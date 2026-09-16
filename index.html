@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f4ed" />
+    <title>KlarDeutsch — Alemão A1</title>
+    <meta
+      name="description"
+      content="Um curso local, interativo e prático para construir sua base no alemão."
+    />
+    <link rel="stylesheet" href="css/styles.css?v=20260915-conclusion-graphs" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="sidebar-scrim" data-close-sidebar></div>
+
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">K</div>
+          <div>
+            <p class="brand-name">KlarDeutsch</p>
+            <p class="brand-kicker">A1 · do zero</p>
+          </div>
+          <button class="icon-button sidebar-close" data-close-sidebar aria-label="Fechar menu">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="sidebar-progress" aria-label="Progresso do curso">
+          <div class="sidebar-progress-top">
+            <span>Seu caminho</span>
+            <strong id="sidebar-progress-value">0%</strong>
+          </div>
+          <div class="progress-track progress-track-dark">
+            <span id="sidebar-progress-bar" style="width: 0%"></span>
+          </div>
+          <p id="sidebar-progress-copy">Comece pelo primeiro passo.</p>
+        </div>
+
+        <nav class="primary-nav" aria-label="Seções">
+          <button class="nav-item is-active" data-route="dashboard">
+            <i class="nav-icon" data-lucide="house" aria-hidden="true"></i>
+            <span>Visão geral</span>
+          </button>
+          <button class="nav-item" data-route="review">
+            <i class="nav-icon" data-lucide="rotate-ccw" aria-hidden="true"></i>
+            <span>Revisar</span>
+            <span class="nav-badge" id="review-badge">0</span>
+          </button>
+        </nav>
+
+        <div class="lesson-nav-heading">
+          <span>Aulas</span>
+          <span class="lesson-count">10</span>
+        </div>
+        <nav class="lesson-nav" id="lesson-nav" aria-label="Aulas do curso"></nav>
+
+        <div class="lesson-nav-heading exercise-nav-heading">
+          <span>Exercícios</span>
+          <span class="lesson-count">2</span>
+        </div>
+        <nav class="lesson-nav exercise-nav" aria-label="Exercícios do curso">
+          <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises">
+            <span class="lesson-nav-number">01</span>
+            <span class="lesson-nav-title">Ser ou estar</span>
+            <span class="lesson-status" aria-label="Prática disponível"></span>
+          </button>
+          <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises-haben">
+            <span class="lesson-nav-number">02</span>
+            <span class="lesson-nav-title">Conjugação de haben</span>
+            <span class="lesson-status" aria-label="Prática disponível"></span>
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="offline-note">
+            <span class="offline-dot" aria-hidden="true"></span>
+            <span>Funciona offline neste navegador</span>
+          </div>
+          <button class="reset-button" data-reset-progress>
+            <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            <span>Resetar progresso</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <button class="icon-button menu-trigger" data-open-sidebar aria-label="Abrir menu"><i data-lucide="menu" aria-hidden="true"></i></button>
+          <div class="breadcrumb" id="breadcrumb">
+            <span>Meu Alemão</span>
+            <span aria-hidden="true">/</span>
+            <strong>Visão geral</strong>
+          </div>
+          <div class="topbar-actions">
+            <div class="streak-pill" title="Dias de estudo">
+              <i class="streak-flame" data-lucide="flame" aria-hidden="true"></i>
+              <span><strong id="streak-value">1</strong> dia de ritmo</span>
+            </div>
+            <div class="avatar" aria-label="Perfil de Leonardo">L</div>
+          </div>
+        </header>
+
+        <main class="main-content" id="app-view" tabindex="-1"></main>
+      </section>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/exercises.js"></script>
+    <script src="js/verb-exercises.js"></script>
+    <script src="js/app.js?v=20260915-conclusion-graphs"></script>
+  </body>
+</html>
