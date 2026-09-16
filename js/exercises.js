@@ -38,6 +38,23 @@
       .replace(/\s+/g, ' ');
   }
 
+  /**
+   * Normalizes an A1 German answer while accepting keyboard-friendly
+   * spellings without umlauts or the German sharp s.
+   *
+   * @param {*} value The answer to normalize.
+   * @returns {string} A comparable normalized answer.
+   */
+  function normalizeGermanAnswer(value) {
+    return normalize(value)
+      .trim()
+      .normalize('NFC')
+      .replace(/ä/g, 'a')
+      .replace(/ö/g, 'o')
+      .replace(/ü/g, 'u')
+      .replace(/ß/g, 'ss');
+  }
+
   function renderOptions(exercise) {
     const optionValues = exercise.optionValues || exercise.options;
     return '<div class="exercise-options" role="group" aria-label="' + escapeHTML(i18n.t('exercise.alternatives')) + '">' + exercise.options.map((option, index) => (
@@ -90,12 +107,12 @@
 
   function isCorrect(response, exercise) {
     if (exercise.type === 'order') {
-      const actual = response.map(normalize);
-      const expected = exercise.answer.map(normalize);
+      const actual = response.map(normalizeGermanAnswer);
+      const expected = exercise.answer.map(normalizeGermanAnswer);
       return actual.length === expected.length && actual.every((word, index) => word === expected[index]);
     }
     const accepted = exercise.answers || [exercise.answer];
-    return accepted.some((answer) => normalize(response) === normalize(answer));
+    return accepted.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
   }
 
   function answerLabel(exercise) {
@@ -107,6 +124,7 @@
     escapeHTML,
     typeLabels,
     normalize,
+    normalizeGermanAnswer,
     renderExercise,
     readResponse,
     isCorrect,

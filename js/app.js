@@ -135,10 +135,14 @@
   const vocabularyRoutes = ['vocabulary-words', 'vocabulary-phrases', 'vocabulary-numbers', 'vocabulary-weekdays', 'vocabulary-months'];
 
   const view = document.getElementById('app-view');
+  const appShell = document.querySelector('.app-shell');
   const sidebar = document.getElementById('sidebar');
   const sidebarScrim = document.querySelector('.sidebar-scrim');
   const breadcrumb = document.getElementById('breadcrumb');
   const toastRegion = document.getElementById('toast-region');
+  const sidebarBreakpoint = 800;
+  let sidebarIsOpen = window.innerWidth > sidebarBreakpoint;
+  let sidebarWasMobile = window.innerWidth <= sidebarBreakpoint;
 
   function esc(value) { return exercises.escapeHTML(value); }
   function icon(name, className, label) { return icons.render(name, className, label); }
@@ -203,10 +207,53 @@
     return page.modes[modeId] || page.modes.conjugation;
   }
 
+  function shuffleVerbSentenceOrder(items) {
+    const original = items.map((item) => item.id);
+    const order = original.slice();
+    for (let index = order.length - 1; index > 0; index -= 1) {
+      const swap = Math.floor(Math.random() * (index + 1));
+      [order[index], order[swap]] = [order[swap], order[index]];
+    }
+    if (order.length > 1 && order.every((id, index) => id === original[index])) {
+      [order[0], order[1]] = [order[1], order[0]];
+    }
+    return order;
+  }
+
+  function createVerbSession(mode) {
+    return {
+      answers: {},
+      results: {},
+      checked: false,
+      currentIndex: 0,
+      status: 'idle',
+      completed: false,
+      streak: 0,
+      order: mode.id === 'sentences' ? shuffleVerbSentenceOrder(mode.items) : []
+    };
+  }
+
   function getVerbSession(modeId) {
-    const key = getExercisePage().id + ':' + modeId;
-    if (!ui.verbSessions[key]) ui.verbSessions[key] = { answers: {}, results: {}, checked: false };
-    return ui.verbSessions[key];
+    const page = getExercisePage();
+    const mode = page.modes[modeId] || page.modes.conjugation;
+    const key = page.id + ':' + modeId;
+    if (!ui.verbSessions[key]) ui.verbSessions[key] = createVerbSession(mode);
+    const session = ui.verbSessions[key];
+    if (mode.id === 'sentences') {
+      const itemIds = mode.items.map((item) => item.id);
+      const orderIsCurrent = Array.isArray(session.order) && session.order.length === itemIds.length && new Set(session.order).size === itemIds.length && itemIds.every((id) => session.order.includes(id));
+      if (!orderIsCurrent) {
+        ui.verbSessions[key] = createVerbSession(mode);
+        return ui.verbSessions[key];
+      }
+      if (!Number.isFinite(session.streak) || session.streak < 0) session.streak = 0;
+    }
+    return session;
+  }
+
+  function getCurrentVerbSentence(mode, session) {
+    const currentId = session.order && session.order[session.currentIndex];
+    return mode.items.find((item) => item.id === currentId) || mode.items[session.currentIndex];
   }
 
   function updateLanguageButtons() {
@@ -494,6 +541,62 @@
       '</div>';
   }
 
+  function renderSentenceFeedback(item, response, status) {
+    const content = localized(item);
+    const canonical = content.answers[0];
+    if (status === 'correct') {
+      return '<div class="verb-sentence-feedback is-correct" role="status" aria-live="polite">' + icon('circle-check', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.correctNotice', { answer: canonical })) + '</strong></div></div>';
+    }
+    if (status === 'wrong') {
+      return '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite"><div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><div class="verb-answer-comparison"><div><span>' + esc(tr('verb.youWrote')) + '</span><strong>' + esc(response) + '</strong></div><div><span>' + esc(tr('verb.correctAnswerLabel')) + '</span><strong>' + esc(canonical) + '</strong></div></div></div></div>';
+    }
+    return '';
+  }
+
+  function focusVerbAnswer() {
+    const input = document.querySelector('[data-verb-answer]');
+    if (input) input.focus();
+  }
+
+  function renderSentenceStreak(session) {
+    const streak = Math.max(0, Number.isFinite(session.streak) ? session.streak : 0);
+    const visibleStreak = Math.min(streak, 10);
+    const copy = streak === 0 ? tr('verb.streakZero') : streak === 1 ? tr('verb.streakSingle') : tr('verb.streakPlural', { count: streak });
+    const segments = Array.from({ length: 10 }, (_, index) => '<span class="' + (index < visibleStreak ? 'is-active' : '') + '"></span>').join('');
+    return '<div class="verb-streak-meter" data-verb-streak role="meter" aria-live="polite" aria-valuemin="0" aria-valuemax="10" aria-valuenow="' + visibleStreak + '" aria-valuetext="' + esc(copy) + '" aria-label="' + esc(tr('verb.streakLabel')) + '"><div class="verb-streak-summary"><span>' + esc(tr('verb.streakLabel')) + '</span><strong>' + streak + '</strong></div><div class="verb-streak-track" aria-hidden="true">' + segments + '</div><span class="verb-streak-copy">' + esc(copy) + '</span></div>';
+  }
+
+  function renderSentencePractice(page, mode, session) {
+    const total = mode.items.length;
+    if (!total) return '<div class="verb-sentence-practice"><p>' + esc(tr('verb.resultEmptyCopy')) + '</p></div>';
+    if (session.completed) {
+      return '<div class="verb-sentence-practice is-complete" data-verb-sentence-practice><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(tr('verb.completedCopy', { total })) + ' ' + esc(tr('verb.finalStreak', { count: session.streak || 0 })) + '</p></div><button type="button" class="button button-secondary" data-retry-verb="restart">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.restartSentences')) + '</button></div>';
+    }
+    const index = Math.min(Math.max(Number.isInteger(session.currentIndex) ? session.currentIndex : 0, 0), total - 1);
+    session.currentIndex = index;
+    const item = getCurrentVerbSentence(mode, session);
+    const content = localized(item);
+    const response = session.answers[item.id] || '';
+    const status = session.status || 'idle';
+    const disabled = status === 'correct' || status === 'wrong' ? ' disabled' : '';
+    let action = '<button type="button" class="button button-primary" data-check-verb>' + icon('check', 'button-icon') + esc(tr('verb.checkSentence')) + '</button>';
+    if (status === 'correct') {
+      const isLast = index === total - 1;
+      action = '<button type="button" class="button button-primary" data-next-verb>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('verb.completedTitle') : tr('verb.nextSentence')) + '</button>';
+    } else if (status === 'wrong') {
+      action = '<button type="button" class="button button-secondary" data-retry-verb="current">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.tryAgain')) + '</button>';
+    }
+    return '<div class="verb-sentence-practice" data-verb-sentence-practice>' +
+      renderSentenceStreak(session) +
+      '<article class="verb-sentence-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
+      '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + '</div>' +
+      '<div class="verb-sentence-copy"><h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
+      '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="verb-answer-' + esc(page.id) + '">' + esc(tr('verb.sentenceInput')) + '</label><input id="verb-answer-' + esc(page.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-answer data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
+      renderSentenceFeedback(item, response, status) +
+      '<div class="verb-sentence-actions">' + action + '</div>' +
+      '</article></div>';
+  }
+
   function renderVerbResult(page, mode, session) {
     const contentPage = localized(page);
     const contentMode = localized(mode);
@@ -512,10 +615,13 @@
     const contentPage = localized(page);
     const contentMode = localized(mode);
     const session = getVerbSession(mode.id);
-      view.innerHTML = '<div class="fade-in exercise-page"><section class="exercise-hero"><div><p class="view-kicker">' + esc(tr('verb.practiceKicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(tr('verb.heroIntro', { verb: contentPage.verb, copy: contentPage.heroCopy })) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(tr('verb.present')) + '</span><span class="meta-pill">' + esc(tr('verb.challenges', { count: mode.items.length })) + '</span><span class="meta-pill">' + esc(tr('verb.noRush')) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>' + esc(contentPage.verb) + '</span><small>' + esc(contentPage.meaning) + '</small></div></section>' +
+    const practiceContent = mode.id === 'sentences'
+      ? renderSentencePractice(page, mode, session)
+      : '<div class="verb-prompt-list">' + mode.items.map((item, index) => renderVerbRow(item, session, index)).join('') + '</div><div class="verb-form-actions"><button type="button" class="button button-primary" data-check-verb>' + esc(tr('verb.check')) + '</button><button type="button" class="button button-secondary" data-reset-verb>' + esc(tr('verb.reset')) + '</button></div>' + renderVerbResult(page, mode, session);
+    view.innerHTML = '<div class="fade-in exercise-page"><section class="exercise-hero"><div><p class="view-kicker">' + esc(tr('verb.practiceKicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(tr('verb.heroIntro', { verb: contentPage.verb, copy: contentPage.heroCopy })) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(tr('verb.present')) + '</span><span class="meta-pill">' + esc(tr('verb.challenges', { count: mode.items.length })) + '</span><span class="meta-pill">' + esc(tr('verb.noRush')) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>' + esc(contentPage.verb) + '</span><small>' + esc(contentPage.meaning) + '</small></div></section>' +
       '<div class="practice-tabs" role="tablist" aria-label="' + esc(tr('verb.tabsAria')) + '"><button type="button" class="practice-tab' + (mode.id === 'conjugation' ? ' is-active' : '') + '" data-exercise-mode="conjugation" role="tab" aria-controls="verb-practice-panel" aria-selected="' + (mode.id === 'conjugation' ? 'true' : 'false') + '"><span>01</span><strong>' + esc(tr('verb.conjugation')) + '</strong><small>' + esc(tr('verb.conjugationShort')) + '</small></button><button type="button" class="practice-tab' + (mode.id === 'sentences' ? ' is-active' : '') + '" data-exercise-mode="sentences" role="tab" aria-controls="verb-practice-panel" aria-selected="' + (mode.id === 'sentences' ? 'true' : 'false') + '"><span>02</span><strong>' + esc(tr('verb.sentences')) + '</strong><small>' + esc(tr('verb.sentencesShort')) + '</small></button></div>' +
-      '<section class="verb-practice-card" id="verb-practice-panel" role="tabpanel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(contentMode.shortLabel) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(tr('verb.equals', { verb: contentPage.verb, meaning: contentPage.meaning })) + '</span></div></div><div class="verb-prompt-list">' + mode.items.map((item, index) => renderVerbRow(item, session, index)).join('') + '</div><div class="verb-form-actions"><button type="button" class="button button-primary" data-check-verb>' + esc(tr('verb.check')) + '</button><button type="button" class="button button-secondary" data-reset-verb>' + esc(tr('verb.reset')) + '</button></div>' + renderVerbResult(page, mode, session) + '</section>' +
-       '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('tip.speak')) + '</p></div>';
+      '<section class="verb-practice-card" id="verb-practice-panel" role="tabpanel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(contentMode.shortLabel) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(tr('verb.equals', { verb: contentPage.verb, meaning: contentPage.meaning })) + '</span></div></div>' + practiceContent + '</section>' +
+      '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('tip.speak')) + '</p></div>';
     icons.refresh(view);
   }
 
@@ -645,7 +751,7 @@
     ui.activeLessonId = id;
     ui.route = 'lesson';
     render();
-    closeSidebar();
+    closeSidebarOnMobile();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -678,8 +784,37 @@
     showToast(tr('toast.pathReset'));
   }
 
-  function closeSidebar() { sidebar.classList.remove('is-open'); sidebarScrim.classList.remove('is-visible'); }
-  function openSidebar() { sidebar.classList.add('is-open'); sidebarScrim.classList.add('is-visible'); }
+  function updateSidebarToggleState(isOpen) {
+    document.querySelectorAll('[data-toggle-sidebar]').forEach((button) => {
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.setAttribute('aria-label', tr(isOpen ? 'sidebar.close' : 'sidebar.open'));
+    });
+  }
+
+  function setSidebarState(isOpen) {
+    sidebarIsOpen = isOpen;
+    sidebar.classList.toggle('is-open', isOpen);
+    appShell.classList.toggle('is-sidebar-collapsed', !isOpen);
+    sidebarScrim.classList.toggle('is-visible', isOpen && window.innerWidth <= sidebarBreakpoint);
+    updateSidebarToggleState(isOpen);
+  }
+
+  function closeSidebar() {
+    setSidebarState(false);
+  }
+
+  function openSidebar() {
+    setSidebarState(true);
+  }
+
+  function toggleSidebar() {
+    if (sidebarIsOpen) closeSidebar();
+    else openSidebar();
+  }
+
+  function closeSidebarOnMobile() {
+    if (window.innerWidth <= sidebarBreakpoint) closeSidebar();
+  }
 
   function render() {
     const progress = getProgress();
@@ -693,6 +828,7 @@
     icons.refresh(document);
     i18n.apply(document);
     updateLanguageButtons();
+    updateSidebarToggleState(sidebarIsOpen);
     view.focus({ preventScroll: true });
   }
 
@@ -719,7 +855,7 @@
     const open = event.target.closest('[data-open-lesson]');
     if (open) { openLesson(open.dataset.openLesson); return; }
     const route = event.target.closest('[data-route]');
-    if (route) { ui.route = route.dataset.route; render(); closeSidebar(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (route) { ui.route = route.dataset.route; render(); closeSidebarOnMobile(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     const exerciseMode = event.target.closest('[data-exercise-mode]');
     if (exerciseMode) {
       ui.exerciseModes[getExercisePage().id] = exerciseMode.dataset.exerciseMode;
@@ -727,7 +863,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    if (event.target.closest('[data-open-sidebar]')) { openSidebar(); return; }
+    if (event.target.closest('[data-toggle-sidebar]')) { toggleSidebar(); return; }
     if (event.target.closest('[data-close-sidebar]')) { closeSidebar(); return; }
     if (event.target.closest('[data-reset-progress]')) { resetAllProgress(); return; }
     const option = event.target.closest('[data-option]');
@@ -757,6 +893,8 @@
     if (navLesson && !navLesson.disabled) { navigateLesson(navLesson.dataset.navLesson); return; }
     const complete = event.target.closest('[data-complete-lesson]');
     if (complete && !complete.disabled) { completeLesson(complete.dataset.completeLesson); return; }
+    if (event.target.closest('[data-next-verb]')) { nextVerbSentence(); return; }
+    if (event.target.closest('[data-retry-verb]')) { retryVerbSentence(); return; }
     if (event.target.closest('[data-check-verb]')) { checkVerbPractice(); return; }
     if (event.target.closest('[data-reset-verb]')) { resetVerbPractice(); return; }
     if (event.target.closest('[data-scroll-summary]')) { document.querySelector('.summary-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
@@ -766,6 +904,12 @@
     if (event.target.matches('.verb-input')) {
       const mode = getVerbMode();
       const session = getVerbSession(mode.id);
+      if (mode.id === 'sentences') {
+        const item = getCurrentVerbSentence(mode, session);
+        if (item) session.answers[item.id] = event.target.value;
+        session.checked = false;
+        return;
+      }
       session.answers[event.target.dataset.verbId] = event.target.value;
       session.checked = false;
       session.results = {};
@@ -784,10 +928,84 @@
     card.querySelector('[data-feedback]').className = 'feedback';
   });
 
-  window.addEventListener('resize', () => { if (window.innerWidth > 800) closeSidebar(); });
+  window.addEventListener('resize', () => {
+    const isMobile = window.innerWidth <= sidebarBreakpoint;
+    if (isMobile === sidebarWasMobile) return;
+    sidebarWasMobile = isMobile;
+    setSidebarState(!isMobile);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && sidebarIsOpen) closeSidebar();
+  });
+
+  function nextVerbSentence() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    if (mode.id !== 'sentences' || session.status !== 'correct') return;
+    if (session.currentIndex >= session.order.length - 1) {
+      session.completed = true;
+      renderExercises();
+      return;
+    }
+    session.currentIndex += 1;
+    session.status = 'idle';
+    session.checked = false;
+    renderExercises();
+    focusVerbAnswer();
+  }
+
+  function retryVerbSentence() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    if (mode.id !== 'sentences') return;
+    if (session.completed) {
+      resetVerbPractice();
+      return;
+    }
+    const item = getCurrentVerbSentence(mode, session);
+    if (item) {
+      delete session.answers[item.id];
+      delete session.results[item.id];
+    }
+    session.status = 'idle';
+    session.checked = false;
+    renderExercises();
+    focusVerbAnswer();
+  }
+
+  function checkSentencePractice() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    const item = getCurrentVerbSentence(mode, session);
+    if (!item) return;
+    const response = String(session.answers[item.id] || '').trim();
+    if (!response) {
+      showToast(tr('toast.answerRequired'));
+      return;
+    }
+    const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
+    const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
+    session.answers[item.id] = response;
+    session.results[item.id] = correct;
+    session.checked = true;
+    session.status = correct ? 'correct' : 'wrong';
+    session.streak = Number.isFinite(session.streak) ? session.streak : 0;
+    if (correct) {
+      session.streak += 1;
+    } else {
+      session.streak = 0;
+    }
+    if (correct && session.currentIndex === session.order.length - 1) session.completed = true;
+    renderExercises();
+  }
 
   function checkVerbPractice() {
     const mode = getVerbMode();
+    if (mode.id === 'sentences') {
+      checkSentencePractice();
+      return;
+    }
     const session = getVerbSession(mode.id);
     const inputs = Array.from(document.querySelectorAll('.verb-input'));
     const hasAnswer = inputs.some((input) => input.value.trim());
@@ -799,7 +1017,8 @@
       const input = document.querySelector('.verb-input[data-verb-id="' + item.id + '"]');
       const response = input ? input.value : '';
       session.answers[item.id] = response;
-      session.results[item.id] = item.answers.some((answer) => exercises.normalize(response) === exercises.normalize(answer));
+      const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
+      session.results[item.id] = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
     });
     session.checked = true;
     const scrollY = window.scrollY;
@@ -811,10 +1030,11 @@
 
   function resetVerbPractice() {
     const mode = getVerbMode();
-    ui.verbSessions[getExercisePage().id + ':' + mode.id] = { answers: {}, results: {}, checked: false };
+    ui.verbSessions[getExercisePage().id + ':' + mode.id] = createVerbSession(mode);
     renderExercises();
     showToast(tr('toast.verbReset'));
   }
+  setSidebarState(sidebarIsOpen);
   i18n.subscribe(() => render());
   render();
 }());

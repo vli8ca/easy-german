@@ -10,7 +10,7 @@
       data-i18n-content="meta.description"
       content="Um curso local, interativo e prático para construir sua base no alemão."
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260916-bilingual" />
+    <link rel="stylesheet" href="css/styles.css?v=20260916-sidebar-toggle" />
   </head>
   <body>
     <div class="app-shell">
@@ -23,8 +23,8 @@
             <p class="brand-name">KlarDeutsch</p>
             <p class="brand-kicker" data-i18n="brand.course">A1 · do zero</p>
           </div>
-          <button class="icon-button sidebar-close" data-close-sidebar aria-label="Fechar menu" data-i18n-aria-label="sidebar.close">
-            <i data-lucide="x" aria-hidden="true"></i>
+          <button type="button" class="icon-button sidebar-close" data-toggle-sidebar aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu" data-i18n-aria-label="sidebar.open">
+            <i data-lucide="arrow-left" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -158,7 +158,7 @@
 
       <section class="workspace">
         <header class="topbar">
-          <button class="icon-button menu-trigger" data-open-sidebar aria-label="Abrir menu" data-i18n-aria-label="sidebar.open"><i data-lucide="menu" aria-hidden="true"></i></button>
+          <button type="button" class="icon-button menu-trigger" data-toggle-sidebar aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu" data-i18n-aria-label="sidebar.open"><i data-lucide="menu" aria-hidden="true"></i></button>
           <div class="breadcrumb" id="breadcrumb">
             <span data-i18n="breadcrumb.myGerman">Meu Alemão</span>
             <span aria-hidden="true">/</span>
