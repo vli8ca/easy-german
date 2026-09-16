@@ -204,7 +204,6 @@
     document.getElementById('sidebar-progress-bar').style.width = percent + '%';
     document.getElementById('sidebar-progress-copy').textContent = percent === 0 ? 'Comece pelo primeiro passo.' : percent === 100 ? 'A1 Starter concluído!' : progress.completedLessons.length + ' de ' + lessons.length + ' aulas concluídas.';
     document.getElementById('review-badge').textContent = progress.completedLessons.length;
-    document.getElementById('streak-value').textContent = progress.totalAnswered > 0 ? '2' : '1';
   }
 
   function renderSidebar(progress) {
