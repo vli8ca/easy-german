@@ -13,8 +13,125 @@
     reviewSession: {},
     reviewQuestions: [],
     exerciseModes: { sein: 'conjugation', haben: 'conjugation' },
-    verbSessions: {}
+    verbSessions: {},
+    sidebarSections: { vocabulary: true, lessons: true, exercises: true }
   };
+
+  const vocabulary = {
+    words: [
+      { word: 'Guten', meaning: 'bom / boa (forma usada nas saudações)' },
+      { word: 'Morgen', meaning: 'manhã' },
+      { word: 'Tag', meaning: 'dia' },
+      { word: 'Abend', meaning: 'noite / fim da tarde' },
+      { word: 'Gute', meaning: 'boa' },
+      { word: 'Nacht', meaning: 'noite' },
+      { word: 'Tschüss', meaning: 'adeus / tchau (formal)' },
+      { word: 'Tschau', meaning: 'adeus / tchau (informal)' },
+      { word: 'Bis', meaning: 'até' },
+      { word: 'später', meaning: 'mais tarde' },
+      { word: 'dann', meaning: 'então' },
+      { word: 'bald', meaning: 'em breve' },
+      { word: 'Auf', meaning: 'até (na expressão Auf Wiedersehen)' },
+      { word: 'Wiedersehen', meaning: 'ver novamente / reencontro' },
+      { word: 'Mein', meaning: 'meu' },
+      { word: 'Name', meaning: 'nome' },
+      { word: 'ist', meaning: 'é / está' },
+      { word: 'Leo', meaning: 'Leo' },
+      { word: 'Ich', meaning: 'eu' },
+      { word: 'heiße', meaning: 'me chamo' },
+      { word: 'bin', meaning: 'sou / estou' },
+      { word: '25', meaning: 'vinte e cinco' },
+      { word: 'Jahre', meaning: 'anos' },
+      { word: 'alt', meaning: 'de idade' },
+      { word: 'komme', meaning: 'venho' },
+      { word: 'aus', meaning: 'de' },
+      { word: 'Brasilien', meaning: 'Brasil' },
+      { word: 'Brasilianer/in', meaning: 'brasileiro/a' },
+      { word: 'wohne', meaning: 'moro' },
+      { word: 'in', meaning: 'em' },
+      { word: 'München', meaning: 'Munique' },
+      { word: 'spreche', meaning: 'falo' },
+      { word: 'Portugiesisch', meaning: 'português' },
+      { word: 'und', meaning: 'e' },
+      { word: 'Deutsch', meaning: 'alemão' },
+      { word: 'Meine', meaning: 'meus / minhas' },
+      { word: 'Hobbys', meaning: 'passatempos' },
+      { word: 'sind', meaning: 'são / estão' },
+      { word: 'Fußball', meaning: 'futebol' },
+      { word: 'spielen', meaning: 'jogar' },
+      { word: 'lesen', meaning: 'ler' },
+      { word: 'Single', meaning: 'solteiro/a' },
+      { word: 'habe', meaning: 'tenho' },
+      { word: 'einen', meaning: 'um' },
+      { word: 'Freund', meaning: 'amigo / namorado' },
+      { word: 'eine', meaning: 'uma' },
+      { word: 'Freundin', meaning: 'amiga / namorada' },
+      { word: 'verheiratet', meaning: 'casado/a' },
+      { word: 'Student/in', meaning: 'estudante universitário/a' },
+      { word: 'Schüler/in', meaning: 'aluno/a' },
+      { word: 'Lehrer/in', meaning: 'professor/a' },
+      { word: 'Frage', meaning: 'pergunta' },
+      { word: 'Antwort', meaning: 'resposta' },
+      { word: 'Wie', meaning: 'como / quão' },
+      { word: 'dein', meaning: 'seu / sua' },
+      { word: 'bist', meaning: 'é / está (com du)' },
+      { word: 'du', meaning: 'você' },
+      { word: 'Woher', meaning: 'de onde' },
+      { word: 'kommst', meaning: 'vem (com du)' },
+      { word: 'Was', meaning: 'o que / quais' },
+      { word: 'deine', meaning: 'seus / suas' },
+      { word: 'Welche', meaning: 'quais' },
+      { word: 'Sprachen', meaning: 'idiomas / línguas' },
+      { word: 'sprichst', meaning: 'fala (com du)' }
+    ],
+    phrases: [
+      { de: 'Guten Morgen', pt: 'bom dia' },
+      { de: 'Guten Tag', pt: 'bom dia / boa tarde' },
+      { de: 'Guten Abend', pt: 'boa noite' },
+      { de: 'Gute Nacht', pt: 'boa noite' },
+      { de: 'Bis später / bis dann', pt: 'até mais' },
+      { de: 'Bis bald', pt: 'até breve' },
+      { de: 'Auf Wiedersehen', pt: 'até mais' },
+      { de: 'Mein Name ist Leo', pt: 'meu nome é Leonardo' },
+      { de: 'Ich heiße Leo', pt: 'chamo-me Leo' },
+      { de: 'Ich bin Leo', pt: 'eu sou Leo' },
+      { de: 'Ich bin 25 Jahre alt', pt: 'tenho 25 anos de idade' },
+      { de: 'Ich komme aus Brasilien', pt: 'venho do Brasil' },
+      { de: 'Ich bin Brasilianer/in', pt: 'eu sou brasileiro/a' },
+      { de: 'Ich wohne in München', pt: 'moro em Munique' },
+      { de: 'Ich spreche Portugiesisch und Deutsch', pt: 'falo português e alemão' },
+      { de: 'Meine Hobbys sind Fußball spielen und lesen', pt: 'meus passatempos são jogar futebol e ler' },
+      { de: 'Ich bin Single', pt: 'eu sou solteiro/a' },
+      { de: 'Ich habe einen Freund', pt: 'eu tenho namorado' },
+      { de: 'Ich habe eine Freundin', pt: 'eu tenho namorada' },
+      { de: 'Ich bin verheiratet', pt: 'sou casado/a' },
+      { de: 'Ich bin Student/in', pt: 'eu sou estudante' },
+      { de: 'Ich bin Schüler/in', pt: 'eu sou aluno/a' },
+      { de: 'Ich bin Lehrer/in', pt: 'eu sou professor/a' },
+      { de: 'Wie ist dein Name?', pt: 'qual é o seu nome?' },
+      { de: 'Wie alt bist du?', pt: 'quantos anos você tem?' },
+      { de: 'Woher kommst du?', pt: 'de onde você é?' },
+      { de: 'Was sind deine Hobbys?', pt: 'quais são os seus passatempos?' },
+      { de: 'Welche Sprachen sprichst du?', pt: 'quais idiomas você fala?' }
+    ],
+    numbers: [
+      ['1', 'eins'], ['2', 'zwei'], ['3', 'drei'], ['4', 'vier'], ['5', 'fünf'],
+      ['6', 'sechs'], ['7', 'sieben'], ['8', 'acht'], ['9', 'neun'], ['10', 'zehn'],
+      ['11', 'elf'], ['12', 'zwölf'], ['13', 'dreizehn'], ['14', 'vierzehn'], ['15', 'fünfzehn'],
+      ['16', 'sechzehn'], ['17', 'siebzehn'], ['18', 'achtzehn'], ['19', 'neunzehn'], ['20', 'zwanzig']
+    ],
+    weekdays: [
+      ['Montag', 'segunda-feira'], ['Dienstag', 'terça-feira'], ['Mittwoch', 'quarta-feira'],
+      ['Donnerstag', 'quinta-feira'], ['Freitag', 'sexta-feira'], ['Samstag', 'sábado'], ['Sonntag', 'domingo']
+    ],
+    months: [
+      ['Januar', 'janeiro'], ['Februar', 'fevereiro'], ['März', 'março'], ['April', 'abril'],
+      ['Mai', 'maio'], ['Juni', 'junho'], ['Juli', 'julho'], ['August', 'agosto'],
+      ['September', 'setembro'], ['Oktober', 'outubro'], ['November', 'novembro'], ['Dezember', 'dezembro']
+    ]
+  };
+
+  const vocabularyRoutes = ['vocabulary-words', 'vocabulary-phrases', 'vocabulary-numbers', 'vocabulary-weekdays', 'vocabulary-months'];
 
   const view = document.getElementById('app-view');
   const sidebar = document.getElementById('sidebar');
@@ -26,6 +143,7 @@
   function icon(name, className, label) { return icons.render(name, className, label); }
   function getLesson(id) { return lessons.find((lesson) => lesson.id === id); }
   function getProgress() { return storage.getProgress(); }
+  function isVocabularyRoute(route) { return vocabularyRoutes.includes(route); }
 
   function completionPercent(progress) {
     return lessons.length ? Math.round((progress.completedLessons.length / lessons.length) * 100) : 0;
@@ -102,7 +220,18 @@
         '</button>';
     }).join('');
 
-    document.querySelectorAll('[data-route]').forEach((item) => item.classList.toggle('is-active', item.dataset.route === ui.route));
+    document.querySelectorAll('[data-route]').forEach((item) => {
+      const isActive = item.dataset.route === ui.route;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-current', isActive ? 'page' : 'false');
+    });
+
+    document.querySelectorAll('[data-sidebar-section]').forEach((section) => {
+      const isOpen = ui.sidebarSections[section.dataset.sidebarSection] !== false;
+      section.classList.toggle('is-collapsed', !isOpen);
+      const toggle = section.querySelector('[data-toggle-sidebar-section]');
+      if (toggle) toggle.setAttribute('aria-expanded', String(isOpen));
+    });
   }
 
   function updateBreadcrumb() {
@@ -112,6 +241,9 @@
       breadcrumb.innerHTML = '<span>Meu Alemão</span><span aria-hidden="true">/</span><strong>Revisar</strong>';
     } else if (ui.route === 'exercises' || ui.route === 'exercises-haben') {
       breadcrumb.innerHTML = '<span>Prática A1</span><span aria-hidden="true">/</span><strong>Exercícios · ' + esc(getExercisePage().title) + '</strong>';
+    } else if (isVocabularyRoute(ui.route)) {
+      const vocabularyLabels = { 'vocabulary-words': 'Palavras', 'vocabulary-phrases': 'Frases', 'vocabulary-numbers': 'Números', 'vocabulary-weekdays': 'Dias da semana', 'vocabulary-months': 'Meses do ano' };
+      breadcrumb.innerHTML = '<span>Curso A1</span><span aria-hidden="true">/</span><strong>Vocabulário · ' + vocabularyLabels[ui.route] + '</strong>';
     } else {
       const lesson = getLesson(ui.activeLessonId);
       breadcrumb.innerHTML = '<span>Curso A1</span><span aria-hidden="true">/</span><strong>Aula ' + String(lesson.number).padStart(2, '0') + ' · ' + esc(lesson.title) + '</strong>';
@@ -211,6 +343,61 @@
 
   function renderVocabulary(item) {
     return '<article class="vocab-card"><div class="vocab-card-top"><div><div class="vocab-word">' + esc(item.word) + '</div><div class="vocab-meaning">' + esc(item.meaning) + '</div></div><button type="button" class="speak-button" data-speak="' + esc(item.word) + '" aria-label="Ouvir ' + esc(item.word) + '">' + icon('volume-2', 'audio-icon') + '</button></div><p class="vocab-example"><em>' + esc(item.example) + '</em></p></article>';
+  }
+
+  function renderVocabularyWord(item) {
+    return '<article class="vocab-card vocabulary-word-card"><div class="vocab-card-top"><div><div class="vocab-word">' + esc(item.word) + '</div><div class="vocab-meaning">' + esc(item.meaning) + '</div></div><button type="button" class="speak-button" data-speak="' + esc(item.word) + '" aria-label="Ouvir ' + esc(item.word) + '">' + icon('volume-2', 'audio-icon') + '</button></div></article>';
+  }
+
+  function renderNumberCard(item, index) {
+    return '<article class="number-card"><span class="number-card-index">' + String(index + 1).padStart(2, '0') + '</span><div class="number-card-copy"><strong>' + esc(item[1]) + '</strong><span>' + esc(item[0]) + '</span></div><button type="button" class="speak-button" data-speak="' + esc(item[1]) + '" aria-label="Ouvir ' + esc(item[1]) + '">' + icon('volume-2', 'audio-icon') + '</button></article>';
+  }
+
+  function renderNumberRule(rule) {
+    return '<article class="number-rule-card"><div class="number-rule-top"><span class="number-rule-range">' + esc(rule.range) + '</span><span class="number-rule-icon" aria-hidden="true">' + icon(rule.icon) + '</span></div><h3>' + esc(rule.title) + '</h3><p>' + esc(rule.description) + '</p><div class="number-rule-examples">' + rule.examples.map((example) => '<div class="number-rule-example"><span>' + esc(example[0]) + '</span><strong>' + esc(example[1]) + '</strong><button type="button" class="audio-inline" data-speak="' + esc(example[1]) + '" aria-label="Ouvir ' + esc(example[1]) + '">' + icon('volume-2', 'audio-icon') + '</button></div>').join('') + '</div></article>';
+  }
+
+  function renderCalendarCard(item, index, kind) {
+    const prefix = kind === 'weekday' ? 'der ' : 'der ';
+    const usage = kind === 'weekday' ? 'am ' + item[0] + ' · na ' + item[1] : 'im ' + item[0] + ' · em ' + item[1];
+    return '<article class="calendar-card"><span class="calendar-card-index">' + String(index + 1).padStart(2, '0') + '</span><div class="calendar-card-copy"><strong>' + prefix + esc(item[0]) + '</strong><span>' + esc(item[1]) + '</span><small>' + esc(usage) + '</small></div><button type="button" class="speak-button" data-speak="' + esc(item[0]) + '" aria-label="Ouvir ' + esc(item[0]) + '">' + icon('volume-2', 'audio-icon') + '</button></article>';
+  }
+
+  function renderVocabularyPage() {
+    const meta = {
+      'vocabulary-words': { kicker: 'Vocabulário · primeiras conversas', title: 'Palavras e frases', accent: 'para se apresentar', copy: 'Uma coleção curta para dizer quem você é, de onde vem e como continuar a conversa.', iconName: 'book-open', mark: vocabulary.words.length + ' palavras', sectionLabel: '01 · Palavras', sectionTitle: 'Palavras para reconhecer', sectionDescription: 'As palavras abaixo foram separadas das frases que você enviou. Ouça cada uma e guarde o sentido mais útil para começar.' },
+      'vocabulary-phrases': { kicker: 'Vocabulário · primeiras conversas', title: 'Palavras e frases', accent: 'para se apresentar', copy: 'Uma coleção curta para dizer quem você é, de onde vem e como continuar a conversa.', iconName: 'book-open', mark: vocabulary.phrases.length + ' frases', sectionLabel: '02 · Frases', sectionTitle: 'Frases para usar', sectionDescription: 'A lista mantém somente as frases enviadas, com a escrita ajustada para o alemão padrão e uma tradução curta para revisar.' },
+      'vocabulary-numbers': { kicker: 'Vocabulário · quantidade e tempo', title: 'Números em alemão', accent: 'do eins ao milhão', copy: 'Aprenda os números essenciais e perceba a lógica que permite formar números cada vez maiores sem decorar tudo de uma vez.', iconName: 'hash', mark: '1 → 1.000.000', sectionLabel: '03 · Números', sectionTitle: 'A lógica dos números', sectionDescription: 'Comece pelos números de 1 a 20. Depois, use as peças abaixo para montar dezenas, centenas e milhares.' },
+      'vocabulary-weekdays': { kicker: 'Vocabulário · calendário', title: 'Dias da semana', accent: 'para falar da rotina', copy: 'Os sete dias em ordem, com o artigo e a preposição mais comum para dizer quando algo acontece.', iconName: 'calendar-days', mark: '7 dias', sectionLabel: '04 · Dias da semana', sectionTitle: 'Die Wochentage', sectionDescription: 'Os dias da semana são substantivos masculinos: use der para nomear e am para dizer “naquele dia”.' },
+      'vocabulary-months': { kicker: 'Vocabulário · calendário', title: 'Meses do ano', accent: 'para falar de datas', copy: 'Os doze meses em alemão e um pequeno atalho para falar sobre aniversários, viagens e compromissos.', iconName: 'calendar-range', mark: '12 meses', sectionLabel: '05 · Meses do ano', sectionTitle: 'Die Monate', sectionDescription: 'Os meses também são masculinos: use der para nomear e im para dizer “em determinado mês”.' }
+    }[ui.route];
+    const tabs = [
+      ['vocabulary-words', '01', 'Palavras', vocabulary.words.length + ' itens'],
+      ['vocabulary-phrases', '02', 'Frases', vocabulary.phrases.length + ' frases'],
+      ['vocabulary-numbers', '03', 'Números', '1 até 1 milhão'],
+      ['vocabulary-weekdays', '04', 'Dias da semana', '7 dias'],
+      ['vocabulary-months', '05', 'Meses do ano', '12 meses']
+    ];
+    let content = '';
+    if (ui.route === 'vocabulary-words') {
+      content = '<div class="vocab-grid vocabulary-word-grid">' + vocabulary.words.map(renderVocabularyWord).join('') + '</div>';
+    } else if (ui.route === 'vocabulary-phrases') {
+      content = '<div class="example-list vocabulary-phrase-list">' + vocabulary.phrases.map((phrase) => '<div class="example-row"><div><div class="example-de">' + esc(phrase.de) + '</div><span class="example-pt">' + esc(phrase.pt) + '</span></div><button type="button" class="speak-button" data-speak="' + esc(phrase.de) + '" aria-label="Ouvir ' + esc(phrase.de) + '">' + icon('volume-2', 'audio-icon') + '</button></div>').join('') + '</div>';
+    } else if (ui.route === 'vocabulary-numbers') {
+      const rules = [
+        { range: '20 → 100', title: 'Unidade + und + dezena', description: 'A unidade vem antes da dezena. O und significa “e”: 21 é literalmente “um e vinte”.', icon: 'arrow-left-right', examples: [['21', 'einundzwanzig'], ['32', 'zweiunddreißig'], ['47', 'siebenundvierzig'], ['99', 'neunundneunzig']] },
+        { range: '100 → 1.000', title: 'Centena + resto do número', description: 'Use hundert depois da centena e continue com a mesma lógica das dezenas. 100 pode ser hundert ou einhundert.', icon: 'layers-3', examples: [['101', 'einhunderteins'], ['245', 'zweihundertfünfundvierzig'], ['999', 'neunhundertneunundneunzig']] },
+        { range: '1.000 → 1.000.000', title: 'Milhar + centenas', description: 'Coloque tausend depois do bloco dos milhares. Em 1.000.000, use eine Million; Million é um substantivo.', icon: 'milestone', examples: [['1.234', 'eintausendzweihundertvierunddreißig'], ['12.500', 'zwölftausendfünfhundert'], ['1.000.000', 'eine Million']] }
+      ];
+      content = '<section class="number-basics"><div class="number-basics-heading"><div><p class="view-kicker">01 · Primeiro passo</p><h3>De 1 a 20</h3><p>Memorize esta base. A partir de 21, as combinações começam a se repetir.</p></div><span class="number-basics-note">20 = zwanzig</span></div><div class="number-grid">' + vocabulary.numbers.map(renderNumberCard).join('') + '</div></section><div class="number-rule-grid">' + rules.map(renderNumberRule).join('') + '</div><div class="info-callout number-tip"><span class="callout-icon" aria-hidden="true">' + icon('lightbulb', 'callout-icon-svg') + '</span><p><strong>Dica para montar qualquer número</strong><br>Leia o número em blocos: milhares → centenas → dezenas e unidades. Escreva tudo junto, sem espaços, até chegar em Million.</p></div>';
+    } else if (ui.route === 'vocabulary-weekdays') {
+      content = '<div class="calendar-grid">' + vocabulary.weekdays.map((item, index) => renderCalendarCard(item, index, 'weekday')).join('') + '</div><div class="info-callout calendar-tip"><span class="callout-icon" aria-hidden="true">' + icon('calendar-check', 'callout-icon-svg') + '</span><p><strong>Para dizer “na segunda-feira”</strong><br>Use <strong>am</strong> + dia: <em>am Montag</em>. Exemplo: <em>Ich arbeite am Montag.</em></p></div>';
+    } else {
+      content = '<div class="calendar-grid months-grid">' + vocabulary.months.map((item, index) => renderCalendarCard(item, index, 'month')).join('') + '</div><div class="info-callout calendar-tip"><span class="callout-icon" aria-hidden="true">' + icon('calendar-check', 'callout-icon-svg') + '</span><p><strong>Para dizer “em janeiro”</strong><br>Use <strong>im</strong> + mês: <em>im Januar</em>. Exemplo: <em>Mein Geburtstag ist im Mai.</em></p></div>';
+    }
+    view.innerHTML = '<div class="fade-in vocabulary-page"><section class="vocabulary-hero"><div><p class="view-kicker">' + meta.kicker + '</p><h1>' + meta.title + '<br><span>' + meta.accent + '</span></h1><p class="vocabulary-hero-copy">' + meta.copy + '</p></div><div class="vocabulary-hero-mark" aria-hidden="true">' + icon(meta.iconName) + '<small>' + meta.mark + '</small></div></section>' +
+      '<nav class="vocabulary-tabs" aria-label="Seções do vocabulário">' + tabs.map((tab) => '<button type="button" role="tab" class="vocabulary-tab' + (ui.route === tab[0] ? ' is-active' : '') + '" data-route="' + tab[0] + '" aria-selected="' + (ui.route === tab[0] ? 'true' : 'false') + '"><span>' + tab[1] + '</span><strong>' + tab[2] + '</strong><small>' + tab[3] + '</small></button>').join('') + '</nav>' +
+      '<section class="content-section vocabulary-content"><p class="view-kicker">' + meta.sectionLabel + '</p><h2>' + meta.sectionTitle + '</h2><p class="section-lede">' + meta.sectionDescription + '</p>' + content + '</section></div>';
   }
 
   function renderResultCard(lesson, session, id) {
@@ -456,12 +643,21 @@
     if (ui.route === 'dashboard') renderDashboard();
     else if (ui.route === 'review') renderReview();
     else if (ui.route === 'exercises' || ui.route === 'exercises-haben') renderExercises();
+    else if (isVocabularyRoute(ui.route)) renderVocabularyPage();
     else renderLesson(getLesson(ui.activeLessonId));
     icons.refresh(document);
     view.focus({ preventScroll: true });
   }
 
   document.addEventListener('click', (event) => {
+    const sectionToggle = event.target.closest('[data-toggle-sidebar-section]');
+    if (sectionToggle) {
+      const sectionId = sectionToggle.dataset.toggleSidebarSection;
+      ui.sidebarSections[sectionId] = ui.sidebarSections[sectionId] === false;
+      renderSidebar(getProgress());
+      icons.refresh(document);
+      return;
+    }
     const speak = event.target.closest('[data-speak]');
     if (speak) {
       const worked = window.speakGerman(speak.dataset.speak);

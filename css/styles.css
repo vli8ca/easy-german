@@ -92,7 +92,16 @@ button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
 .nav-item.is-active { color: var(--teal-deep); background: #eaf3e9; }
 .nav-icon { display: block; width: 18px; height: 18px; font-size: 19px; line-height: 1; text-align: center; }
 .nav-badge { margin-left: auto; min-width: 21px; padding: 3px 6px; border-radius: 99px; color: var(--teal-deep); background: var(--yellow); font-family: var(--mono); font-size: 10px; text-align: center; }
-.lesson-nav-heading { display: flex; justify-content: space-between; align-items: center; padding: 0 12px 9px; color: #759b93; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.sidebar-section { margin-top: 16px; }
+.primary-nav + .sidebar-section { margin-top: 0; }
+.sidebar-section-heading { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 12px 9px; border: 0; color: #759b93; background: transparent; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-align: left; text-transform: uppercase; }
+.sidebar-section-heading:hover { color: #cbe0d9; }
+.sidebar-section-heading-end { display: inline-flex; align-items: center; gap: 6px; }
+.section-chevron { width: 14px; height: 14px; color: #8bb1a8; transition: transform .22s ease, color .2s ease; }
+.sidebar-section-heading:hover .section-chevron { color: var(--yellow); }
+.sidebar-section.is-collapsed .section-chevron { transform: rotate(-90deg); }
+.sidebar-section-content { max-height: 650px; overflow: hidden; opacity: 1; transition: max-height .25s ease, opacity .2s ease; }
+.sidebar-section.is-collapsed .sidebar-section-content { max-height: 0; opacity: 0; pointer-events: none; }
 .lesson-count { color: #5e8981; }
 .lesson-nav { display: grid; gap: 3px; }
 .lesson-nav-item { display: grid; grid-template-columns: 27px 1fr 15px; align-items: center; gap: 8px; min-height: 43px; padding: 6px 9px; border-radius: 10px; }
@@ -276,6 +285,66 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .vocab-meaning { margin-top: 5px; color: var(--ink-soft); font-size: 11px; }
 .vocab-example { margin-top: 11px; color: var(--ink-faint); font-size: 10px; line-height: 1.4; }
 .vocab-example em { color: var(--ink); font-style: normal; }
+.vocabulary-hero { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 30px; align-items: end; margin-bottom: 28px; }
+.vocabulary-hero h1 { font-size: clamp(42px, 5vw, 62px); line-height: .98; letter-spacing: -.045em; }
+.vocabulary-hero h1 span { color: var(--coral); }
+.vocabulary-hero-copy { max-width: 580px; margin: 17px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.65; }
+.vocabulary-hero-mark { display: grid; place-items: center; align-content: center; gap: 10px; width: 128px; height: 128px; border-radius: 31px; color: var(--teal-deep); background: var(--yellow); transform: rotate(3deg); }
+.vocabulary-hero-mark .lucide { width: 42px; height: 42px; }
+.vocabulary-hero-mark small { font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+.vocabulary-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; max-width: 1180px; margin-bottom: 36px; }
+.vocabulary-tab { display: grid; grid-template-columns: 25px 1fr; column-gap: 9px; align-items: center; min-height: 76px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 14px; color: var(--ink-soft); background: rgba(255,253,248,.65); text-align: left; transition: border-color .2s ease, background-color .2s ease, transform .2s ease; }
+.vocabulary-tab:hover { border-color: var(--teal); background: var(--white); transform: translateY(-1px); }
+.vocabulary-tab.is-active { border-color: var(--teal); background: var(--teal); color: #eef7f1; box-shadow: var(--shadow-sm); }
+.vocabulary-tab > span { grid-row: span 2; color: var(--coral); font-family: var(--mono); font-size: 10px; }
+.vocabulary-tab.is-active > span { color: var(--yellow); }
+.vocabulary-tab strong { color: var(--ink); font-size: 14px; }
+.vocabulary-tab.is-active strong { color: #fff; }
+.vocabulary-tab small { color: var(--ink-faint); font-size: 10px; line-height: 1.25; }
+.vocabulary-tab.is-active small { color: #b5d0c8; }
+.vocabulary-content { max-width: 860px; }
+.vocabulary-word-grid { align-items: stretch; }
+.vocabulary-word-card { min-height: 86px; }
+.vocabulary-word-card .vocab-word { font-size: 18px; }
+.vocabulary-phrase-list { max-width: 860px; }
+.number-basics { max-width: 860px; padding: 20px; margin-bottom: 24px; border-radius: 17px; color: #eef7f1; background: var(--teal); }
+.number-basics-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.number-basics-heading .view-kicker { color: var(--yellow); }
+.number-basics-heading h3 { color: #fff; font-size: 24px; }
+.number-basics-heading p { margin: 7px 0 0; color: #b5d0c8; font-size: 12px; line-height: 1.5; }
+.number-basics-note { flex: 0 0 auto; padding: 8px 10px; border-radius: 9px; color: var(--teal-deep); background: var(--yellow); font-family: var(--mono); font-size: 11px; }
+.number-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+.number-card { display: grid; grid-template-columns: 23px minmax(0, 1fr) 28px; gap: 7px; align-items: center; min-height: 58px; padding: 8px; border: 1px solid rgba(255,255,255,.12); border-radius: 11px; background: rgba(255,255,255,.09); }
+.number-card-index { color: #8fbbb0; font-family: var(--mono); font-size: 9px; }
+.number-card-copy { min-width: 0; }
+.number-card-copy strong, .number-card-copy span { display: block; overflow-wrap: anywhere; }
+.number-card-copy strong { color: #fff; font-family: var(--display); font-size: 15px; }
+.number-card-copy span { margin-top: 2px; color: #a9c9c0; font-size: 10px; }
+.number-card .speak-button { width: 28px; height: 28px; border-color: rgba(255,255,255,.22); color: #fff; }
+.number-card .speak-button:hover { color: var(--teal-deep); background: var(--yellow); }
+.number-rule-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin-bottom: 22px; }
+.number-rule-card { padding: 16px; border: 1px solid var(--line); border-radius: 15px; background: var(--white); }
+.number-rule-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.number-rule-range { color: var(--coral); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; }
+.number-rule-icon { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 9px; color: var(--teal-deep); background: var(--teal-soft); }
+.number-rule-icon .lucide { width: 15px; height: 15px; }
+.number-rule-card h3 { margin-top: 15px; font-size: 15px; line-height: 1.25; }
+.number-rule-card > p { min-height: 78px; margin: 8px 0 13px; color: var(--ink-soft); font-size: 11px; line-height: 1.5; }
+.number-rule-examples { display: grid; gap: 6px; }
+.number-rule-example { display: grid; grid-template-columns: 37px minmax(0, 1fr) 25px; gap: 6px; align-items: center; padding-top: 7px; border-top: 1px solid var(--line); }
+.number-rule-example > span { color: var(--ink-faint); font-family: var(--mono); font-size: 10px; }
+.number-rule-example strong { overflow-wrap: anywhere; color: var(--teal); font-family: var(--display); font-size: 13px; }
+.number-rule-example .audio-inline { min-height: 25px; padding: 2px 4px; }
+.number-tip, .calendar-tip { max-width: 860px; margin-top: 2px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; max-width: 860px; }
+.months-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.calendar-card { display: grid; grid-template-columns: 25px minmax(0, 1fr) 32px; gap: 9px; align-items: center; min-height: 78px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 13px; background: var(--white); }
+.calendar-card-index { align-self: start; padding-top: 2px; color: var(--coral); font-family: var(--mono); font-size: 10px; }
+.calendar-card-copy { min-width: 0; }
+.calendar-card-copy strong, .calendar-card-copy span, .calendar-card-copy small { display: block; overflow-wrap: anywhere; }
+.calendar-card-copy strong { color: var(--teal); font-family: var(--display); font-size: 17px; }
+.calendar-card-copy span { margin-top: 3px; color: var(--ink-soft); font-size: 11px; }
+.calendar-card-copy small { margin-top: 6px; color: var(--ink-faint); font-family: var(--mono); font-size: 9px; }
 .scenario-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .scenario-card { padding: 16px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); }
 .scenario-card h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; }
@@ -429,7 +498,7 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .exercise-page-note { display: flex; align-items: center; gap: 8px; max-width: 670px; margin: 20px auto 0; color: var(--ink-faint); font-size: 11px; line-height: 1.5; }
 .exercise-page-note span { color: var(--coral); }
 .exercise-page-note .lucide { width: 15px; height: 15px; }
-.exercise-nav-heading { margin-top: 26px; }
+.exercise-nav-heading { margin-top: 16px; }
 .exercise-nav-item .lesson-nav-number { color: var(--coral); }
 .exercise-nav-item.is-active .lesson-nav-number { color: var(--yellow); }
 
@@ -458,6 +527,7 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
   .lesson-path { grid-template-columns: repeat(5, minmax(130px, 1fr)); overflow-x: auto; padding-bottom: 4px; }
   .path-card { min-width: 138px; }
   .dashboard-hero { grid-template-columns: minmax(0, 1fr) 290px; gap: 25px; }
+  .vocabulary-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 800px) {
@@ -472,6 +542,13 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
   .breadcrumb { margin-right: auto; }
   .main-content { padding: 38px 20px 60px; }
   .dashboard-hero, .lesson-header, .exercise-hero { grid-template-columns: 1fr; gap: 25px; }
+  .vocabulary-hero { grid-template-columns: 1fr; gap: 22px; align-items: start; }
+  .vocabulary-hero-mark { width: 96px; height: 96px; border-radius: 24px; }
+  .vocabulary-hero-mark .lucide { width: 32px; height: 32px; }
+  .number-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .number-rule-grid { grid-template-columns: 1fr; }
+  .number-rule-card > p { min-height: 0; }
+  .months-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dashboard-hero { margin-bottom: 25px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .bottom-grid { grid-template-columns: 1fr; }
@@ -499,7 +576,13 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
   .continue-arrow { width: 34px; height: 34px; font-size: 16px; }
   .section-heading h2 { font-size: 24px; }
   .what-list, .sound-grid, .scenario-grid, .vocab-grid { grid-template-columns: 1fr; }
+  .vocabulary-tabs { grid-template-columns: 1fr; margin-bottom: 29px; }
   .vocab-grid { gap: 8px; }
+  .number-basics { padding: 16px; }
+  .number-basics-heading { display: block; }
+  .number-basics-note { display: inline-block; margin-top: 13px; }
+  .number-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .calendar-grid, .months-grid { grid-template-columns: 1fr; }
   .lesson-steps { padding-top: 18px; }
   .lesson-step + .lesson-step::before { width: 14px; margin: 0 5px; }
   .exercise-options { grid-template-columns: 1fr; }

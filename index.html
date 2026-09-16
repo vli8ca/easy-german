@@ -9,7 +9,7 @@
       name="description"
       content="Um curso local, interativo e prático para construir sua base no alemão."
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260915-conclusion-graphs" />
+    <link rel="stylesheet" href="css/styles.css?v=20260916-vocabulary-calendar" />
   </head>
   <body>
     <div class="app-shell">
@@ -50,28 +50,66 @@
           </button>
         </nav>
 
-        <div class="lesson-nav-heading">
-          <span>Aulas</span>
-          <span class="lesson-count">10</span>
-        </div>
-        <nav class="lesson-nav" id="lesson-nav" aria-label="Aulas do curso"></nav>
+        <section class="sidebar-section" data-sidebar-section="vocabulary">
+          <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="vocabulary" aria-expanded="true" aria-controls="vocabulary-nav">
+            <span>Vocabulário</span>
+            <span class="sidebar-section-heading-end"><span class="lesson-count">5</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
+          </button>
+          <nav class="sidebar-section-content lesson-nav vocabulary-nav" id="vocabulary-nav" aria-label="Seções de vocabulário">
+            <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-words">
+              <span class="lesson-nav-number">01</span>
+              <span class="lesson-nav-title">Palavras</span>
+              <span class="lesson-status" aria-label="Seção de palavras"></span>
+            </button>
+            <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-phrases">
+              <span class="lesson-nav-number">02</span>
+              <span class="lesson-nav-title">Frases</span>
+              <span class="lesson-status" aria-label="Seção de frases"></span>
+            </button>
+            <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-numbers">
+              <span class="lesson-nav-number">03</span>
+              <span class="lesson-nav-title">Números</span>
+              <span class="lesson-status" aria-label="Seção de números"></span>
+            </button>
+            <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-weekdays">
+              <span class="lesson-nav-number">04</span>
+              <span class="lesson-nav-title">Dias da semana</span>
+              <span class="lesson-status" aria-label="Seção de dias da semana"></span>
+            </button>
+            <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-months">
+              <span class="lesson-nav-number">05</span>
+              <span class="lesson-nav-title">Meses do ano</span>
+              <span class="lesson-status" aria-label="Seção de meses do ano"></span>
+            </button>
+          </nav>
+        </section>
 
-        <div class="lesson-nav-heading exercise-nav-heading">
-          <span>Exercícios</span>
-          <span class="lesson-count">2</span>
-        </div>
-        <nav class="lesson-nav exercise-nav" aria-label="Exercícios do curso">
-          <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises">
-            <span class="lesson-nav-number">01</span>
-            <span class="lesson-nav-title">Ser ou estar</span>
-            <span class="lesson-status" aria-label="Prática disponível"></span>
+        <section class="sidebar-section" data-sidebar-section="lessons">
+          <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="lessons" aria-expanded="true" aria-controls="lesson-nav">
+            <span>Aulas</span>
+            <span class="sidebar-section-heading-end"><span class="lesson-count">10</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
           </button>
-          <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises-haben">
-            <span class="lesson-nav-number">02</span>
-            <span class="lesson-nav-title">Conjugação de haben</span>
-            <span class="lesson-status" aria-label="Prática disponível"></span>
+          <nav class="sidebar-section-content lesson-nav" id="lesson-nav" aria-label="Aulas do curso"></nav>
+        </section>
+
+        <section class="sidebar-section exercise-nav-heading" data-sidebar-section="exercises">
+          <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="exercises" aria-expanded="true" aria-controls="exercise-nav">
+            <span>Exercícios</span>
+            <span class="sidebar-section-heading-end"><span class="lesson-count">2</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
           </button>
-        </nav>
+          <nav class="sidebar-section-content lesson-nav exercise-nav" id="exercise-nav" aria-label="Exercícios do curso">
+            <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises">
+              <span class="lesson-nav-number">01</span>
+              <span class="lesson-nav-title">Ser ou estar</span>
+              <span class="lesson-status" aria-label="Prática disponível"></span>
+            </button>
+            <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises-haben">
+              <span class="lesson-nav-number">02</span>
+              <span class="lesson-nav-title">Conjugação de haben</span>
+              <span class="lesson-status" aria-label="Prática disponível"></span>
+            </button>
+          </nav>
+        </section>
 
         <div class="sidebar-bottom">
           <div class="offline-note">
@@ -115,6 +153,6 @@
     <script src="js/icons.js"></script>
     <script src="js/exercises.js"></script>
     <script src="js/verb-exercises.js"></script>
-    <script src="js/app.js?v=20260915-conclusion-graphs"></script>
+    <script src="js/app.js?v=20260916-vocabulary-calendar"></script>
   </body>
 </html>
