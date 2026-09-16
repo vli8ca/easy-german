@@ -341,5 +341,539 @@
     }
   ];
 
+  const englishTranslations = {
+    pronunciation: {
+      title: 'Pronunciation and reading',
+      description: 'Learn the sounds you will hear every day and gain confidence reading your first words.',
+      focus: 'Listen and recognize',
+      introduction: 'German becomes much easier when you stop trying to guess the sounds. In this lesson, we will build a practical pronunciation map: notice the combination, listen to the word, and repeat it aloud.',
+      objectives: ['Recognize ä, ö, ü, and ß', 'Read common combinations', 'Use audio to train your ear'],
+      sections: [
+        {
+          title: 'The four special sounds',
+          lede: 'They are not decorations: they change pronunciation and sometimes change the meaning of a word.',
+          items: [
+            { title: 'ä / Ä', pronunciation: 'similar to an open “eh” sound', translation: 'girl' },
+            { title: 'ö / Ö', pronunciation: 'make an “eh” sound with rounded “oh” lips', translation: 'beautiful' },
+            { title: 'ü / Ü', pronunciation: 'make an “ee” sound with “oo” lips', translation: 'tired' },
+            { title: 'ß (Eszett)', pronunciation: 'sounds like “ss”', translation: 'street' }
+          ]
+        },
+        {
+          title: 'Combinations that appear all the time',
+          lede: 'Use these approximations only as a starting point. The Listen button plays the real German sound.',
+          headers: ['Writing', 'Approximate sound', 'Example', 'Translation'],
+          rows: [
+            ['ch', 'a soft breath', 'ich', 'I'], ['sch', '“sh”', 'Schule', 'school'], ['sp', '“shp” at the beginning', 'Sport', 'sport'], ['st', '“sht” at the beginning', 'Stein', 'stone'], ['z', '“ts”', 'Zeit', 'time'], ['w', '“v”', 'Wasser', 'water'], ['v', 'usually “f”', 'Vater', 'father'], ['j', '“y”', 'ja', 'yes']
+          ]
+        },
+        {
+          title: 'Vowels in pairs',
+          lede: 'These combinations are great shortcuts for reading new words.',
+          headers: ['Combination', 'Read it as', 'Example', 'Translation'],
+          rows: [
+            ['ei', '“eye”', 'mein', 'my'], ['ie', 'long “ee”', 'Liebe', 'love'], ['eu', '“oy”', 'Deutsch', 'German'], ['äu', '“oy”', 'Häuser', 'houses']
+          ]
+        },
+        {
+          title: 'Read, listen, repeat',
+          lede: 'Click the speaker and repeat each word twice.',
+          items: [
+            { en: 'girl' }, { en: 'beautiful' }, { en: 'tired' }, { en: 'street' }, { en: 'German' }, { en: 'houses' }
+          ]
+        }
+      ],
+      vocabulary: [
+        { meaning: 'the school' }, { meaning: 'the street' }, { meaning: 'the water' },
+        { meaning: 'the sport' }, { meaning: 'my' }, { meaning: 'love' }
+      ],
+      summary: ['ä, ö, and ü have their own sounds.', 'ß sounds like “ss”.', 'sch sounds like “sh”; z starts with “ts”.', 'ei sounds like “eye”; ie is a long “ee” sound.', 'Listening and repeating is more important than memorizing an approximation in Portuguese.'],
+      exercises: [
+        { prompt: 'Which combination usually sounds like “eye”?', options: ['ie', 'ei', 'eu', 'äu'], explanation: 'In German, ei usually sounds like “eye”: mein, Stein, drei.' },
+        { prompt: 'Which word begins with the “sh” sound?', options: ['Vater', 'Schule', 'Zeit', 'Liebe'], explanation: 'sch at the beginning of Schule produces a sound like “sh”.' },
+        { prompt: 'What is the approximate pronunciation of Zeit?', options: ['“zait”', '“ziet”', '“xait”', '“tsait”'], explanation: 'The German letter z starts with “ts”. Zeit means “time”.' },
+        { prompt: 'How do you say “water” in German? (include the article)', explanation: 'Water is das Wasser. Learn the noun together with its article.' }
+      ]
+    },
+    pronouns: {
+      title: 'Personal pronouns',
+      description: 'Find out who performs the action and start building sentences about yourself, other people, and formal address.',
+      focus: 'Talking about people',
+      introduction: 'Pronouns are the small words that take the place of nouns. They appear before the verb and determine the form the verb will take.',
+      objectives: ['Use the nine basic pronouns', 'Distinguish sie from Sie', 'Introduce people with simple sentences'],
+      sections: [
+        {
+          title: 'The pronoun map',
+          lede: 'Context and capitalization help you understand sie and Sie.',
+          headers: ['German', 'English', 'Quick clue'],
+          rows: [
+            ['ich', 'I', 'the speaker'], ['du', 'you (informal)', 'someone close'], ['er', 'he', 'masculine'], ['sie', 'she', 'lowercase'], ['es', 'it / he / she (neuter)', 'neuter'], ['wir', 'we', 'ich + other people'], ['ihr', 'you (informal plural)', 'more than one person'], ['sie', 'they', 'lowercase'], ['Sie', 'you (formal singular/plural)', 'always capitalized']
+          ]
+        },
+        {
+          title: 'Watch out for “Sie”',
+          text: '<strong>sie</strong> can mean “she” or “they”. <strong>Sie</strong>, with a capital S, is the formal form of address. In speech, the verb and context help; in writing, capitalization is an important clue.'
+        },
+        {
+          title: 'Introducing yourself',
+          items: [
+            { en: 'I am Leonardo.' }, { en: 'You are here.' }, { en: 'He works.' },
+            { en: 'She is learning German.' }, { en: 'We live in Germany.' }, { en: 'Do you speak German? (formal)' }
+          ]
+        }
+      ],
+      vocabulary: [
+        { meaning: 'I' }, { meaning: 'you (informal)' }, { meaning: 'we' },
+        { meaning: 'you (informal plural)' }, { meaning: 'she / they' }, { meaning: 'you (formal singular/plural)' }
+      ],
+      summary: ['ich means “I”; du is informal “you”.', 'er, sie, and es mean he, she, and neuter it.', 'Lowercase sie can mean she or they.', 'Capitalized Sie is formal and takes the plural verb form.', 'The pronoun normally comes before the verb in a simple sentence.'],
+      exercises: [
+        { prompt: '___ lernt Deutsch. (she)', options: ['Er', 'Sie', 'Wir', 'Ihr'], explanation: '“She” is sie. At the beginning of a sentence, it appears as Sie because every first word is capitalized.' },
+        { prompt: 'Which pronoun means “we”?', options: ['ihr', 'sie', 'wir', 'du'], explanation: 'wir means “we”.' },
+        { prompt: 'Complete: ___ bin Leonardo. (I)', explanation: 'The first-person singular is ich: Ich bin Leonardo.' },
+        { prompt: 'Translate into German: “We live in Germany.”', explanation: 'wir = we, wohnen = live / to live, and Deutschland = Germany.' }
+      ]
+    },
+    'sein-haben': {
+      title: 'Sein and haben',
+      description: 'Master the two most important German verbs: to be and to have, with useful sentences from day one.',
+      focus: 'Bin, bist, habe',
+      introduction: 'Sein and haben appear in introductions, descriptions, needs, and everyday situations. Learn their forms by heart, always connected to a short sentence.',
+      objectives: ['Conjugate sein in the present tense', 'Conjugate haben in the present tense', 'Describe states and needs'],
+      sections: [
+        {
+          title: 'SEIN — to be',
+          headers: ['Pronoun', 'Form', 'Example'],
+          rows: [
+            ['ich', 'bin', 'Ich bin müde.'], ['du', 'bist', 'Du bist nett.'], ['er / sie / es', 'ist', 'Er ist im Büro.'], ['wir', 'sind', 'Wir sind hier.'], ['ihr', 'seid', 'Ihr seid pünktlich.'], ['sie / Sie', 'sind', 'Sie sind freundlich.']
+          ]
+        },
+        {
+          title: 'HABEN — to have',
+          headers: ['Pronoun', 'Form', 'Example'],
+          rows: [
+            ['ich', 'habe', 'Ich habe Zeit.'], ['du', 'hast', 'Du hast ein Auto.'], ['er / sie / es', 'hat', 'Er hat eine Frage.'], ['wir', 'haben', 'Wir haben Arbeit.'], ['ihr', 'habt', 'Ihr habt Hunger.'], ['sie / Sie', 'haben', 'Sie haben Zeit.']
+          ]
+        },
+        {
+          title: 'Sentences you will use',
+          lede: 'Listen to the complete sentence. The rhythm helps you lock in the verb form.',
+          items: [
+            { en: 'I am tired.' }, { en: 'I am happy.' }, { en: 'I am at home.' },
+            { en: 'You are kind.' }, { en: 'He is in the office.' }, { en: 'I have time.' },
+            { en: 'I am hungry.' }, { en: 'You have a car.' }, { en: 'He has a question.' }, { en: 'We have work.' }
+          ]
+        },
+        {
+          title: 'A clue to remember',
+          text: 'The forms of <strong>sein</strong> are more irregular: bin, bist, ist, sind, seid. <strong>haben</strong> keeps “hab-” through most of its conjugation, but changes to hast and hat in the singular.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'tired' }, { meaning: 'happy' }, { meaning: 'at home' },
+        { meaning: 'time' }, { meaning: 'hunger' }, { meaning: 'the question' }
+      ],
+      summary: ['bin, bist, ist, sind, seid are forms of sein.', 'habe, hast, hat, haben, habt are forms of haben.', 'In German, hunger and time are expressed with haben.', 'Learn the verb form together with a short sentence.', 'The verb changes according to the pronoun.'],
+      exercises: [
+        { prompt: 'Ich ___ müde.', options: ['bin', 'bist', 'ist', 'sind'], explanation: 'With ich, sein becomes bin: Ich bin müde.' },
+        { prompt: 'Du ___ nett.', options: ['bin', 'bist', 'ist', 'seid'], explanation: 'With du, we use bist.' },
+        { prompt: 'Er ___ im Büro.', options: ['bin', 'bist', 'ist', 'sind'], explanation: 'er/sie/es uses ist.' },
+        { prompt: 'Wir ___ hier.', options: ['ist', 'seid', 'sind', 'bin'], explanation: 'wir uses sind.' },
+        { prompt: 'Ihr ___ pünktlich.', options: ['sind', 'seid', 'ist', 'habt'], explanation: 'ihr uses seid.' },
+        { prompt: 'Ich ___ Zeit.', options: ['hat', 'hast', 'habe', 'haben'], explanation: 'With ich, haben becomes habe.' },
+        { prompt: 'Du ___ ein Auto.', options: ['habe', 'hast', 'hat', 'habt'], explanation: 'du uses hast.' },
+        { prompt: 'Er ___ eine Frage.', options: ['hat', 'hast', 'haben', 'habe'], explanation: 'er/sie/es uses hat.' },
+        { prompt: 'Wir ___ Arbeit.', options: ['habt', 'hat', 'haben', 'habe'], explanation: 'wir uses haben.' },
+        { prompt: 'Translate: “I am at home.”', explanation: 'The sentence is Ich bin zu Hause. Zu Hause is the expression “at home”.' }
+      ]
+    },
+    'sentence-structure': {
+      title: 'Basic sentence structure',
+      description: 'Understand verb position 2 and build clear sentences even when you start with today, tomorrow, or another element.',
+      focus: 'Verb in position 2',
+      introduction: 'German sentences become predictable when you find the conjugated verb. In a statement, it usually occupies second position—the second element of the sentence, not necessarily the second word.',
+      objectives: ['Identify the conjugated verb', 'Build declarative sentences', 'Start sentences with time or place'],
+      sections: [
+        {
+          title: 'The rule that organizes the sentence',
+          segments: ['Position 1', 'VERB', 'Rest of the sentence'],
+          caption: 'The conjugated verb normally comes in the second element.'
+        },
+        {
+          title: 'Subject first',
+          items: [
+            { en: 'I work at Bosch.', note: 'Ich = position 1 · arbeite = verb' }, { en: 'I learn German.' }, { en: 'I live in Stuttgart.' }
+          ]
+        },
+        {
+          title: 'Another element first',
+          lede: 'When Heute occupies position 1, the subject comes after the verb.',
+          items: [
+            { en: 'Today I work.', note: 'Heute = position 1 · arbeite = verb · ich = subject' }, { en: 'Today I learn German.' }, { en: 'On Monday I work.' }
+          ]
+        },
+        {
+          title: 'Second element, not second word',
+          text: 'In <strong>Am Montag arbeite ich</strong>, “Am Montag” functions as a time block. That is why arbeite remains in position 2, even though it appears as the third word.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'today' }, { meaning: 'on Monday' }, { meaning: 'to work' },
+        { meaning: 'to learn' }, { meaning: 'to live' }, { meaning: 'at / for a company' }
+      ],
+      summary: ['A statement usually has the conjugated verb in position 2.', 'Position 2 means the second syntactic element.', 'The subject can come after the verb.', 'Today = heute; on Monday = am Montag.', 'Do not translate Portuguese word order word for word.'],
+      exercises: [
+        { prompt: 'Put the words in order: Deutsch / ich / lerne', explanation: 'The sentence is Ich lerne Deutsch. The verb lerne occupies position 2.' },
+        { prompt: 'Put the words in order: Heute / ich / arbeite', explanation: 'Heute is the first element; arbeite remains in position 2.' },
+        { prompt: 'Which sentence is correct?', options: ['Heute ich lerne Deutsch.', 'Heute lerne ich Deutsch.', 'Heute Deutsch ich lerne.', 'Lerne heute ich Deutsch.'], explanation: 'After Heute comes the conjugated verb: Heute lerne ich Deutsch.' },
+        { prompt: 'True or false: in a German sentence, the conjugated verb must always be the second word.', options: ['True', 'False'], answer: 'False', explanation: 'It is usually the second element. A block such as Am Montag can contain two words and occupy position 1.' }
+      ]
+    },
+    questions: {
+      title: 'Questions in German',
+      description: 'Learn the essential question words and build questions that solve real-life situations in Germany.',
+      focus: 'Ask and understand',
+      introduction: 'Asking a good question is one of the fastest ways to gain independence. First, recognize the question word; then let the verb do the work.',
+      objectives: ['Recognize the main W-questions', 'Ask about places, prices, and times', 'Use survival phrases'],
+      sections: [
+        {
+          title: 'The words that open doors',
+          headers: ['Question', 'Meaning', 'Example'],
+          rows: [
+            ['Was?', 'what?', 'Was ist das?'], ['Wer?', 'who?', 'Wer ist das?'], ['Wo?', 'where?', 'Wo ist der Bahnhof?'], ['Woher?', 'where from?', 'Woher kommst du?'], ['Wohin?', 'where to?', 'Wohin gehst du?'], ['Wann?', 'when?', 'Wann kommt der Zug?'], ['Warum?', 'why?', 'Warum lernst du Deutsch?'], ['Wie?', 'how?', 'Wie heißt du?'], ['Wie viel?', 'how much?', 'Wie viel kostet das?'], ['Wie lange?', 'how long?', 'Wie lange dauert das?']
+          ]
+        },
+        {
+          title: 'Truly useful questions',
+          items: [
+            { en: 'Where is the train station?' }, { en: 'How much does that cost?' }, { en: 'When does the train arrive?' },
+            { en: 'Where are you from?' }, { en: 'Why are you learning German?' }, { en: 'What is your name?' }, { en: 'Do you speak English? (formal)' }
+          ]
+        },
+        {
+          title: 'Pocket phrases',
+          scenarios: [
+            { title: 'When you need help', phrases: ['Entschuldigung, wo ist der Bahnhof?', 'Können Sie mir helfen?', 'Sprechen Sie Englisch?'] },
+            { title: 'When you are paying', phrases: ['Wie viel kostet das?', 'Kann ich mit Karte bezahlen?'] }
+          ]
+        }
+      ],
+      vocabulary: [
+        { meaning: 'the train station' }, { meaning: 'the train' }, { meaning: 'how much' },
+        { meaning: 'why' }, { meaning: 'to help' }, { meaning: 'to pay' }
+      ],
+      summary: ['Wo asks about a place; wohin asks about a destination.', 'Woher asks where someone comes from.', 'Wie viel is used to ask about prices and quantities.', 'Entschuldigung is a polite way to get someone’s attention.', 'Formal questions use Sie.'],
+      exercises: [
+        { prompt: '___ ist der Bahnhof? (where)', options: ['Was', 'Wo', 'Wann', 'Warum'], explanation: 'Wo means “where”.' },
+        { prompt: '___ kostet das? (how much)', options: ['Wie viel', 'Woher', 'Wer', 'Wie lange'], explanation: 'Wie viel means “how much” and appears often in price questions.' },
+        { prompt: '___ kommt der Zug? (when)', options: ['Warum', 'Wohin', 'Wann', 'Was'], explanation: 'Wann asks “when”.' },
+        { prompt: 'Translate: “Do you speak English?” (formal)', explanation: 'With formal Sie, the question is Sprechen Sie Englisch?' }
+      ]
+    },
+    'present-verbs': {
+      title: 'Present-tense verbs',
+      description: 'Use the logic of regular verbs to talk about work, study, housing, shopping, and routine.',
+      focus: 'Everyday actions',
+      introduction: 'Most regular verbs follow a clear pattern. Remove -en to find the stem and add the ending that matches the pronoun.',
+      objectives: ['Find the verb stem', 'Conjugate machen and common verbs', 'Talk about your routine'],
+      sections: [
+        {
+          title: 'machen as a model',
+          segments: ['mach-', 'ending', 'sentence'],
+          caption: 'Stem + ending. In the present tense, the ending follows the pronoun.'
+        },
+        {
+          title: 'The regular endings',
+          headers: ['Pronoun', 'Ending', 'machen'],
+          rows: [
+            ['ich', '-e', 'ich mache'], ['du', '-st', 'du machst'], ['er / sie / es', '-t', 'er macht'], ['wir', '-en', 'wir machen'], ['ihr', '-t', 'ihr macht'], ['sie / Sie', '-en', 'sie machen']
+          ]
+        },
+        {
+          title: 'Verbs for your first week',
+          headers: ['Infinitive', 'Meaning', 'Example'],
+          rows: [
+            ['machen', 'to do', 'Ich mache Sport.'], ['arbeiten', 'to work', 'Ich arbeite heute.'], ['lernen', 'to learn', 'Wir lernen Deutsch.'], ['wohnen', 'to live', 'Ich wohne in Stuttgart.'], ['kommen', 'to come', 'Ich komme aus Brasilien.'], ['kaufen', 'to buy', 'Wir kaufen Brot.'], ['brauchen', 'to need', 'Ich brauche Hilfe.'], ['spielen', 'to play', 'Die Kinder spielen.'], ['fragen', 'to ask', 'Ich frage den Lehrer.']
+          ]
+        },
+        {
+          title: 'A small detail',
+          text: 'Verbs whose stem ends in -t or -d can gain a supporting “e” in some forms: <strong>arbeiten → du arbeitest</strong>. Do not try to apply the pattern mechanically to every verb.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'to do' }, { meaning: 'to work' }, { meaning: 'to learn' },
+        { meaning: 'to live' }, { meaning: 'to buy' }, { meaning: 'to need' }
+      ],
+      summary: ['Remove -en to find the stem of a regular verb.', 'ich gets -e; du gets -st.', 'er/sie/es gets -t; ihr also gets -t.', 'wir and sie/Sie get -en.', 'Some stems need a supporting “e”, such as arbeiten.'],
+      exercises: [
+        { prompt: 'Ich ___ Deutsch. (lernen)', explanation: 'ich gets the -e ending: lernen → ich lerne.' },
+        { prompt: 'Du ___ in Berlin. (wohnen)', explanation: 'du gets -st: wohnen → du wohnst.' },
+        { prompt: 'Er ___ bei Bosch. (arbeiten)', explanation: 'arbeiten has a supporting “e”: er arbeitet.' },
+        { prompt: 'What is the correct form for wir + machen?', options: ['wir macht', 'wir machen', 'wir machst', 'wir mache'], explanation: 'wir gets -en: wir machen.' },
+        { prompt: 'Translate: “I need help.”', explanation: 'brauchen → ich brauche; Hilfe means help.' }
+      ]
+    },
+    articles: {
+      title: 'Articles and gender',
+      description: 'Learn to treat each noun as a set: article + word. This makes your speech much more natural.',
+      focus: 'Der, die, das',
+      introduction: 'Every German noun has grammatical gender. For Portuguese speakers, the best strategy is never to memorize the word alone: learn der Tisch, die Stadt, das Haus.',
+      objectives: ['Recognize the definite articles', 'Use ein and eine', 'Memorize nouns with their article'],
+      sections: [
+        {
+          title: 'The definite articles',
+          headers: ['Article', 'Gender / number', 'Example'],
+          rows: [
+            ['der', 'masculine', 'der Mann · the man'], ['die', 'feminine', 'die Frau · the woman'], ['das', 'neuter', 'das Auto · the car'], ['die', 'plural', 'die Kinder · the children']
+          ]
+        },
+        {
+          title: 'Grouped vocabulary',
+          scenarios: [
+            { title: 'Masculine · der', phrases: ['der Mann — the man', 'der Tisch — the table', 'der Bahnhof — the train station', 'der Zug — the train'] },
+            { title: 'Feminine · die', phrases: ['die Frau — the woman', 'die Stadt — the city', 'die Arbeit — the work', 'die Schule — the school'] },
+            { title: 'Neuter · das', phrases: ['das Auto — the car', 'das Haus — the house', 'das Kind — the child', 'das Wasser — the water'] }
+          ]
+        },
+        {
+          title: 'One / a',
+          lede: 'The indefinite article follows the gender. In the plural, there is no direct equivalent of “a/an”.',
+          headers: ['Definite', 'Indefinite', 'Example'],
+          rows: [
+            ['der', 'ein', 'ein Mann'], ['die', 'eine', 'eine Frau'], ['das', 'ein', 'ein Auto']
+          ]
+        },
+        {
+          title: 'The golden rule',
+          text: 'Do not memorize <strong>Tisch = table</strong>. Memorize <strong>der Tisch = the table</strong>. The article is part of the word and will help you in the next lessons.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'the man' }, { meaning: 'the woman' }, { meaning: 'the child' },
+        { meaning: 'the table' }, { meaning: 'the city' }, { meaning: 'the house' }
+      ],
+      summary: ['der is masculine; die is feminine and plural; das is neuter.', 'German gender does not always match gender in Portuguese.', 'Learn nouns with their article.', 'ein goes with der and das; eine goes with die.', 'The plural uses die as the definite article.'],
+      exercises: [
+        { prompt: '___ Auto', options: ['der', 'die', 'das'], explanation: 'Car is das Auto.' },
+        { prompt: '___ Frau', options: ['der', 'die', 'das'], explanation: 'Woman is die Frau.' },
+        { prompt: '___ Bahnhof', options: ['der', 'die', 'das'], explanation: 'Train station is der Bahnhof.' },
+        { prompt: 'Which form means “a house”?', options: ['ein Haus', 'eine Haus', 'der Haus', 'ein Hause'], explanation: 'Haus is neuter, so we use ein Haus.' },
+        { prompt: 'Translate: “the school”', explanation: 'School is die Schule. Keep the article with it.' }
+      ]
+    },
+    negation: {
+      title: 'Negation: nicht and kein',
+      description: 'Say that something is not happening, is not expensive, or that you do not have something without freezing when you speak.',
+      focus: 'Saying “no”',
+      introduction: 'In German, there are two main ways to negate. First think about what you are negating: an action or characteristic takes nicht; a noun without a definite article takes kein.',
+      objectives: ['Use nicht for actions and adjectives', 'Use kein for nouns', 'Negate everyday sentences'],
+      sections: [
+        {
+          title: 'nicht × kein',
+          items: [
+            { description: 'negates an action, adjective, or entire sentence', examples: ['Ich verstehe nicht. — I do not understand.', 'Das ist nicht teuer. — That is not expensive.'] },
+            { description: 'negates a noun: no / not a', examples: ['Ich habe kein Auto. — I do not have a car.', 'Ich habe keine Zeit. — I do not have time.'] }
+          ]
+        },
+        {
+          title: 'Compare them in context',
+          items: [
+            { en: 'I do not work today.', note: 'not + action' }, { en: 'I do not understand.', note: 'not + action' },
+            { en: 'That is not expensive.', note: 'not + adjective' }, { en: 'That is not a problem.', note: 'kein + noun' },
+            { en: 'I do not have time.', note: 'keine + noun' }
+          ]
+        },
+        {
+          title: 'A safe first approximation',
+          text: 'If you are denying the existence or possession of something, use <strong>kein</strong>: Ich habe kein Auto. If you are denying what someone does or a quality, use <strong>nicht</strong>: Ich arbeite nicht.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'not' }, { meaning: 'none / not a' }, { meaning: 'no time' },
+        { meaning: 'expensive' }, { meaning: 'to understand' }, { meaning: 'the problem' }
+      ],
+      summary: ['nicht negates actions, adjectives, or the sentence.', 'kein negates a noun.', 'At this level, kein goes with neuter and masculine nouns.', 'keine appears with feminine nouns and in the plural.', 'Learn whole sentences, not just the isolated rule.'],
+      exercises: [
+        { prompt: 'Ich verstehe ___.', options: ['nicht', 'kein', 'keine'], explanation: 'Verstehen is an action; use nicht.' },
+        { prompt: 'Ich habe ___ Auto.', options: ['nicht', 'kein', 'keine'], explanation: 'Auto is a neuter noun: kein Auto.' },
+        { prompt: 'Ich habe ___ Zeit.', options: ['nicht', 'kein', 'keine'], explanation: 'Zeit is feminine: keine Zeit.' },
+        { prompt: 'Das ist ___ teuer. (not)', explanation: 'Teuer is an adjective; use nicht.' },
+        { prompt: 'Translate: “That is not a problem.”', explanation: 'Problem is neuter and appears without a definite article in the expression: kein Problem.' },
+        { prompt: 'True or false: “kein” is used to negate an action.', options: ['True', 'False'], answer: 'False', explanation: 'kein negates a noun. Actions are negated with nicht.' },
+        { prompt: 'Which sentence is correct?', options: ['Ich habe nicht Auto.', 'Ich habe kein Auto.', 'Ich habe keine Auto.', 'Ich kein habe Auto.'], explanation: 'Auto is neuter: Ich habe kein Auto.' },
+        { prompt: 'Translate: “I do not work today.”', explanation: 'Here we are negating the action arbeiten, so we use nicht.' }
+      ]
+    },
+    accusative: {
+      title: 'Accusative',
+      description: 'A gentle introduction to the direct object: notice why der changes to den and ein to einen.',
+      focus: 'Who acts · what receives',
+      introduction: 'You can already form sentences. Now let’s look at what happens to the person or thing that directly receives the action. For now, focus on the masculine change.',
+      objectives: ['Distinguish subject and object', 'Recognize der → den', 'Use ein → einen with masculine nouns'],
+      sections: [
+        {
+          title: 'Who acts and who receives',
+          segments: ['Who acts', 'VERB', 'Direct object'],
+          caption: 'Nominative = the one who acts. Accusative = the direct object of the action.'
+        },
+        {
+          title: 'The basic change',
+          headers: ['Gender / number', 'Nominative', 'Accusative'],
+          rows: [
+            ['masculine', 'der', 'den'], ['feminine', 'die', 'die'], ['neuter', 'das', 'das'], ['plural', 'die', 'die']
+          ]
+        },
+        {
+          title: 'With the indefinite article',
+          headers: ['Gender', 'Nominative', 'Accusative'],
+          rows: [
+            ['masculine', 'ein', 'einen'], ['feminine', 'eine', 'eine'], ['neuter', 'ein', 'ein']
+          ]
+        },
+        {
+          title: 'See the change in real sentences',
+          items: [
+            { en: 'The man is here.', note: 'der Mann = subject' }, { en: 'I see the man.', note: 'den Mann = object' },
+            { en: 'I buy a coffee.' }, { en: 'I have an appointment.' }, { en: 'I need a doctor.' },
+            { en: 'I buy the bread.' }, { en: 'I see the woman.' }
+          ]
+        },
+        {
+          title: 'Do not try to learn everything now',
+          text: 'At this stage, keep one mental picture: when a masculine noun directly receives the action, <strong>der → den</strong> and <strong>ein → einen</strong>. die and das stay the same in this basic overview.'
+        }
+      ],
+      vocabulary: [
+        { meaning: 'to see' }, { meaning: 'to buy' }, { meaning: 'the coffee' },
+        { meaning: 'the appointment' }, { meaning: 'the doctor' }, { meaning: 'the bread' }
+      ],
+      summary: ['Nominative is who performs the action.', 'Accusative is the direct object.', 'With masculine nouns: der becomes den.', 'With masculine nouns: ein becomes einen.', 'die and das stay the same in this introduction.'],
+      exercises: [
+        { prompt: 'Ich sehe ___ Mann.', options: ['der', 'den', 'die', 'das'], explanation: 'Mann receives the action of seeing: masculine accusative = den Mann.' },
+        { prompt: 'Ich kaufe ___ Kaffee.', options: ['ein', 'einen', 'eine', 'der'], explanation: 'Kaffee is masculine and is the direct object: einen Kaffee.' },
+        { prompt: 'Ich sehe ___ Frau.', options: ['der', 'den', 'die', 'das'], explanation: 'Feminine stays die in the accusative.' },
+        { prompt: 'Ich kaufe ___ Brot.', options: ['den', 'ein', 'das', 'einen'], explanation: 'Brot is neuter: das stays das.' },
+        { prompt: 'Ich habe ___ Termin. (ein, masculine)', explanation: 'Termin is masculine and the direct object: einen Termin.' },
+        { prompt: 'Translate: “I need a doctor.”', explanation: 'Arzt is masculine and is in the accusative: einen Arzt.' }
+      ]
+    },
+    'modals-real-life': {
+      title: 'Modal verbs and real-life German',
+      description: 'Finish the A1 Starter with kann, muss, and möchte—and take ready-made sentences to the supermarket, restaurant, transport, and work.',
+      focus: 'Getting by in Germany',
+      introduction: 'Modal verbs express what you can, need to, want, or would like to do. They make your sentences much more useful: the conjugated modal stays in position 2 and the infinitive goes to the end.',
+      objectives: ['Use können, müssen, wollen, möchten, and dürfen', 'Build sentences with two verbs', 'Handle practical situations'],
+      sections: [
+        {
+          title: 'Essential modals',
+          headers: ['Verb', 'Idea', '1st person'],
+          rows: [
+            ['können', 'can / be able to', 'ich kann'], ['müssen', 'need to / have to', 'ich muss'], ['wollen', 'want to', 'ich will'], ['möchten', 'would like', 'ich möchte'], ['dürfen', 'may / be allowed to', 'ich darf']
+          ]
+        },
+        {
+          title: 'Two verbs, two positions',
+          segments: ['Ich', 'kann', 'Deutsch', 'sprechen'],
+          caption: 'The conjugated modal goes in position 2; the infinitive closes the sentence.'
+        },
+        {
+          title: 'Sentences to remember',
+          items: [
+            { en: 'I can speak German.' }, { en: 'I have to work.' }, { en: 'I would like a coffee.' },
+            { en: 'I want to go home.' }, { en: 'May I sit here?' }, { en: 'Can I pay by card?' }, { en: 'Can you help me? (formal)' }
+          ]
+        },
+        {
+          title: 'Real-life German',
+          scenarios: [
+            { title: 'Supermarket', phrases: ['Wo finde ich ...?', 'Wie viel kostet das?', 'Kann ich mit Karte bezahlen?', 'Brauchen Sie eine Tüte?'] },
+            { title: 'Restaurant', phrases: ['Ich möchte ...', 'Die Rechnung, bitte.', 'Ein Wasser, bitte.', 'Ich hätte gerne ...'] },
+            { title: 'Transportation', phrases: ['Wo ist der Bahnhof?', 'Wann kommt der Zug?', 'Fährt dieser Zug nach Stuttgart?', 'Welches Gleis?'] },
+            { title: 'Work', phrases: ['Guten Morgen.', 'Ich habe eine Frage.', 'Können Sie mir helfen?', 'Können Sie das bitte wiederholen?'] }
+          ]
+        },
+        {
+          title: 'Mini-dialogue: first contact',
+          lines: [
+            ['A', 'Guten Morgen!'], ['B', 'Guten Morgen!'], ['A', 'Sprechen Sie Englisch?'], ['B', 'Ja, ein bisschen.']
+          ]
+        },
+        {
+          title: 'Personal introduction',
+          items: [
+            { en: 'My name is Leonardo.' }, { en: 'I come from Brazil.' }, { en: 'I live in Stuttgart.' },
+            { en: 'I work at Bosch.' }, { en: 'I am learning German.' }
+          ]
+        }
+      ],
+      vocabulary: [
+        { meaning: 'can / be able to' }, { meaning: 'have to' }, { meaning: 'would like' },
+        { meaning: 'the bill' }, { meaning: 'the platform / track' }, { meaning: 'to repeat' }
+      ],
+      summary: ['The conjugated modal goes in position 2.', 'The infinitive goes to the end: Ich kann Deutsch sprechen.', 'möchte is a polite way to ask for something.', 'Können Sie mir helfen? is a key phrase.', 'Short, polite sentences already solve many situations.'],
+      exercises: [
+        { prompt: 'Ich ___ Deutsch sprechen. (can)', options: ['kann', 'muss', 'will', 'darf'], explanation: 'können in the first person is ich kann.' },
+        { prompt: 'Ich ___ arbeiten. (have to)', options: ['möchte', 'muss', 'kann', 'darf'], explanation: 'müssen expresses obligation: ich muss.' },
+        { prompt: 'Which request is more polite?', options: ['Ich will einen Kaffee.', 'Ich möchte einen Kaffee.', 'Ich muss einen Kaffee.', 'Ich kann einen Kaffee.'], explanation: 'möchte means “would like” and is a polite way to ask for something.' },
+        { prompt: 'Put in order: kann / ich / mit Karte / bezahlen', explanation: 'The modal kann is in position 2; bezahlen goes to the end.' },
+        { prompt: 'Translate: “Can you help me?” (formal)', explanation: 'Use können + Sie + mir helfen for the formal request.' },
+        { prompt: 'True or false: in “Ich muss arbeiten”, the infinitive is at the end.', options: ['True', 'False'], answer: 'True', explanation: 'With a modal, the second verb stays in the infinitive and goes to the end.' }
+      ]
+    }
+  };
+
+  function applyEnglishTranslations(lesson, translation) {
+    ['title', 'description', 'focus', 'introduction'].forEach((field) => {
+      lesson[field + '_en'] = translation[field];
+    });
+    lesson.objectives_en = translation.objectives;
+    lesson.summary_en = translation.summary;
+
+    lesson.sections.forEach((section, sectionIndex) => {
+      const translated = translation.sections[sectionIndex] || {};
+      ['title', 'lede', 'text', 'caption'].forEach((field) => {
+        if (translated[field] !== undefined) section[field + '_en'] = translated[field];
+      });
+      ['headers', 'rows', 'segments'].forEach((field) => {
+        if (translated[field] !== undefined) section[field + '_en'] = translated[field];
+      });
+      if (translated.items && section.items) {
+        section.items.forEach((item, itemIndex) => {
+          const itemTranslation = translated.items[itemIndex] || {};
+          Object.keys(itemTranslation).forEach((field) => {
+            if (field === 'en') item.en = itemTranslation[field];
+            else if (field === 'examples') item.examples_en = itemTranslation[field];
+            else item[field + '_en'] = itemTranslation[field];
+          });
+        });
+      }
+      if (translated.scenarios && section.scenarios) {
+        section.scenarios.forEach((scenario, scenarioIndex) => {
+          const scenarioTranslation = translated.scenarios[scenarioIndex] || {};
+          if (scenarioTranslation.title !== undefined) scenario.title_en = scenarioTranslation.title;
+          if (scenarioTranslation.phrases !== undefined) scenario.phrases_en = scenarioTranslation.phrases;
+        });
+      }
+      if (translated.lines !== undefined) section.lines_en = translated.lines;
+    });
+
+    lesson.vocabulary.forEach((item, itemIndex) => {
+      const itemTranslation = translation.vocabulary[itemIndex] || {};
+      if (itemTranslation.meaning !== undefined) item.meaning_en = itemTranslation.meaning;
+    });
+
+    lesson.exercises.forEach((exercise, exerciseIndex) => {
+      const exerciseTranslation = translation.exercises[exerciseIndex] || {};
+      if (exerciseTranslation.prompt !== undefined) exercise.prompt_en = exerciseTranslation.prompt;
+      if (exerciseTranslation.options !== undefined) exercise.options_en = exerciseTranslation.options;
+      if (exerciseTranslation.explanation !== undefined) exercise.explanation_en = exerciseTranslation.explanation;
+      exercise.answer_en = exerciseTranslation.answer !== undefined ? exerciseTranslation.answer : exercise.answer;
+      if (exercise.answers) exercise.answers_en = exercise.answers.slice();
+    });
+  }
+
+  lessons.forEach((lesson) => applyEnglishTranslations(lesson, englishTranslations[lesson.id]));
+
   window.KlarLessons = lessons;
 }());

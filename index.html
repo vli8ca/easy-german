@@ -4,109 +4,142 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7f4ed" />
-    <title>KlarDeutsch — Alemão A1</title>
+    <title data-i18n="meta.title">KlarDeutsch — Alemão A1</title>
     <meta
       name="description"
+      data-i18n-content="meta.description"
       content="Um curso local, interativo e prático para construir sua base no alemão."
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260916-no-streak-account" />
+    <link rel="stylesheet" href="css/styles.css?v=20260916-bilingual" />
   </head>
   <body>
     <div class="app-shell">
       <div class="sidebar-scrim" data-close-sidebar></div>
 
-      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal" data-i18n-aria-label="shell.navigation">
         <div class="brand-lockup">
           <div class="brand-mark" aria-hidden="true">K</div>
           <div>
             <p class="brand-name">KlarDeutsch</p>
-            <p class="brand-kicker">A1 · do zero</p>
+            <p class="brand-kicker" data-i18n="brand.course">A1 · do zero</p>
           </div>
-          <button class="icon-button sidebar-close" data-close-sidebar aria-label="Fechar menu">
+          <button class="icon-button sidebar-close" data-close-sidebar aria-label="Fechar menu" data-i18n-aria-label="sidebar.close">
             <i data-lucide="x" aria-hidden="true"></i>
           </button>
         </div>
 
-        <div class="sidebar-progress" aria-label="Progresso do curso">
+        <div class="language-selector" role="group" aria-label="Selecionar idioma" data-i18n-aria-label="language.select">
+          <span class="language-selector-label" data-i18n="language.label">Idioma</span>
+          <div class="language-selector-options">
+            <button
+              type="button"
+              class="language-button is-active"
+              data-language="pt"
+              aria-label="Português"
+              data-i18n-aria-label="language.portuguese"
+              aria-pressed="true"
+              title="Português"
+              data-i18n-title="language.portuguese"
+            >
+              <span class="language-button-flag" aria-hidden="true">🇧🇷</span>
+              <span class="language-button-code">PT</span>
+            </button>
+            <button
+              type="button"
+              class="language-button"
+              data-language="en"
+              aria-label="Inglês"
+              data-i18n-aria-label="language.english"
+              aria-pressed="false"
+              title="Inglês"
+              data-i18n-title="language.english"
+            >
+              <span class="language-button-flag" aria-hidden="true">🇺🇸</span>
+              <span class="language-button-code">EN</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-progress" aria-label="Progresso do curso" data-i18n-aria-label="sidebar.progressLabel">
           <div class="sidebar-progress-top">
-            <span>Seu caminho</span>
+            <span data-i18n="sidebar.path">Seu caminho</span>
             <strong id="sidebar-progress-value">0%</strong>
           </div>
           <div class="progress-track progress-track-dark">
             <span id="sidebar-progress-bar" style="width: 0%"></span>
           </div>
-          <p id="sidebar-progress-copy">Comece pelo primeiro passo.</p>
+          <p id="sidebar-progress-copy" data-i18n="sidebar.start">Comece pelo primeiro passo.</p>
         </div>
 
-        <nav class="primary-nav" aria-label="Seções">
+        <nav class="primary-nav" aria-label="Seções" data-i18n-aria-label="shell.sections">
           <button class="nav-item is-active" data-route="dashboard">
             <i class="nav-icon" data-lucide="house" aria-hidden="true"></i>
-            <span>Visão geral</span>
+            <span data-i18n="nav.overview">Visão geral</span>
           </button>
           <button class="nav-item" data-route="review">
             <i class="nav-icon" data-lucide="rotate-ccw" aria-hidden="true"></i>
-            <span>Revisar</span>
+            <span data-i18n="nav.review">Revisar</span>
             <span class="nav-badge" id="review-badge">0</span>
           </button>
         </nav>
 
         <section class="sidebar-section" data-sidebar-section="vocabulary">
           <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="vocabulary" aria-expanded="true" aria-controls="vocabulary-nav">
-            <span>Vocabulário</span>
+            <span data-i18n="sidebar.vocabulary">Vocabulário</span>
             <span class="sidebar-section-heading-end"><span class="lesson-count">5</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
           </button>
-          <nav class="sidebar-section-content lesson-nav vocabulary-nav" id="vocabulary-nav" aria-label="Seções de vocabulário">
+          <nav class="sidebar-section-content lesson-nav vocabulary-nav" id="vocabulary-nav" aria-label="Seções de vocabulário" data-i18n-aria-label="shell.vocabularySections">
             <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-words">
               <span class="lesson-nav-number">01</span>
-              <span class="lesson-nav-title">Palavras</span>
-              <span class="lesson-status" aria-label="Seção de palavras"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.words">Palavras</span>
+              <span class="lesson-status" aria-label="Seção de palavras" data-i18n-aria-label="sidebar.words"></span>
             </button>
             <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-phrases">
               <span class="lesson-nav-number">02</span>
-              <span class="lesson-nav-title">Frases</span>
-              <span class="lesson-status" aria-label="Seção de frases"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.phrases">Frases</span>
+              <span class="lesson-status" aria-label="Seção de frases" data-i18n-aria-label="sidebar.phrases"></span>
             </button>
             <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-numbers">
               <span class="lesson-nav-number">03</span>
-              <span class="lesson-nav-title">Números</span>
-              <span class="lesson-status" aria-label="Seção de números"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.numbers">Números</span>
+              <span class="lesson-status" aria-label="Seção de números" data-i18n-aria-label="sidebar.numbers"></span>
             </button>
             <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-weekdays">
               <span class="lesson-nav-number">04</span>
-              <span class="lesson-nav-title">Dias da semana</span>
-              <span class="lesson-status" aria-label="Seção de dias da semana"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.weekdays">Dias da semana</span>
+              <span class="lesson-status" aria-label="Seção de dias da semana" data-i18n-aria-label="sidebar.weekdays"></span>
             </button>
             <button type="button" class="lesson-nav-item vocabulary-nav-item" data-route="vocabulary-months">
               <span class="lesson-nav-number">05</span>
-              <span class="lesson-nav-title">Meses do ano</span>
-              <span class="lesson-status" aria-label="Seção de meses do ano"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.months">Meses do ano</span>
+              <span class="lesson-status" aria-label="Seção de meses do ano" data-i18n-aria-label="sidebar.months"></span>
             </button>
           </nav>
         </section>
 
         <section class="sidebar-section" data-sidebar-section="lessons">
           <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="lessons" aria-expanded="true" aria-controls="lesson-nav">
-            <span>Aulas</span>
+            <span data-i18n="sidebar.lessons">Aulas</span>
             <span class="sidebar-section-heading-end"><span class="lesson-count">10</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
           </button>
-          <nav class="sidebar-section-content lesson-nav" id="lesson-nav" aria-label="Aulas do curso"></nav>
+          <nav class="sidebar-section-content lesson-nav" id="lesson-nav" aria-label="Aulas do curso" data-i18n-aria-label="shell.lessons"></nav>
         </section>
 
         <section class="sidebar-section exercise-nav-heading" data-sidebar-section="exercises">
           <button type="button" class="sidebar-section-heading" data-toggle-sidebar-section="exercises" aria-expanded="true" aria-controls="exercise-nav">
-            <span>Exercícios</span>
+            <span data-i18n="sidebar.exercises">Exercícios</span>
             <span class="sidebar-section-heading-end"><span class="lesson-count">2</span><i data-lucide="chevron-down" class="section-chevron" aria-hidden="true"></i></span>
           </button>
-          <nav class="sidebar-section-content lesson-nav exercise-nav" id="exercise-nav" aria-label="Exercícios do curso">
+          <nav class="sidebar-section-content lesson-nav exercise-nav" id="exercise-nav" aria-label="Exercícios do curso" data-i18n-aria-label="shell.exerciseSections">
             <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises">
               <span class="lesson-nav-number">01</span>
-              <span class="lesson-nav-title">Ser ou estar</span>
-              <span class="lesson-status" aria-label="Prática disponível"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.sein">Ser ou estar</span>
+              <span class="lesson-status" aria-label="Prática disponível" data-i18n-aria-label="sidebar.practiceAvailable"></span>
             </button>
             <button type="button" class="lesson-nav-item exercise-nav-item" data-route="exercises-haben">
               <span class="lesson-nav-number">02</span>
-              <span class="lesson-nav-title">Conjugação de haben</span>
-              <span class="lesson-status" aria-label="Prática disponível"></span>
+              <span class="lesson-nav-title" data-i18n="sidebar.haben">Conjugação de haben</span>
+              <span class="lesson-status" aria-label="Prática disponível" data-i18n-aria-label="sidebar.practiceAvailable"></span>
             </button>
           </nav>
         </section>
@@ -114,22 +147,22 @@
         <div class="sidebar-bottom">
           <div class="offline-note">
             <span class="offline-dot" aria-hidden="true"></span>
-            <span>Funciona offline neste navegador</span>
+            <span data-i18n="sidebar.offline">Funciona offline neste navegador</span>
           </div>
           <button class="reset-button" data-reset-progress>
             <i data-lucide="rotate-ccw" aria-hidden="true"></i>
-            <span>Resetar progresso</span>
+            <span data-i18n="sidebar.reset">Resetar progresso</span>
           </button>
         </div>
       </aside>
 
       <section class="workspace">
         <header class="topbar">
-          <button class="icon-button menu-trigger" data-open-sidebar aria-label="Abrir menu"><i data-lucide="menu" aria-hidden="true"></i></button>
+          <button class="icon-button menu-trigger" data-open-sidebar aria-label="Abrir menu" data-i18n-aria-label="sidebar.open"><i data-lucide="menu" aria-hidden="true"></i></button>
           <div class="breadcrumb" id="breadcrumb">
-            <span>Meu Alemão</span>
+            <span data-i18n="breadcrumb.myGerman">Meu Alemão</span>
             <span aria-hidden="true">/</span>
-            <strong>Visão geral</strong>
+            <strong data-i18n="breadcrumb.overview">Visão geral</strong>
           </div>
         </header>
 
@@ -140,12 +173,13 @@
     <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
 
     <script src="js/storage.js"></script>
+    <script src="js/i18n.js?v=20260916-bilingual"></script>
     <script src="js/speech.js"></script>
-    <script src="js/lessons.js"></script>
+    <script src="js/lessons.js?v=20260916-bilingual"></script>
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script src="js/icons.js"></script>
-    <script src="js/exercises.js"></script>
-    <script src="js/verb-exercises.js"></script>
-    <script src="js/app.js?v=20260916-no-streak-account"></script>
+    <script src="js/exercises.js?v=20260916-bilingual"></script>
+    <script src="js/verb-exercises.js?v=20260916-bilingual"></script>
+    <script src="js/app.js?v=20260916-bilingual"></script>
   </body>
 </html>
