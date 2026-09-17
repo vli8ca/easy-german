@@ -15,7 +15,7 @@
     reviewQuestions: [],
     exerciseModes: { sein: 'conjugation', haben: 'conjugation' },
     verbSessions: {},
-    sidebarSections: { vocabulary: true, lessons: true, exercises: true }
+    sidebarSections: { vocabulary: false, lessons: false, exercises: false }
   };
 
   const vocabulary = {
