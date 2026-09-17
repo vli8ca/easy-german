@@ -14,6 +14,7 @@
   function localizeExercise(exercise) {
     const content = Object.assign({}, exercise);
     content.optionValues = exercise.options;
+    if (i18n.getLanguage() !== 'en') return content;
     ['prompt', 'options', 'explanation'].forEach((field) => {
       const translated = exercise[field + '_en'];
       if (translated !== undefined) content[field] = translated;

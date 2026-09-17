@@ -98,4 +98,11 @@ assert.match(englishExerciseHTML, /data-option="Falso"/);
 assert.equal(exerciseContext.window.KlarExercises.isCorrect('Verdadeiro', trueFalseExercise), true);
 assert.equal(exerciseContext.window.KlarExercises.isCorrect('True', trueFalseExercise), false);
 
+exerciseContext.window.KlarI18n.setLanguage('pt');
+const portugueseExerciseHTML = exerciseContext.window.KlarExercises.renderExercise(trueFalseExercise, 0, 'lesson-1');
+assert.match(portugueseExerciseHTML, /O verbo está correto\?/);
+assert.match(portugueseExerciseHTML, />Verdadeiro</);
+assert.match(portugueseExerciseHTML, />Falso</);
+assert.doesNotMatch(portugueseExerciseHTML, /Which|True|False/);
+
 console.log('content localization tests passed');
