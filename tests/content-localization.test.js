@@ -18,7 +18,18 @@ function requireEnglish(object, field, label) {
 }
 
 const lessons = loadWindow('js/lessons.js').KlarLessons;
-assert.equal(lessons.length, 10);
+assert.equal(lessons.length, 11);
+
+const connectorLesson = lessons.find((lesson) => lesson.id === 'connectors-prepositions');
+assert.ok(connectorLesson, 'the connectors and prepositions lesson must exist');
+assert.equal(connectorLesson.number, 11);
+assert.ok(connectorLesson.exercises.length >= 20, 'the lesson needs enough practice');
+assert.ok(connectorLesson.sections.some((section) => section.title === 'Conectores: uma ideia leva à outra'));
+assert.ok(connectorLesson.sections.some((section) => section.title === 'Preposições: lugar, direção, tempo e relações'));
+assert.equal(connectorLesson.exercises.filter((exercise) => exercise.id.startsWith('cp')).length, connectorLesson.exercises.length);
+assert.equal(new Set(connectorLesson.exercises.map((exercise) => exercise.id)).size, connectorLesson.exercises.length);
+assert.deepEqual(Array.from(connectorLesson.exercises.slice(0, 10), (exercise) => exercise.id), ['cp1', 'cp2', 'cp3', 'cp4', 'cp5', 'cp6', 'cp7', 'cp8', 'cp9', 'cp10']);
+assert.deepEqual(Array.from(connectorLesson.exercises.slice(10), (exercise) => exercise.id), ['cp11', 'cp12', 'cp13', 'cp14', 'cp15', 'cp16', 'cp17', 'cp18', 'cp19', 'cp20', 'cp21', 'cp22', 'cp23', 'cp24']);
 
 lessons.forEach((lesson) => {
   ['title', 'description', 'focus', 'introduction', 'objectives', 'summary'].forEach((field) => requireEnglish(lesson, field, `lesson:${lesson.id}`));
@@ -56,7 +67,18 @@ Object.values(verbPractice.pages).forEach((page) => {
     ['label', 'shortLabel', 'title', 'instruction'].forEach((field) => requireEnglish(mode, field, modeLabel));
     mode.items.forEach((item, index) => {
       const itemLabel = `${modeLabel}.item:${index}`;
-      ['prompt', 'detail', 'placeholder'].forEach((field) => requireEnglish(item, field, itemLabel));
+      const itemIsChoice = mode.interaction === 'multiple-choice' || item.interaction === 'multiple-choice';
+      const fields = itemIsChoice
+        ? ['prompt', 'detail', 'options']
+        : ['prompt', 'detail', 'placeholder'];
+      fields.forEach((field) => requireEnglish(item, field, itemLabel));
+      if (mode.interaction === 'mixed') requireEnglish(item, 'questionType', itemLabel);
+      if (itemIsChoice) {
+        assert.ok(Array.isArray(item.options) && item.options.length === 4, `${itemLabel}.options must have four alternatives`);
+        assert.ok(Array.isArray(item.options_en) && item.options_en.length === 4, `${itemLabel}.options_en must have four alternatives`);
+        assert.ok(Array.isArray(item.optionIds) && item.optionIds.length === 4, `${itemLabel}.optionIds must have four IDs`);
+        assert.notEqual(item.correctOptionId, undefined, `${itemLabel}.correctOptionId is missing`);
+      }
     });
   });
 });

@@ -1,6 +1,93 @@
 (function () {
   'use strict';
 
+  const numberItems = [
+    { id: 'number-1', prompt: '1', prompt_en: '1', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['eins'] },
+    { id: 'number-2', prompt: '2', prompt_en: '2', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['zwei'] },
+    { id: 'number-3', prompt: '3', prompt_en: '3', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['drei'] },
+    { id: 'number-4', prompt: '4', prompt_en: '4', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['vier'] },
+    { id: 'number-5', prompt: '5', prompt_en: '5', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['fünf'] },
+    { id: 'number-6', prompt: '6', prompt_en: '6', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['sechs'] },
+    { id: 'number-7', prompt: '7', prompt_en: '7', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['sieben'] },
+    { id: 'number-8', prompt: '8', prompt_en: '8', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['acht'] },
+    { id: 'number-9', prompt: '9', prompt_en: '9', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['neun'] },
+    { id: 'number-10', prompt: '10', prompt_en: '10', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['zehn'] }
+  ];
+
+  function makeChoiceItem(id, prompt, promptEn, detail, detailEn, options, answerIndex) {
+    const answerPositions = [2, 0, 3, 1, 1, 3, 0, 2, 3, 1, 2, 0, 0, 3, 1, 2, 1, 2, 0, 3, 3, 0, 2, 1, 2, 1, 3, 0, 1, 3, 0, 2, 2, 3, 1, 0, 3, 2, 1, 0, 1, 3, 2, 0, 3, 1, 0, 2, 3, 0];
+    const itemNumber = Number((id.match(/(\d+)$/) || [0, 0])[1]);
+    const correctPosition = answerPositions[(itemNumber - 1) % answerPositions.length];
+    const orderedOptions = options.slice();
+    const correctOption = orderedOptions.splice(answerIndex, 1)[0];
+    orderedOptions.splice(correctPosition, 0, correctOption);
+    const optionIds = ['a', 'b', 'c', 'd'];
+    return {
+      id,
+      prompt,
+      prompt_en: promptEn,
+      detail,
+      detail_en: detailEn,
+      options: orderedOptions,
+      options_en: orderedOptions.slice(),
+      optionIds,
+      correctOptionId: optionIds[correctPosition]
+    };
+  }
+
+  const seinChoiceItems = [
+    makeChoiceItem('sein-choice-01', 'Eu estou satisfeito.', 'I am satisfied.', 'Vocabulário novo: zufrieden = satisfeito · ich + sein', 'New vocabulary: zufrieden = satisfied · ich + sein', ['Ich bin zufrieden', 'Ich bist zufrieden', 'Ich ist zufrieden', 'Ich sind zufrieden'], 0),
+    makeChoiceItem('sein-choice-02', 'Você está curioso.', 'You are curious.', 'Vocabulário novo: neugierig = curioso · du + sein', 'New vocabulary: neugierig = curious · du + sein', ['Du bin neugierig', 'Du bist neugierig', 'Du ist neugierig', 'Du seid neugierig'], 1),
+    makeChoiceItem('sein-choice-03', 'Ele está nervoso.', 'He is nervous.', 'Vocabulário novo: nervös = nervoso · er + sein', 'New vocabulary: nervös = nervous · er + sein', ['Er bin nervös', 'Er bist nervös', 'Er ist nervös', 'Er sind nervös'], 2),
+    makeChoiceItem('sein-choice-04', 'Ela é corajosa.', 'She is brave.', 'Vocabulário novo: mutig = corajoso/a · sie + sein', 'New vocabulary: mutig = brave · sie + sein', ['Sie bin mutig', 'Sie bist mutig', 'Sie sind mutig', 'Sie ist mutig'], 3),
+    makeChoiceItem('sein-choice-05', 'Isso é possível.', 'It is possible.', 'Vocabulário novo: möglich = possível · es + sein', 'New vocabulary: möglich = possible · es + sein', ['Es ist möglich', 'Es bin möglich', 'Es bist möglich', 'Es sind möglich'], 0),
+    makeChoiceItem('sein-choice-06', 'Nós estamos prontos para o teste.', 'We are ready for the test.', 'Vocabulário novo: der Test = o teste · wir + sein', 'New vocabulary: der Test = the test · wir + sein', ['Wir bin bereit für den Test', 'Wir sind bereit für den Test', 'Wir bist bereit für den Test', 'Wir seid bereit für den Test'], 1),
+    makeChoiceItem('sein-choice-07', 'Vocês estão silenciosos.', 'You are quiet.', 'Vocabulário novo: leise = silencioso/a · ihr + sein', 'New vocabulary: leise = quiet · ihr + sein', ['Ihr sind leise', 'Ihr bist leise', 'Ihr seid leise', 'Ihr ist leise'], 2),
+    makeChoiceItem('sein-choice-08', 'Eles são honestos.', 'They are honest.', 'Vocabulário novo: ehrlich = honesto/a · sie + sein', 'New vocabulary: ehrlich = honest · sie + sein', ['Sie ist ehrlich', 'Sie seid ehrlich', 'Sie bist ehrlich', 'Sie sind ehrlich'], 3),
+    makeChoiceItem('sein-choice-09', 'Eu estou no museu.', 'I am at the museum.', 'Vocabulário novo: das Museum = o museu · ich + sein', 'New vocabulary: das Museum = the museum · ich + sein', ['Ich bin im Museum', 'Ich bist im Museum', 'Ich ist im Museum', 'Ich sind im Museum'], 0),
+    makeChoiceItem('sein-choice-10', 'Você está na estação.', 'You are at the station.', 'Vocabulário novo: der Bahnhof = a estação · du + sein', 'New vocabulary: der Bahnhof = the station · du + sein', ['Du bin am Bahnhof', 'Du bist am Bahnhof', 'Du ist am Bahnhof', 'Du sind am Bahnhof'], 1),
+    makeChoiceItem('sein-choice-11', 'Ele está na cozinha.', 'He is in the kitchen.', 'Vocabulário novo: die Küche = a cozinha · er + sein', 'New vocabulary: die Küche = the kitchen · er + sein', ['Er bin in der Küche', 'Er bist in der Küche', 'Er ist in der Küche', 'Er sind in der Küche'], 2),
+    makeChoiceItem('sein-choice-12', 'Ela está no hotel.', 'She is at the hotel.', 'Vocabulário novo: das Hotel = o hotel · sie + sein', 'New vocabulary: das Hotel = the hotel · sie + sein', ['Sie bin im Hotel', 'Sie bist im Hotel', 'Sie sind im Hotel', 'Sie ist im Hotel'], 3),
+    makeChoiceItem('sein-choice-13', 'Está quente lá fora.', 'It is warm outside.', 'Vocabulário novo: draußen = lá fora · warm = quente · es + sein', 'New vocabulary: draußen = outside · warm = warm · es + sein', ['Es ist draußen warm', 'Es bin draußen warm', 'Es bist draußen warm', 'Es sind draußen warm'], 0),
+    makeChoiceItem('sein-choice-14', 'Nós estamos no parque.', 'We are in the park.', 'Vocabulário novo: der Park = o parque · wir + sein', 'New vocabulary: der Park = the park · wir + sein', ['Wir bin im Park', 'Wir sind im Park', 'Wir bist im Park', 'Wir seid im Park'], 1),
+    makeChoiceItem('sein-choice-15', 'Vocês estão no lago.', 'You are at the lake.', 'Vocabulário novo: der See = o lago · ihr + sein', 'New vocabulary: der See = the lake · ihr + sein', ['Ihr sind am See', 'Ihr bist am See', 'Ihr seid am See', 'Ihr ist am See'], 2),
+    makeChoiceItem('sein-choice-16', 'Eles estão na biblioteca.', 'They are in the library.', 'Vocabulário novo: die Bibliothek = a biblioteca · sie + sein', 'New vocabulary: die Bibliothek = the library · sie + sein', ['Sie ist in der Bibliothek', 'Sie seid in der Bibliothek', 'Sie bist in der Bibliothek', 'Sie sind in der Bibliothek'], 3),
+    makeChoiceItem('sein-choice-17', 'Eu sou da Áustria.', 'I am from Austria.', 'Vocabulário novo: Österreich = Áustria · ich + sein', 'New vocabulary: Österreich = Austria · ich + sein', ['Ich bin aus Österreich', 'Ich bist aus Österreich', 'Ich ist aus Österreich', 'Ich sind aus Österreich'], 0),
+    makeChoiceItem('sein-choice-18', 'Você é da Espanha.', 'You are from Spain.', 'Vocabulário novo: Spanien = Espanha · du + sein', 'New vocabulary: Spanien = Spain · du + sein', ['Du bin aus Spanien', 'Du bist aus Spanien', 'Du ist aus Spanien', 'Du sind aus Spanien'], 1),
+    makeChoiceItem('sein-choice-19', 'Ele é meu vizinho.', 'He is my neighbor.', 'Vocabulário novo: der Nachbar = o vizinho · er + sein', 'New vocabulary: der Nachbar = the neighbor · er + sein', ['Er bin mein Nachbar', 'Er bist mein Nachbar', 'Er ist mein Nachbar', 'Er sind mein Nachbar'], 2),
+    makeChoiceItem('sein-choice-20', 'Ela é minha colega.', 'She is my colleague.', 'Vocabulário novo: die Kollegin = a colega · sie + sein', 'New vocabulary: die Kollegin = the colleague · sie + sein', ['Sie bin meine Kollegin', 'Sie bist meine Kollegin', 'Sie sind meine Kollegin', 'Sie ist meine Kollegin'], 3),
+    makeChoiceItem('sein-choice-21', 'Isso é minha mochila.', 'It is my backpack.', 'Vocabulário novo: der Rucksack = a mochila · es + sein', 'New vocabulary: der Rucksack = the backpack · es + sein', ['Es ist mein Rucksack', 'Es bin mein Rucksack', 'Es bist mein Rucksack', 'Es sind mein Rucksack'], 0),
+    makeChoiceItem('sein-choice-22', 'Nós somos uma família.', 'We are a family.', 'Vocabulário novo: die Familie = a família · wir + sein', 'New vocabulary: die Familie = the family · wir + sein', ['Wir bin eine Familie', 'Wir sind eine Familie', 'Wir bist eine Familie', 'Wir seid eine Familie'], 1),
+    makeChoiceItem('sein-choice-23', 'Vocês são bons amigos.', 'You are good friends.', 'Vocabulário novo: gute Freunde = bons amigos · ihr + sein', 'New vocabulary: gute Freunde = good friends · ihr + sein', ['Ihr sind gute Freunde', 'Ihr bist gute Freunde', 'Ihr seid gute Freunde', 'Ihr ist gute Freunde'], 2),
+    makeChoiceItem('sein-choice-24', 'Eles são nossos convidados.', 'They are our guests.', 'Vocabulário novo: die Gäste = os convidados · sie + sein', 'New vocabulary: die Gäste = the guests · sie + sein', ['Sie ist unsere Gäste', 'Sie seid unsere Gäste', 'Sie bist unsere Gäste', 'Sie sind unsere Gäste'], 3),
+    makeChoiceItem('sein-choice-25', 'Eu tenho dezoito anos.', 'I am eighteen years old.', 'Vocabulário novo: achtzehn = dezoito · ich + sein', 'New vocabulary: achtzehn = eighteen · ich + sein', ['Ich bin achtzehn Jahre alt', 'Ich bist achtzehn Jahre alt', 'Ich ist achtzehn Jahre alt', 'Ich sind achtzehn Jahre alt'], 0),
+    makeChoiceItem('sein-choice-26', 'Você está relaxado.', 'You are relaxed.', 'Vocabulário novo: entspannt = relaxado/a · du + sein', 'New vocabulary: entspannt = relaxed · du + sein', ['Du bin entspannt', 'Du bist entspannt', 'Du ist entspannt', 'Du sind entspannt'], 1),
+    makeChoiceItem('sein-choice-27', 'Ele está a caminho.', 'He is on his way.', 'Vocabulário novo: unterwegs = a caminho · er + sein', 'New vocabulary: unterwegs = on the way · er + sein', ['Er bin gerade unterwegs', 'Er bist gerade unterwegs', 'Er ist gerade unterwegs', 'Er sind gerade unterwegs'], 2),
+    makeChoiceItem('sein-choice-28', 'Ela já está lá.', 'She is already there.', 'Vocabulário novo: schon da = já lá · sie + sein', 'New vocabulary: schon da = already there · sie + sein', ['Sie bin schon da', 'Sie bist schon da', 'Sie sind schon da', 'Sie ist schon da'], 3),
+    makeChoiceItem('sein-choice-29', 'Está escuro lá fora.', 'It is dark outside.', 'Vocabulário novo: dunkel = escuro · es + sein', 'New vocabulary: dunkel = dark · es + sein', ['Es ist draußen dunkel', 'Es bin draußen dunkel', 'Es bist draußen dunkel', 'Es sind draußen dunkel'], 0),
+    makeChoiceItem('sein-choice-30', 'Nós estamos quase terminando.', 'We are almost done.', 'Vocabulário novo: fast fertig = quase terminado · wir + sein', 'New vocabulary: fast fertig = almost done · wir + sein', ['Wir bin fast fertig', 'Wir sind fast fertig', 'Wir bist fast fertig', 'Wir seid fast fertig'], 1),
+    makeChoiceItem('sein-choice-31', 'Vocês são realmente rápidos.', 'You are really fast.', 'Vocabulário novo: schnell = rápido/a · ihr + sein', 'New vocabulary: schnell = fast · ihr + sein', ['Ihr sind wirklich schnell', 'Ihr bist wirklich schnell', 'Ihr seid wirklich schnell', 'Ihr ist wirklich schnell'], 2),
+    makeChoiceItem('sein-choice-32', 'Eles são muito lentos.', 'They are very slow.', 'Vocabulário novo: langsam = lento/a · sie + sein', 'New vocabulary: langsam = slow · sie + sein', ['Sie ist sehr langsam', 'Sie seid sehr langsam', 'Sie bist sehr langsam', 'Sie sind sehr langsam'], 3),
+    makeChoiceItem('sein-choice-33', 'Eu sou iniciante.', 'I am a beginner.', 'Vocabulário novo: der Anfänger = o iniciante · ich + sein', 'New vocabulary: der Anfänger = the beginner · ich + sein', ['Ich bin ein Anfänger', 'Ich bist ein Anfänger', 'Ich ist ein Anfänger', 'Ich sind ein Anfänger'], 0),
+    makeChoiceItem('sein-choice-34', 'Você é uma boa cozinheira.', 'You are a good cook.', 'Vocabulário novo: die Köchin = a cozinheira · du + sein', 'New vocabulary: die Köchin = the cook · du + sein', ['Du bin eine gute Köchin', 'Du bist eine gute Köchin', 'Du ist eine gute Köchin', 'Du sind eine gute Köchin'], 1),
+    makeChoiceItem('sein-choice-35', 'Ele é meu tio.', 'He is my uncle.', 'Vocabulário novo: der Onkel = o tio · er + sein', 'New vocabulary: der Onkel = the uncle · er + sein', ['Er bin mein Onkel', 'Er bist mein Onkel', 'Er ist mein Onkel', 'Er sind mein Onkel'], 2),
+    makeChoiceItem('sein-choice-36', 'Ela é médica.', 'She is a doctor.', 'Vocabulário novo: die Ärztin = a médica · sie + sein', 'New vocabulary: die Ärztin = the doctor · sie + sein', ['Sie bin Ärztin', 'Sie bist Ärztin', 'Sie sind Ärztin', 'Sie ist Ärztin'], 3),
+    makeChoiceItem('sein-choice-37', 'Isso é meu livro favorito.', 'It is my favorite book.', 'Vocabulário novo: das Lieblingsbuch = o livro favorito · es + sein', 'New vocabulary: das Lieblingsbuch = the favorite book · es + sein', ['Es ist mein Lieblingsbuch', 'Es bin mein Lieblingsbuch', 'Es bist mein Lieblingsbuch', 'Es sind mein Lieblingsbuch'], 0),
+    makeChoiceItem('sein-choice-38', 'Nós somos vizinhos.', 'We are neighbors.', 'Vocabulário novo: die Nachbarn = os vizinhos · wir + sein', 'New vocabulary: die Nachbarn = the neighbors · wir + sein', ['Wir bin Nachbarn', 'Wir sind Nachbarn', 'Wir bist Nachbarn', 'Wir seid Nachbarn'], 1),
+    makeChoiceItem('sein-choice-39', 'Vocês são irmãos.', 'You are siblings.', 'Vocabulário novo: die Geschwister = os irmãos · ihr + sein', 'New vocabulary: die Geschwister = the siblings · ihr + sein', ['Ihr sind Geschwister', 'Ihr bist Geschwister', 'Ihr seid Geschwister', 'Ihr ist Geschwister'], 2),
+    makeChoiceItem('sein-choice-40', 'Eles são meus primos.', 'They are my cousins.', 'Vocabulário novo: die Cousins = os primos · sie + sein', 'New vocabulary: die Cousins = the cousins · sie + sein', ['Sie ist meine Cousins', 'Sie seid meine Cousins', 'Sie bist meine Cousins', 'Sie sind meine Cousins'], 3),
+    makeChoiceItem('sein-choice-41', 'Eu tenho orgulho de você.', 'I am proud of you.', 'Vocabulário novo: stolz auf = orgulhoso de · ich + sein', 'New vocabulary: stolz auf = proud of · ich + sein', ['Ich bin stolz auf dich', 'Ich bist stolz auf dich', 'Ich ist stolz auf dich', 'Ich sind stolz auf dich'], 0),
+    makeChoiceItem('sein-choice-42', 'Você está sem casaco.', 'You are without a jacket.', 'Vocabulário novo: ohne Jacke = sem casaco · du + sein', 'New vocabulary: ohne Jacke = without a jacket · du + sein', ['Du bin ohne Jacke', 'Du bist ohne Jacke', 'Du ist ohne Jacke', 'Du sind ohne Jacke'], 1),
+    makeChoiceItem('sein-choice-43', 'Ele está de férias desde segunda-feira.', 'He has been on vacation since Monday.', 'Vocabulário novo: im Urlaub = de férias · er + sein', 'New vocabulary: im Urlaub = on vacation · er + sein', ['Er bin seit Montag im Urlaub', 'Er bist seit Montag im Urlaub', 'Er ist seit Montag im Urlaub', 'Er sind seit Montag im Urlaub'], 2),
+    makeChoiceItem('sein-choice-44', 'Ela não está sozinha.', 'She is not alone.', 'Vocabulário novo: allein = sozinho/a · sie + sein', 'New vocabulary: allein = alone · sie + sein', ['Sie bin nicht allein', 'Sie bist nicht allein', 'Sie sind nicht allein', 'Sie ist nicht allein'], 3),
+    makeChoiceItem('sein-choice-45', 'Está tudo limpo por aqui.', 'It is clean everywhere.', 'Vocabulário novo: sauber = limpo · es + sein', 'New vocabulary: sauber = clean · es + sein', ['Es ist überall sauber', 'Es bin überall sauber', 'Es bist überall sauber', 'Es sind überall sauber'], 0),
+    makeChoiceItem('sein-choice-46', 'Nós somos dois.', 'There are two of us.', 'Vocabulário novo: zu zweit = os dois / em dupla · wir + sein', 'New vocabulary: zu zweit = the two of us · wir + sein', ['Wir bin zu zweit', 'Wir sind zu zweit', 'Wir bist zu zweit', 'Wir seid zu zweit'], 1),
+    makeChoiceItem('sein-choice-47', 'Vocês estão realmente atentos.', 'You are really attentive.', 'Vocabulário novo: aufmerksam = atento/a · ihr + sein', 'New vocabulary: aufmerksam = attentive · ihr + sein', ['Ihr sind wirklich aufmerksam', 'Ihr bist wirklich aufmerksam', 'Ihr seid wirklich aufmerksam', 'Ihr ist wirklich aufmerksam'], 2),
+    makeChoiceItem('sein-choice-48', 'Eles voltam daqui a pouco.', 'They will be back soon.', 'Vocabulário novo: gleich zurück = de volta daqui a pouco · sie + sein', 'New vocabulary: gleich zurück = back soon · sie + sein', ['Sie ist gleich zurück', 'Sie seid gleich zurück', 'Sie bist gleich zurück', 'Sie sind gleich zurück'], 3),
+    makeChoiceItem('sein-choice-49', 'Eu não tenho certeza.', 'I am not sure.', 'Vocabulário novo: sicher = certo / seguro · ich + sein', 'New vocabulary: sicher = sure / certain · ich + sein', ['Ich bin nicht sicher', 'Ich bist nicht sicher', 'Ich ist nicht sicher', 'Ich sind nicht sicher'], 0),
+    makeChoiceItem('sein-choice-50', 'É a sua vez.', 'It is your turn.', 'Vocabulário novo: an der Reihe = na sua vez · du + sein', 'New vocabulary: an der Reihe = your turn · du + sein', ['Du bin an der Reihe', 'Du bist an der Reihe', 'Du ist an der Reihe', 'Du sind an der Reihe'], 1)
+  ];
+
   window.KlarVerbPractice = {
     pages: {
       sein: {
@@ -44,6 +131,7 @@
           },
           sentences: {
             id: 'sentences',
+            visible: false,
             label: 'Frases rápidas',
             label_en: 'Quick sentences',
             shortLabel: '02 · Na vida real',
@@ -53,12 +141,12 @@
             instruction: 'Traduza as frases curtas para o alemão. Preste atenção ao pronome e à forma de sein.',
             instruction_en: 'Translate the short sentences into German. Pay attention to the pronoun and the form of sein.',
             items: [
-              { id: 'happy', prompt: 'Eu estou feliz.', prompt_en: 'I am happy.', detail: 'Dica: ich + sein', detail_en: 'Hint: ich + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['ich bin glücklich'] },
-              { id: 'here', prompt: 'Você está aqui.', prompt_en: 'You are here.', detail: 'Dica: du + sein', detail_en: 'Hint: du + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['du bist hier'] },
-              { id: 'office', prompt: 'Ele está no escritório.', prompt_en: 'He is in the office.', detail: 'Dica: er + sein', detail_en: 'Hint: er + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['er ist im büro'] },
-              { id: 'home', prompt: 'Nós estamos em casa.', prompt_en: 'We are at home.', detail: 'Dica: wir + sein', detail_en: 'Hint: wir + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['wir sind zu hause'] },
-              { id: 'ready', prompt: 'Vocês estão prontos.', prompt_en: 'You are ready.', detail: 'Dica: ihr + sein', detail_en: 'Hint: ihr + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['ihr seid bereit'] },
-              { id: 'friendly', prompt: 'Eles são gentis.', prompt_en: 'They are kind.', detail: 'Dica: sie + sein', detail_en: 'Hint: sie + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['sie sind freundlich'] },
+              { id: 'happy', prompt: 'Eu estou feliz.', prompt_en: 'I am happy.', detail: 'Dica: ich + sein', detail_en: 'Hint: ich + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ich bin glücklich'] },
+              { id: 'here', prompt: 'Você está aqui.', prompt_en: 'You are here.', detail: 'Dica: du + sein', detail_en: 'Hint: du + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Du bist hier'] },
+              { id: 'office', prompt: 'Ele está no escritório.', prompt_en: 'He is in the office.', detail: 'Dica: er + sein', detail_en: 'Hint: er + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Er ist im Büro'] },
+              { id: 'home', prompt: 'Nós estamos em casa.', prompt_en: 'We are at home.', detail: 'Dica: wir + sein', detail_en: 'Hint: wir + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Wir sind zu Hause'] },
+              { id: 'ready', prompt: 'Vocês estão prontos.', prompt_en: 'You are ready.', detail: 'Dica: ihr + sein', detail_en: 'Hint: ihr + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ihr seid bereit'] },
+              { id: 'friendly', prompt: 'Eles são gentis.', prompt_en: 'They are kind.', detail: 'Dica: sie + sein', detail_en: 'Hint: sie + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Sie sind freundlich'] },
               { id: 'tired', prompt: 'Eu estou cansado.', prompt_en: 'I am tired.', detail: 'Dica: ich + sein', detail_en: 'Hint: ich + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ich bin müde'] },
               { id: 'late', prompt: 'Você está atrasado.', prompt_en: 'You are late.', detail: 'Dica: du + sein', detail_en: 'Hint: du + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Du bist spät dran'] },
               { id: 'sick', prompt: 'Ela está doente.', prompt_en: 'She is ill.', detail: 'Dica: sie + sein', detail_en: 'Hint: sie + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Sie ist krank'] },
@@ -104,6 +192,51 @@
               { id: 'sein-punctual', prompt: 'Eu sou pontual.', prompt_en: 'I am punctual.', detail: 'Dica: ich + sein', detail_en: 'Hint: ich + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ich bin pünktlich'] },
               { id: 'sein-sunny', prompt: 'Está ensolarado.', prompt_en: 'It is sunny.', detail: 'Dica: es + sein', detail_en: 'Hint: es + sein', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Es ist sonnig'] }
             ]
+          },
+          multipleChoice: {
+            id: 'multipleChoice',
+            visible: false,
+            interaction: 'multiple-choice',
+            shuffle: true,
+            label: 'Escolha correta',
+            label_en: 'Choose correctly',
+            shortLabel: '03 · Alternativas',
+            shortLabel_en: '03 · Multiple choice',
+            title: 'Escolha a forma correta de sein',
+            title_en: 'Choose the correct form of sein',
+            instruction: 'Leia a frase em português e escolha uma das quatro opções em alemão. As alternativas são parecidas de propósito: observe o sujeito e a forma de sein.',
+            instruction_en: 'Read the sentence in Portuguese and choose one of the four German options. The alternatives are intentionally similar: watch the subject and the form of sein.',
+            checkLabel: 'Verificar alternativa',
+            checkLabel_en: 'Check answer',
+            nextLabel: 'Próxima alternativa',
+            nextLabel_en: 'Next question',
+            restartLabel: 'Recomeçar alternativas',
+            restartLabel_en: 'Restart questions',
+            completedCopy: 'Você praticou 50 alternativas de sein. Recomece quando quiser para reforçar o vocabulário.',
+            completedCopy_en: 'You practiced 50 sein multiple-choice questions. Restart whenever you want to reinforce the vocabulary.',
+            items: seinChoiceItems
+          },
+          mixed: {
+            id: 'mixed',
+            interaction: 'mixed',
+            shuffle: true,
+            label: 'Treino misto',
+            label_en: 'Mixed practice',
+            shortLabel: '02 · Frases + alternativas',
+            shortLabel_en: '02 · Sentences + choices',
+            title: 'Treine sein de dois jeitos',
+            title_en: 'Practice sein in two ways',
+            instruction: 'Uma questão por vez: em algumas você escreve a frase; em outras escolhe a alternativa correta. As duas formas treinam o mesmo verbo e ampliam seu vocabulário.',
+            instruction_en: 'One question at a time: sometimes you write the sentence; sometimes you choose the correct option. Both formats train the same verb and expand your vocabulary.',
+            checkLabel: 'Verificar resposta',
+            checkLabel_en: 'Check answer',
+            nextLabel: 'Próxima questão',
+            nextLabel_en: 'Next question',
+            restartLabel: 'Recomeçar treino misto',
+            restartLabel_en: 'Restart mixed practice',
+            completedCopy: 'Você praticou 100 questões de sein: 50 de escrita e 50 de alternativas.',
+            completedCopy_en: 'You practiced 100 sein questions: 50 written and 50 multiple-choice.',
+            items: []
           }
         }
       },
@@ -157,12 +290,12 @@
             instruction: 'Traduza as frases curtas para o alemão. Preste atenção ao pronome e à forma de haben.',
             instruction_en: 'Translate the short sentences into German. Pay attention to the pronoun and the form of haben.',
             items: [
-              { id: 'time', prompt: 'Eu tenho tempo.', prompt_en: 'I have time.', detail: 'Dica: ich + haben', detail_en: 'Hint: ich + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['ich habe zeit'] },
-              { id: 'car', prompt: 'Você tem um carro.', prompt_en: 'You have a car.', detail: 'Dica: du + haben', detail_en: 'Hint: du + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['du hast ein auto'] },
-              { id: 'question', prompt: 'Ele tem uma pergunta.', prompt_en: 'He has a question.', detail: 'Dica: er + haben', detail_en: 'Hint: er + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['er hat eine frage'] },
-              { id: 'work', prompt: 'Nós temos trabalho.', prompt_en: 'We have work.', detail: 'Dica: wir + haben', detail_en: 'Hint: wir + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['wir haben arbeit'] },
-              { id: 'hunger', prompt: 'Vocês têm fome.', prompt_en: 'You are hungry.', detail: 'Dica: ihr + haben', detail_en: 'Hint: ihr + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['ihr habt hunger'] },
-              { id: 'their-time', prompt: 'Eles têm tempo.', prompt_en: 'They have time.', detail: 'Dica: sie + haben', detail_en: 'Hint: sie + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['sie haben zeit'] },
+              { id: 'time', prompt: 'Eu tenho tempo.', prompt_en: 'I have time.', detail: 'Dica: ich + haben', detail_en: 'Hint: ich + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ich habe Zeit'] },
+              { id: 'car', prompt: 'Você tem um carro.', prompt_en: 'You have a car.', detail: 'Dica: du + haben', detail_en: 'Hint: du + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Du hast ein Auto'] },
+              { id: 'question', prompt: 'Ele tem uma pergunta.', prompt_en: 'He has a question.', detail: 'Dica: er + haben', detail_en: 'Hint: er + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Er hat eine Frage'] },
+              { id: 'work', prompt: 'Nós temos trabalho.', prompt_en: 'We have work.', detail: 'Dica: wir + haben', detail_en: 'Hint: wir + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Wir haben Arbeit'] },
+              { id: 'hunger', prompt: 'Vocês têm fome.', prompt_en: 'You are hungry.', detail: 'Dica: ihr + haben', detail_en: 'Hint: ihr + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ihr habt Hunger'] },
+              { id: 'their-time', prompt: 'Eles têm tempo.', prompt_en: 'They have time.', detail: 'Dica: sie + haben', detail_en: 'Hint: sie + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Sie haben Zeit'] },
               { id: 'phone', prompt: 'Eu tenho um telefone.', prompt_en: 'I have a phone.', detail: 'Dica: ich + haben', detail_en: 'Hint: ich + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Ich habe ein Telefon'] },
               { id: 'brother', prompt: 'Você tem um irmão.', prompt_en: 'You have a brother.', detail: 'Dica: du + haben', detail_en: 'Hint: du + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Du hast einen Bruder'] },
               { id: 'dog', prompt: 'Ela tem um cachorro.', prompt_en: 'She has a dog.', detail: 'Dica: sie + haben', detail_en: 'Hint: sie + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Sie hat einen Hund'] },
@@ -210,7 +343,91 @@
             ]
           }
         }
+      },
+      numbers: {
+        id: 'numbers',
+        title: 'Números de 1 a 10',
+        title_en: 'Numbers 1 to 10',
+        subtitle: 'Treine a escrita dos números de 1 a 10 em alemão.',
+        subtitle_en: 'Practice writing numbers 1 to 10 in German.',
+        verb: '1–10',
+        meaning: 'números em alemão',
+        meaning_en: 'numbers in German',
+        heroTitle: 'Números',
+        heroTitle_en: 'Numbers',
+        heroAccent: 'sem travar.',
+        heroAccent_en: 'without hesitation.',
+        heroCopy: 'escreva de 1 a 10 até cada palavra ficar automática.',
+        heroCopy_en: 'write from 1 to 10 until every word feels automatic.',
+        heroIntro: 'Pratique a escrita dos números de 1 a 10 em alemão — um por vez, com feedback imediato.',
+        heroIntro_en: 'Practice writing numbers 1 to 10 in German — one at a time, with instant feedback.',
+        metaPrimary: 'A1 · números',
+        metaPrimary_en: 'A1 · numbers',
+        metaThird: 'sem pressa',
+        metaThird_en: 'no rush',
+        ruleCopy: '1–10 = escreva em alemão',
+        ruleCopy_en: '1–10 = write in German',
+        perfectMessage: 'Perfeito. Os números de 1 a 10 já estão ficando automáticos.',
+        perfectMessage_en: 'Perfect. Numbers 1 to 10 are becoming automatic.',
+        completedCopy: 'Você praticou os números de 1 a 10. Recomece quando quiser para reforçar a base.',
+        completedCopy_en: 'You practiced numbers 1 to 10. Restart whenever you want to reinforce the basics.',
+        modes: {
+          sequence: {
+            id: 'sequence',
+            interaction: 'streak',
+            shuffle: false,
+            label: 'De 1 a 10',
+            label_en: '1 to 10',
+            shortLabel: '01 · Em ordem',
+            shortLabel_en: '01 · In order',
+            title: 'Escreva os números de 1 a 10',
+            title_en: 'Write the numbers from 1 to 10',
+            instruction: 'Veja cada número e escreva sua forma em alemão. Avance um por um e tente manter o streak.',
+            instruction_en: 'Look at each number and write it in German. Move one by one and try to keep your streak.',
+            inputLabel: 'Digite o número em alemão',
+            inputLabel_en: 'Type the number in German',
+            checkLabel: 'Verificar número',
+            checkLabel_en: 'Check number',
+            nextLabel: 'Próximo número',
+            nextLabel_en: 'Next number',
+            restartLabel: 'Recomeçar números',
+            restartLabel_en: 'Restart numbers',
+            items: numberItems
+          },
+          random: {
+            id: 'random',
+            interaction: 'streak',
+            shuffle: true,
+            label: 'Aleatórios',
+            label_en: 'Random order',
+            shortLabel: '02 · Ordem aleatória',
+            shortLabel_en: '02 · Random order',
+            title: 'Escreva os números em ordem aleatória',
+            title_en: 'Write the numbers in random order',
+            instruction: 'Os números de 1 a 10 aparecem embaralhados a cada nova tentativa. Escreva a forma em alemão.',
+            instruction_en: 'Numbers 1 to 10 are shuffled for each new attempt. Write each one in German.',
+            inputLabel: 'Digite o número em alemão',
+            inputLabel_en: 'Type the number in German',
+            checkLabel: 'Verificar número',
+            checkLabel_en: 'Check number',
+            nextLabel: 'Próximo número',
+            nextLabel_en: 'Next number',
+            restartLabel: 'Recomeçar números',
+            restartLabel_en: 'Restart numbers',
+            items: numberItems
+          }
+        }
       }
     }
   };
+
+  const seinPage = window.KlarVerbPractice.pages.sein;
+  const mixedWritingItems = seinPage.modes.sentences.items.map((item) => Object.assign({}, item, { interaction: 'text', questionType: 'Escrita', questionType_en: 'Writing' }));
+  const mixedChoiceItems = seinPage.modes.multipleChoice.items.map((item) => Object.assign({}, item, { interaction: 'multiple-choice', questionType: 'Múltipla escolha', questionType_en: 'Multiple choice' }));
+  const mixedItems = [];
+  for (let index = 0; index < Math.max(mixedWritingItems.length, mixedChoiceItems.length); index += 1) {
+    if (mixedWritingItems[index]) mixedItems.push(mixedWritingItems[index]);
+    if (mixedChoiceItems[index]) mixedItems.push(mixedChoiceItems[index]);
+  }
+  seinPage.modes.mixed.items = mixedItems;
 }());

@@ -338,6 +338,105 @@
         { id: 'm5', type: 'translate', prompt: 'Traduza: “Você pode me ajudar?” (formal)', answers: ['Können Sie mir helfen?', 'können sie mir helfen'], answer: 'Können Sie mir helfen?', explanation: 'Use können + Sie + mir helfen para o pedido formal.' },
         { id: 'm6', type: 'truefalse', prompt: 'Verdadeiro ou falso: em “Ich muss arbeiten”, o infinitivo fica no final.', options: ['Verdadeiro', 'Falso'], answer: 'Verdadeiro', explanation: 'Com um modal, o segundo verbo permanece no infinitivo e vai para o final.' }
       ]
+    },
+    {
+      id: 'connectors-prepositions', number: 11, title: 'Conectores e preposições',
+      description: 'Ligue ideias, indique lugar e diga para onde você vai com palavras pequenas que organizam a frase.',
+      duration: '42 min', focus: 'Ligar ideias e indicar relações',
+      introduction: 'Conectores unem ideias; preposições mostram relações como lugar, direção, tempo, companhia e finalidade. Nesta aula, vamos separar os dois papéis e praticar cada um com frases curtas.',
+      objectives: ['Distinguir conectores de preposições', 'Usar und, aber, oder, denn e weil', 'Escolher in, im, ins, am, mit, zu e für em frases simples'],
+      sections: [
+        { type: 'compare', title: 'Conectores não são preposições', items: [
+          { label: 'Conectores', description: 'Unem duas palavras ou frases e mostram como as ideias se relacionam.', examples: ['Ich lerne Deutsch und ich arbeite.', 'Ich bleibe zu Hause, weil ich müde bin.'] },
+          { label: 'Preposições', description: 'Vêm antes de um nome ou pronome e indicam lugar, direção, tempo, companhia ou finalidade.', examples: ['Ich bin im Büro.', 'Ich gehe ins Büro.'] }
+        ]},
+        { type: 'table', title: 'Conectores: uma ideia leva à outra', lede: 'Os quatro primeiros mantêm o verbo na posição 2. Weil também significa “porque”, mas leva o verbo da sua oração para o final.', headers: ['Palavra', 'Significado', 'Uso'], rows: [
+          ['und', 'e', 'adiciona informação: Ich lerne und ich arbeite.'],
+          ['aber', 'mas', 'mostra contraste: Ich arbeite, aber ich bin müde.'],
+          ['oder', 'ou', 'apresenta uma escolha: Tee oder Kaffee?'],
+          ['denn', 'pois / porque', 'apresenta um motivo; o verbo continua na posição 2.'],
+          ['weil', 'porque', 'apresenta um motivo; o verbo vai para o final da oração.']
+        ]},
+        { type: 'examples', title: 'Conectores: und, aber, oder e denn', lede: 'Observe a relação entre as ideias e a posição do verbo em cada frase.', items: [
+          { de: 'Ich lerne Deutsch und ich höre Musik.', pt: 'Eu estudo alemão e ouço música.' },
+          { de: 'Ich arbeite am Montag und ich lerne am Abend.', pt: 'Eu trabalho na segunda-feira e estudo à noite.' },
+          { de: 'Ich bin müde, aber ich arbeite.', pt: 'Estou cansado, mas trabalho.' },
+          { de: 'Das ist klein, aber es ist praktisch.', pt: 'Isso é pequeno, mas é prático.' },
+          { de: 'Möchtest du Tee oder Kaffee?', pt: 'Você quer chá ou café?' },
+          { de: 'Gehen wir zu Fuß oder mit dem Bus?', pt: 'Vamos a pé ou de ônibus?' },
+          { de: 'Ich lerne Deutsch, denn ich wohne in Deutschland.', pt: 'Eu estudo alemão, pois moro na Alemanha.' },
+          { de: 'Ich gehe nach Hause, denn ich bin müde.', pt: 'Vou para casa, pois estou cansado.' }
+        ]},
+        { type: 'examples', title: 'Weil: o verbo vai para o final', lede: 'Weil também significa “porque”, mas a oração que começa com weil termina com o verbo conjugado.', items: [
+          { de: 'Ich lerne Deutsch, weil ich in Deutschland wohne.', pt: 'Eu estudo alemão porque moro na Alemanha.', note: 'wohne fica no final da oração com weil.' },
+          { de: 'Ich bleibe zu Hause, weil ich krank bin.', pt: 'Eu fico em casa porque estou doente.', note: 'bin fica no final da oração com weil.' }
+        ]},
+        { type: 'callout', title: 'A diferença de ordem', text: '<strong>und, aber, oder e denn</strong> deixam o verbo na posição 2 em cada frase. <strong>weil</strong> manda o verbo da sua oração para o final: Ich lerne Deutsch, weil ich in Deutschland <strong>wohne</strong>.' },
+        { type: 'table', title: 'Preposições: lugar, direção, tempo e relações', lede: 'Preposições vêm antes de um nome ou pronome. A forma depende do significado e, às vezes, do artigo que vem depois.', headers: ['Palavra', 'Significado', 'Uso'], rows: [
+          ['in', 'em / dentro de', 'preposição base: in der Stadt, in Berlin'],
+          ['im', 'em / no / na', 'in + dem; lugar ou período: im Park, im Sommer'],
+          ['ins', 'para dentro de / para o(a)', 'in + das; movimento: ins Kino'],
+          ['am', 'em / no / na', 'an + dem; dias e momentos: am Montag'],
+          ['mit', 'com / de', 'companhia ou meio: mit Freunden, mit dem Bus'],
+          ['zu', 'para / na casa de', 'destino ou pessoa: zum Arzt, zu Hause'],
+          ['für', 'para', 'destinatário ou finalidade: für dich']
+        ]},
+        { type: 'compare', title: 'in × im × ins', items: [
+          { label: 'in', description: 'É a preposição base. Use com nomes próprios e com artigos que não formam contração; o artigo pode mudar quando há movimento.', examples: ['Ich wohne in Berlin.', 'Ich bin in der Stadt.', 'Ich gehe in die Stadt.'] },
+          { label: 'im', description: 'É a contração de in + dem. Indica localização ou período, sem movimento para dentro.', examples: ['Ich bin im Park.', 'Im Sommer arbeite ich.'] },
+          { label: 'ins', description: 'É a contração de in + das. Indica movimento para dentro de um lugar neutro.', examples: ['Ich gehe ins Kino.', 'Wir fahren ins Büro.'] }
+        ]},
+        { type: 'examples', title: 'Outras preposições em frases', lede: 'Estas frases mostram usos separados de am, mit, zu e für.', items: [
+          { de: 'Am Montag arbeite ich.', pt: 'Na segunda-feira eu trabalho.' },
+          { de: 'Am Abend lerne ich Deutsch.', pt: 'À noite eu estudo alemão.' },
+          { de: 'Ich fahre mit dem Bus.', pt: 'Eu vou de ônibus.' },
+          { de: 'Ich spreche mit meiner Freundin.', pt: 'Eu falo com minha amiga.' },
+          { de: 'Ich gehe zum Arzt.', pt: 'Eu vou ao médico.' },
+          { de: 'Ich bin zu Hause.', pt: 'Eu estou em casa.' },
+          { de: 'Das ist für dich.', pt: 'Isso é para você.' },
+          { de: 'Das Geschenk ist für meine Mutter.', pt: 'O presente é para minha mãe.' }
+        ]},
+        { type: 'callout', title: 'Contrações importantes', text: '<strong>im</strong> não é um tipo diferente de “in”: <strong>im = in + dem</strong>. Da mesma forma, <strong>ins = in + das</strong> e <strong>am = an + dem</strong>. Não transforme todo <em>in</em> em <em>im</em>: compare <strong>in der Stadt</strong>, <strong>im Park</strong> e <strong>ins Kino</strong>.' }
+      ],
+      vocabulary: [
+        { word: 'und', meaning: 'e', example: 'Ich lerne und ich arbeite.', example_en: 'I study and I work.' },
+        { word: 'aber', meaning: 'mas', example: 'Ich bin müde, aber ich arbeite.', example_en: 'I am tired, but I work.' },
+        { word: 'weil', meaning: 'porque', example: 'Ich lerne, weil ich Zeit habe.', example_en: 'I study because I have time.' },
+        { word: 'in', meaning: 'em / dentro de', example: 'Ich wohne in Berlin.', example_en: 'I live in Berlin.' },
+        { word: 'im', meaning: 'em / no / na; in + dem', example: 'Ich bin im Park.', example_en: 'I am in the park.' },
+        { word: 'ins', meaning: 'para dentro de; in + das', example: 'Ich gehe ins Kino.', example_en: 'I go to the cinema.' },
+        { word: 'am Montag', meaning: 'na segunda-feira', example: 'Am Montag arbeite ich.', example_en: 'On Monday I work.' },
+        { word: 'mit dem Bus', meaning: 'de ônibus', example: 'Ich fahre mit dem Bus.', example_en: 'I go by bus.' },
+        { word: 'zu Hause', meaning: 'em casa', example: 'Ich bin zu Hause.', example_en: 'I am at home.' },
+        { word: 'für dich', meaning: 'para você', example: 'Das ist für dich.', example_en: 'This is for you.' }
+      ],
+      summary: ['Conectores unem ideias; preposições ligam nomes a relações como lugar e tempo.', 'und, aber, oder e denn mantêm o verbo na posição 2.', 'weil significa “porque” e leva o verbo para o final da oração.', 'im = in + dem; ins = in + das; am = an + dem.', 'Use in para a preposição base, im para localização/período e ins para movimento para dentro.'],
+      exercises: [
+        { id: 'cp1', type: 'multiple', prompt: 'Ich lerne Deutsch ___ ich arbeite.', options: ['und', 'aber', 'oder', 'weil'], answer: 'und', explanation: 'Und adiciona uma segunda informação: Ich lerne Deutsch und ich arbeite.' },
+        { id: 'cp2', type: 'translate', prompt: 'Traduza: “Eu moro em Berlim e trabalho.”', answer: 'Ich wohne in Berlin und ich arbeite.', answers: ['Ich wohne in Berlin und ich arbeite.'], explanation: 'Use und para juntar as duas ideias.' },
+        { id: 'cp3', type: 'multiple', prompt: 'Ich bin müde, ___ ich arbeite.', options: ['und', 'aber', 'oder', 'weil'], answer: 'aber', explanation: 'Aber mostra contraste: estou cansado, mas trabalho.' },
+        { id: 'cp4', type: 'translate', prompt: 'Traduza: “Eu quero ir, mas estou cansado.”', answer: 'Ich will gehen, aber ich bin müde.', answers: ['Ich will gehen, aber ich bin müde.'], explanation: 'Aber liga duas ideias em contraste; o verbo continua na posição 2 em cada oração.' },
+        { id: 'cp5', type: 'multiple', prompt: 'Möchtest du Tee ___ Kaffee?', options: ['und', 'aber', 'oder', 'denn'], answer: 'oder', explanation: 'Oder apresenta uma escolha entre chá e café.' },
+        { id: 'cp6', type: 'translate', prompt: 'Traduza: “Você quer chá ou café?”', answer: 'Möchtest du Tee oder Kaffee?', answers: ['Möchtest du Tee oder Kaffee?'], explanation: 'Use oder quando oferece uma alternativa.' },
+        { id: 'cp7', type: 'multiple', prompt: 'Ich bleibe zu Hause, ___ ich bin krank.', options: ['und', 'aber', 'denn', 'oder'], answer: 'denn', explanation: 'Denn significa “pois / porque” e mantém o verbo na posição 2: ich bin.' },
+        { id: 'cp8', type: 'translate', prompt: 'Traduza: “Eu vou para casa, pois estou cansado.”', answer: 'Ich gehe nach Hause, denn ich bin müde.', answers: ['Ich gehe nach Hause, denn ich bin müde.'], explanation: 'Depois de denn, a frase continua com o verbo na posição 2: ich bin müde.' },
+        { id: 'cp9', type: 'multiple', prompt: 'Ich lerne Deutsch, weil ich in Deutschland ___.', options: ['wohne', 'wohnen', 'wohnst', 'gehe'], answer: 'wohne', explanation: 'Com weil, o verbo conjugado vai para o final: weil ich in Deutschland wohne.' },
+        { id: 'cp10', type: 'translate', prompt: 'Traduza: “Eu fico em casa porque estou cansado.”', answer: 'Ich bleibe zu Hause, weil ich müde bin.', answers: ['Ich bleibe zu Hause, weil ich müde bin.'], explanation: 'A oração com weil termina com o verbo: weil ich müde bin.' },
+        { id: 'cp11', type: 'multiple', prompt: 'Ich wohne ___ Berlin.', options: ['in', 'im', 'ins', 'am'], answer: 'in', explanation: 'Com o nome próprio Berlin, usamos a preposição base in: in Berlin.' },
+        { id: 'cp12', type: 'translate', prompt: 'Traduza: “Eu moro em Berlim.”', answer: 'Ich wohne in Berlin.', answers: ['Ich wohne in Berlin.'], explanation: 'In indica o lugar onde você mora: in Berlin.' },
+        { id: 'cp13', type: 'multiple', prompt: 'Ich bin ___ Park.', options: ['in', 'im', 'ins', 'am'], answer: 'im', explanation: 'Im é a contração de in + dem: Ich bin im Park.' },
+        { id: 'cp14', type: 'translate', prompt: 'Traduza: “Eu trabalho no verão.”', answer: 'Im Sommer arbeite ich.', answers: ['Im Sommer arbeite ich.'], explanation: 'Para um período, usamos im: im Sommer.' },
+        { id: 'cp15', type: 'multiple', prompt: 'Ich gehe ___ Kino.', options: ['in', 'im', 'ins', 'am'], answer: 'ins', explanation: 'Ins é a contração de in + das e indica movimento para dentro: Ich gehe ins Kino.' },
+        { id: 'cp16', type: 'translate', prompt: 'Traduza: “Nós vamos para o escritório.”', answer: 'Wir fahren ins Büro.', answers: ['Wir fahren ins Büro.', 'Wir gehen ins Büro.'], explanation: 'Büro é neutro; com movimento para dentro, in + das vira ins.' },
+        { id: 'cp17', type: 'multiple', prompt: '___ Montag arbeite ich.', options: ['Am', 'Im', 'In', 'Ins'], answer: 'Am', explanation: 'Para dias da semana, usamos am: am Montag.' },
+        { id: 'cp18', type: 'translate', prompt: 'Traduza: “Na segunda-feira eu estudo alemão.”', answer: 'Am Montag lerne ich Deutsch.', answers: ['Am Montag lerne ich Deutsch.'], explanation: 'Am é a contração de an + dem e aparece com dias da semana.' },
+        { id: 'cp19', type: 'multiple', prompt: 'Ich fahre ___ dem Bus.', options: ['mit', 'zu', 'für', 'in'], answer: 'mit', explanation: 'Mit indica companhia ou meio de transporte: mit dem Bus.' },
+        { id: 'cp20', type: 'translate', prompt: 'Traduza: “Eu falo com minha amiga.”', answer: 'Ich spreche mit meiner Freundin.', answers: ['Ich spreche mit meiner Freundin.'], explanation: 'Mit significa “com” quando falamos da companhia de alguém.' },
+        { id: 'cp21', type: 'multiple', prompt: 'Ich gehe ___ Arzt.', options: ['zum', 'im', 'ins', 'für'], answer: 'zum', explanation: 'Para ir ao médico, usamos zu + dem: zum Arzt.' },
+        { id: 'cp22', type: 'fill', prompt: 'Ich bin ___ Hause.', answer: 'zu', explanation: 'A expressão fixa “em casa” é zu Hause.' },
+        { id: 'cp23', type: 'multiple', prompt: 'Das ist ___ dich.', options: ['für', 'mit', 'zu', 'in'], answer: 'für', explanation: 'Für indica para quem algo é destinado: für dich.' },
+        { id: 'cp24', type: 'translate', prompt: 'Traduza: “O presente é para minha mãe.”', answer: 'Das Geschenk ist für meine Mutter.', answers: ['Das Geschenk ist für meine Mutter.'], explanation: 'Für introduz a pessoa que recebe ou para quem algo é destinado.' }
+      ]
     }
   ];
 
@@ -819,6 +918,97 @@
         { prompt: 'Put in order: kann / ich / mit Karte / bezahlen', explanation: 'The modal kann is in position 2; bezahlen goes to the end.' },
         { prompt: 'Translate: “Can you help me?” (formal)', explanation: 'Use können + Sie + mir helfen for the formal request.' },
         { prompt: 'True or false: in “Ich muss arbeiten”, the infinitive is at the end.', options: ['True', 'False'], answer: 'True', explanation: 'With a modal, the second verb stays in the infinitive and goes to the end.' }
+      ]
+    },
+    'connectors-prepositions': {
+      title: 'Connectors and prepositions',
+      description: 'Connect ideas, indicate place, and say where you are going with small words that organize the sentence.',
+      focus: 'Connecting ideas and showing relationships',
+      introduction: 'Connectors join ideas; prepositions show relationships such as place, direction, time, company, and purpose. In this lesson, we will keep the two roles separate and practice each one with short sentences.',
+      objectives: ['Distinguish connectors from prepositions', 'Use und, aber, oder, denn, and weil', 'Choose in, im, ins, am, mit, zu, and für in simple sentences'],
+      sections: [
+        { title: 'Connectors are not prepositions', items: [
+          { label: 'Connectors', description: 'They join two words or sentences and show how the ideas relate.', examples: ['Ich lerne Deutsch und ich arbeite.', 'Ich bleibe zu Hause, weil ich müde bin.'] },
+          { label: 'Prepositions', description: 'They come before a noun or pronoun and show place, direction, time, company, or purpose.', examples: ['Ich bin im Büro.', 'Ich gehe ins Büro.'] }
+        ]},
+        { title: 'Connectors: one idea leads to another', lede: 'The first four keep the verb in position 2. Weil also means “because”, but it moves the verb in its clause to the end.', headers: ['Word', 'Meaning', 'Use'], rows: [
+          ['und', 'and', 'adds information: Ich lerne und ich arbeite.'],
+          ['aber', 'but', 'shows contrast: Ich arbeite, aber ich bin müde.'],
+          ['oder', 'or', 'presents a choice: Tee oder Kaffee?'],
+          ['denn', 'because / for', 'gives a reason; the verb stays in position 2.'],
+          ['weil', 'because', 'gives a reason; the verb goes to the end of the clause.']
+        ]},
+        { title: 'Connectors: und, aber, oder, and denn', lede: 'Notice the relationship between the ideas and the verb position in each sentence.', items: [
+          { en: 'I study German and I listen to music.' },
+          { en: 'I work on Monday and I study in the evening.' },
+          { en: 'I am tired, but I work.' },
+          { en: 'It is small, but it is practical.' },
+          { en: 'Would you like tea or coffee?' },
+          { en: 'Shall we walk or take the bus?' },
+          { en: 'I study German because I live in Germany.' },
+          { en: 'I am going home because I am tired.' }
+        ]},
+        { title: 'Weil: the verb goes to the end', lede: 'Weil also means “because”, but the clause that starts with weil ends with the conjugated verb.', items: [
+          { en: 'I study German because I live in Germany.', note: 'wohne is at the end of the clause with weil.' },
+          { en: 'I stay at home because I am ill.', note: 'bin is at the end of the clause with weil.' }
+        ]},
+        { title: 'The word-order difference', text: '<strong>und, aber, oder, and denn</strong> keep the verb in position 2 in each sentence. <strong>weil</strong> sends the verb in its clause to the end: Ich lerne Deutsch, weil ich in Deutschland <strong>wohne</strong>.' },
+        { title: 'Prepositions: place, direction, time, and relationships', lede: 'Prepositions come before a noun or pronoun. The form depends on the meaning and sometimes on the article that follows.', headers: ['Word', 'Meaning', 'Use'], rows: [
+          ['in', 'in / inside', 'base preposition: in der Stadt, in Berlin'],
+          ['im', 'in / in the', 'in + dem; place or period: im Park, im Sommer'],
+          ['ins', 'into / to the', 'in + das; movement: ins Kino'],
+          ['am', 'on / on the', 'an + dem; days and moments: am Montag'],
+          ['mit', 'with / by', 'company or means: mit Freunden, mit dem Bus'],
+          ['zu', 'to / at someone’s place', 'destination or person: zum Arzt, zu Hause'],
+          ['für', 'for', 'recipient or purpose: für dich']
+        ]},
+        { title: 'in × im × ins', items: [
+          { label: 'in', description: 'It is the base preposition. Use it with proper names and with articles that do not form a contraction; the article can change when there is movement.', examples: ['Ich wohne in Berlin.', 'Ich bin in der Stadt.', 'Ich gehe in die Stadt.'] },
+          { label: 'im', description: 'It is the contraction of in + dem. It indicates a place or period, without movement into it.', examples: ['Ich bin im Park.', 'Im Sommer arbeite ich.'] },
+          { label: 'ins', description: 'It is the contraction of in + das. It indicates movement into a neuter place.', examples: ['Ich gehe ins Kino.', 'Wir fahren ins Büro.'] }
+        ]},
+        { title: 'Other prepositions in sentences', lede: 'These sentences show separate uses of am, mit, zu, and für.', items: [
+          { en: 'I work on Monday.' },
+          { en: 'I study German in the evening.' },
+          { en: 'I go by bus.' },
+          { en: 'I speak with my friend.' },
+          { en: 'I am going to the doctor.' },
+          { en: 'I am at home.' },
+          { en: 'This is for you.' },
+          { en: 'The gift is for my mother.' }
+        ]},
+        { title: 'Important contractions', text: '<strong>im</strong> is not a different kind of “in”: <strong>im = in + dem</strong>. Likewise, <strong>ins = in + das</strong> and <strong>am = an + dem</strong>. Do not turn every <em>in</em> into <em>im</em>: compare <strong>in der Stadt</strong>, <strong>im Park</strong>, and <strong>ins Kino</strong>.' }
+      ],
+      vocabulary: [
+        { meaning: 'and' }, { meaning: 'but' }, { meaning: 'because' }, { meaning: 'in / inside' }, { meaning: 'in / in the; in + dem' },
+        { meaning: 'into; in + das' }, { meaning: 'on Monday' }, { meaning: 'by bus' }, { meaning: 'at home' }, { meaning: 'for you' }
+      ],
+      summary: ['Connectors join ideas; prepositions connect nouns to relationships such as place and time.', 'und, aber, oder, and denn keep the verb in position 2.', 'weil means “because” and moves the verb to the end of the clause.', 'im = in + dem; ins = in + das; am = an + dem.', 'Use in as the base preposition, im for place or periods, and ins for movement into a place.'],
+      exercises: [
+        { prompt: 'I study German ___ I work.', options: ['und', 'aber', 'oder', 'weil'], explanation: 'Choose und to add a second piece of information.' },
+        { prompt: 'Translate: “I live in Berlin and I work.”', explanation: 'Use und to join the two ideas.' },
+        { prompt: 'I am tired, ___ I work.', options: ['und', 'aber', 'oder', 'weil'], explanation: 'Choose aber to show contrast.' },
+        { prompt: 'Translate: “I want to go, but I am tired.”', explanation: 'Aber joins two contrasting ideas; the verb stays in position 2 in each clause.' },
+        { prompt: 'Möchtest du Tee ___ Kaffee?', options: ['und', 'aber', 'oder', 'denn'], explanation: 'Choose oder when you offer an alternative.' },
+        { prompt: 'Translate: “Would you like tea or coffee?”', explanation: 'Use oder when you present a choice.' },
+        { prompt: 'Ich bleibe zu Hause, ___ ich bin krank.', options: ['und', 'aber', 'denn', 'oder'], explanation: 'Denn means “because / for” and keeps the verb in position 2: ich bin.' },
+        { prompt: 'Translate: “I am going home because I am tired.”', explanation: 'After denn, the sentence still has the verb in position 2: ich bin müde.' },
+        { prompt: 'Ich lerne Deutsch, weil ich in Deutschland ___.', options: ['wohne', 'wohnen', 'wohnst', 'gehe'], explanation: 'With weil, the conjugated verb goes to the end: weil ich in Deutschland wohne.' },
+        { prompt: 'Translate: “I stay at home because I am tired.”', explanation: 'The clause with weil ends with the verb: weil ich müde bin.' },
+        { prompt: 'Ich wohne ___ Berlin.', options: ['in', 'im', 'ins', 'am'], explanation: 'With the proper name Berlin, use the base preposition in: in Berlin.' },
+        { prompt: 'Translate: “I live in Berlin.”', explanation: 'In indicates the place where you live: in Berlin.' },
+        { prompt: 'Ich bin ___ Park.', options: ['in', 'im', 'ins', 'am'], explanation: 'Im is the contraction of in + dem: Ich bin im Park.' },
+        { prompt: 'Translate: “I work in summer.”', explanation: 'For a period, use im: im Sommer.' },
+        { prompt: 'Ich gehe ___ Kino.', options: ['in', 'im', 'ins', 'am'], explanation: 'Ins is the contraction of in + das and indicates movement into a place: Ich gehe ins Kino.' },
+        { prompt: 'Translate: “We are going to the office.”', explanation: 'Büro is neuter; with movement into it, in + das becomes ins.' },
+        { prompt: '___ Montag arbeite ich.', options: ['Am', 'Im', 'In', 'Ins'], explanation: 'For days of the week, use am: am Montag.' },
+        { prompt: 'Translate: “On Monday I study German.”', explanation: 'Am is the contraction of an + dem and appears with days of the week.' },
+        { prompt: 'Ich fahre ___ dem Bus.', options: ['mit', 'zu', 'für', 'in'], explanation: 'Mit indicates company or means of transportation: mit dem Bus.' },
+        { prompt: 'Translate: “I speak with my friend.”', explanation: 'Mit means “with” when we talk about someone’s company.' },
+        { prompt: 'Ich gehe ___ Arzt.', options: ['zum', 'im', 'ins', 'für'], explanation: 'To go to the doctor, use zu + dem: zum Arzt.' },
+        { prompt: 'Complete: Ich bin ___ Hause.', explanation: 'The fixed expression for “at home” is zu Hause.' },
+        { prompt: 'Das ist ___ dich.', options: ['für', 'mit', 'zu', 'in'], explanation: 'Für indicates who something is intended for: für dich.' },
+        { prompt: 'Translate: “The gift is for my mother.”', explanation: 'Für introduces the person who receives something or who it is intended for.' }
       ]
     }
   };

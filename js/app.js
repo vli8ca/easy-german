@@ -13,7 +13,7 @@
     sessions: {},
     reviewSession: {},
     reviewQuestions: [],
-    exerciseModes: { sein: 'conjugation', haben: 'conjugation' },
+    exerciseModes: { sein: 'conjugation', haben: 'conjugation', numbers: 'sequence' },
     verbSessions: {},
     sidebarSections: { vocabulary: false, lessons: false, exercises: false }
   };
@@ -21,7 +21,7 @@
   const vocabulary = {
     words: [
       { word: 'Guten', meaning: 'bom / boa (forma usada nas saudações)', meaning_en: 'good (form used in greetings)' },
-      { word: 'Morgen', meaning: 'manhã', meaning_en: 'morning' },
+      { word: 'Morgen', meaning: 'manhã / amanhã', meaning_en: 'morning / tomorrow' },
       { word: 'Tag', meaning: 'dia', meaning_en: 'day' },
       { word: 'Abend', meaning: 'noite / fim da tarde', meaning_en: 'evening / late afternoon' },
       { word: 'Gute', meaning: 'boa', meaning_en: 'good' },
@@ -132,6 +132,56 @@
     ]
   };
 
+  const practiceWordMeanings = {
+    glücklich: ['feliz', 'happy'], hier: ['aqui', 'here'], er: ['ele', 'he'], im: ['em / no / na; in + dem', 'in / in the; in + dem'], büro: ['escritório', 'office'], wir: ['nós', 'we'], zu: ['para / em (em expressões)', 'to / at (in expressions)'], hause: ['casa (em zu Hause)', 'home (in zu Hause)'], ihr: ['vocês (informal)', 'you (informal plural)'], seid: ['são / estão (com ihr)', 'are (with ihr)'], bereit: ['pronto / pronta', 'ready'], sie: ['ela / eles / elas / formal', 'she / they / formal you'], freundlich: ['gentil', 'kind / friendly'], müde: ['cansado / cansada', 'tired'], spät: ['tarde / atrasado', 'late'], dran: ['em atraso (em spät dran)', 'late (in spät dran)'], krank: ['doente', 'ill / sick'], es: ['isso / ele / ela (neutro)', 'it (neuter)'], heute: ['hoje', 'today'], kalt: ['frio', 'cold'], der: ['o (masculino)', 'the (masculine)'], schule: ['escola', 'school'], bei: ['em / junto de', 'at / with'], arbeit: ['trabalho', 'work'], deutschland: ['Alemanha', 'Germany'], neu: ['novo / nova', 'new'], alles: ['tudo', 'everything'], gut: ['bom / bem', 'good / well'], heiß: ['quente', 'hot'], an: ['em / junto a', 'at / by'], tür: ['porta', 'door'], supermarkt: ['supermercado', 'supermarket'], berlin: ['Berlim', 'Berlin'], sehr: ['muito', 'very'], nett: ['gentil / legal', 'nice / kind'], garten: ['jardim', 'garden'], schwester: ['irmã', 'sister'], wichtig: ['importante', 'important'], montag: ['segunda-feira', 'Monday'], zusammen: ['juntos', 'together'], hungrig: ['com fome', 'hungry'], beschäftigt: ['ocupado / ocupada', 'busy'], frei: ['livre', 'free'], jung: ['jovem', 'young'], traurig: ['triste', 'sad'], ruhig: ['quieto / calmo', 'quiet / calm'], klein: ['pequeno / pequena', 'small'], schön: ['bonito / bonita', 'beautiful'], teuer: ['caro / cara', 'expensive'], billig: ['barato / barata', 'cheap'], offen: ['aberto / aberta', 'open'], nicht: ['não', 'not'], nah: ['perto', 'near'], weit: ['longe', 'far'], weg: ['longe / embora', 'away'], richtig: ['certo / correto', 'right / correct'], einfach: ['fácil', 'easy'], schwer: ['difícil', 'difficult'], früh: ['cedo / adiantado', 'early'], pünktlich: ['pontual', 'on time / punctual'], sonnig: ['ensolarado', 'sunny'], zeit: ['tempo', 'time'], hast: ['tem (com du)', 'have (with du)'], ein: ['um / uma (artigo neutro ou masculino)', 'a / one (neuter or masculine article)'], auto: ['carro', 'car'], hat: ['tem (com er / sie / es)', 'has (with er / sie / es)'], haben: ['ter / têm', 'have'], habt: ['têm (com ihr)', 'have (with ihr)'], hunger: ['fome', 'hunger'], telefon: ['telefone', 'telephone / phone'], bruder: ['irmão', 'brother'], hund: ['cachorro', 'dog'], das: ['o / a (neutro); isso', 'the (neuter); it'], kind: ['criança', 'child'], problem: ['problema', 'problem'], termin: ['compromisso', 'appointment'], unterricht: ['aula', 'class / lesson'], geld: ['dinheiro', 'money'], große: ['grande', 'big / large'], familie: ['família', 'family'], idee: ['ideia', 'idea'], zwei: ['dois / duas', 'two'], kinder: ['crianças / filhos', 'children'], die: ['a / as', 'the (feminine / plural)'], adresse: ['endereço', 'address'], pause: ['pausa', 'break'], geburtstag: ['aniversário', 'birthday'], glück: ['sorte', 'luck'], fahrrad: ['bicicleta', 'bicycle'], mädchen: ['menina', 'girl'], buch: ['livro', 'book'], genug: ['suficiente', 'enough'], kein: ['nenhum / não um', 'no / not a'], durst: ['sede', 'thirst'], katze: ['gato / gata', 'cat'], fahrkarte: ['bilhete / passagem', 'ticket'], namen: ['nome (acusativo)', 'name (accusative)'], wohnung: ['apartamento', 'apartment'], gäste: ['convidados', 'guests'], haustiere: ['animais de estimação', 'pets'], kaffee: ['café', 'coffee'], morgen: ['amanhã', 'tomorrow'], neuen: ['novo / nova (acusativo)', 'new (accusative)'], job: ['emprego / trabalho', 'job'], schwestern: ['irmãs', 'sisters'], um: ['às / em torno de', 'at / around'], zwölf: ['doze', 'twelve'], uhr: ['hora', 'o’clock / clock'], mittagessen: ['almoço', 'lunch'], kleines: ['pequeno / pequena (neutro)', 'small (neuter)'], juli: ['julho', 'July'], urlaub: ['férias', 'vacation'], keine: ['nenhuma / não uma', 'no / not a (feminine)'], ahnung: ['ideia / noção', 'idea / clue'], den: ['o (masculino no acusativo)', 'the (masculine accusative)'], schlüssel: ['chave', 'key'], tasche: ['bolsa', 'bag'], hobby: ['hobby', 'hobby'], sieben: ['sete', 'seven'], frühstück: ['café da manhã', 'breakfast']
+  };
+
+  function vocabularyTextKey(value) {
+    return String(value == null ? '' : value)
+      .toLocaleLowerCase('de-DE')
+      .replace(/[.!?,;:]+/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function cleanPracticeText(value) {
+    return String(value == null ? '' : value).trim().replace(/[.!?]+$/, '');
+  }
+
+  function addVerbPracticeVocabulary() {
+    const existingPhraseKeys = new Set(vocabulary.phrases.map((item) => vocabularyTextKey(item.de)));
+    const existingWordKeys = new Set(vocabulary.words.map((item) => vocabularyTextKey(item.word)));
+    const wordSources = new Map();
+
+    ['sein', 'haben'].forEach((verb) => {
+      const page = verbPractice.pages[verb];
+      const items = page && page.modes.sentences ? page.modes.sentences.items : [];
+      items.forEach((item) => {
+        const phrase = cleanPracticeText(item.answers[0]);
+        const phraseKey = vocabularyTextKey(phrase);
+        if (!existingPhraseKeys.has(phraseKey)) {
+          vocabulary.phrases.push({ de: phrase, pt: cleanPracticeText(item.prompt), pt_en: cleanPracticeText(item.prompt_en), group: verb });
+          existingPhraseKeys.add(phraseKey);
+        }
+        phrase.replace(/[.!?,;:]/g, '').split(/\s+/).forEach((token) => {
+          const word = token.trim();
+          const wordKey = vocabularyTextKey(word);
+          if (!wordKey || existingWordKeys.has(wordKey)) return;
+          if (!wordSources.has(wordKey)) wordSources.set(wordKey, { word, verbs: new Set() });
+          wordSources.get(wordKey).verbs.add(verb);
+        });
+      });
+    });
+
+    wordSources.forEach((entry, wordKey) => {
+      const meaning = practiceWordMeanings[wordKey] || ['palavra das frases de prática', 'word from the practice sentences'];
+      const group = entry.verbs.size === 2 ? 'shared' : entry.verbs.has('sein') ? 'sein' : 'haben';
+      vocabulary.words.push({ word: entry.word, meaning: meaning[0], meaning_en: meaning[1], group });
+    });
+  }
+
+  addVerbPracticeVocabulary();
+
   const vocabularyRoutes = ['vocabulary-words', 'vocabulary-phrases', 'vocabulary-numbers', 'vocabulary-weekdays', 'vocabulary-months'];
 
   const view = document.getElementById('app-view');
@@ -168,6 +218,14 @@
   function getProgress() { return storage.getProgress(); }
   function isVocabularyRoute(route) { return vocabularyRoutes.includes(route); }
 
+  const exercisePageRoutes = {
+    exercises: 'sein',
+    'exercises-haben': 'haben',
+    'exercises-numbers': 'numbers'
+  };
+
+  function isExerciseRoute(route) { return Object.prototype.hasOwnProperty.call(exercisePageRoutes, route); }
+
   function completionPercent(progress) {
     return lessons.length ? Math.round((progress.completedLessons.length / lessons.length) * 100) : 0;
   }
@@ -197,14 +255,30 @@
   }
 
   function getExercisePage() {
-    const pageId = ui.route === 'exercises-haben' ? 'haben' : 'sein';
+    const pageId = exercisePageRoutes[ui.route] || 'sein';
     return verbPractice.pages[pageId] || verbPractice.pages.sein;
   }
 
   function getVerbMode() {
     const page = getExercisePage();
     const modeId = ui.exerciseModes[page.id] || 'conjugation';
-    return page.modes[modeId] || page.modes.conjugation;
+    return page.modes[modeId] || page.modes.conjugation || Object.values(page.modes)[0];
+  }
+
+  function isChoiceMode(mode) {
+    return Boolean(mode && (mode.interaction === 'multiple-choice' || mode.interaction === 'choice'));
+  }
+
+  function isChoiceItem(item) {
+    return Boolean(item && (item.interaction === 'multiple-choice' || item.interaction === 'choice'));
+  }
+
+  function isMixedMode(mode) {
+    return Boolean(mode && mode.interaction === 'mixed');
+  }
+
+  function isStreakMode(mode) {
+    return Boolean(mode && (mode.interaction === 'streak' || mode.id === 'sentences' || isChoiceMode(mode) || isMixedMode(mode)));
   }
 
   function shuffleVerbSentenceOrder(items) {
@@ -220,6 +294,19 @@
     return order;
   }
 
+  function shuffleVerbMixedOrder(items) {
+    const textItems = items.filter((item) => !isChoiceItem(item));
+    const choiceItems = items.filter((item) => isChoiceItem(item));
+    const textOrder = shuffleVerbSentenceOrder(textItems);
+    const choiceOrder = shuffleVerbSentenceOrder(choiceItems);
+    const order = [];
+    for (let index = 0; index < Math.max(textOrder.length, choiceOrder.length); index += 1) {
+      if (textOrder[index]) order.push(textOrder[index]);
+      if (choiceOrder[index]) order.push(choiceOrder[index]);
+    }
+    return order;
+  }
+
   function createVerbSession(mode) {
     return {
       answers: {},
@@ -229,17 +316,17 @@
       status: 'idle',
       completed: false,
       streak: 0,
-      order: mode.id === 'sentences' ? shuffleVerbSentenceOrder(mode.items) : []
+      order: isStreakMode(mode) ? (mode.shuffle === false ? mode.items.map((item) => item.id) : isMixedMode(mode) ? shuffleVerbMixedOrder(mode.items) : shuffleVerbSentenceOrder(mode.items)) : []
     };
   }
 
   function getVerbSession(modeId) {
     const page = getExercisePage();
-    const mode = page.modes[modeId] || page.modes.conjugation;
+    const mode = page.modes[modeId] || page.modes.conjugation || Object.values(page.modes)[0];
     const key = page.id + ':' + modeId;
     if (!ui.verbSessions[key]) ui.verbSessions[key] = createVerbSession(mode);
     const session = ui.verbSessions[key];
-    if (mode.id === 'sentences') {
+    if (isStreakMode(mode)) {
       const itemIds = mode.items.map((item) => item.id);
       const orderIsCurrent = Array.isArray(session.order) && session.order.length === itemIds.length && new Set(session.order).size === itemIds.length && itemIds.every((id) => session.order.includes(id));
       if (!orderIsCurrent) {
@@ -283,6 +370,8 @@
 
   function renderSidebar(progress) {
     updateTopbar(progress);
+    const lessonCount = document.getElementById('lesson-count');
+    if (lessonCount) lessonCount.textContent = String(lessons.length);
     const nav = document.getElementById('lesson-nav');
     nav.innerHTML = lessons.map((lesson) => {
       const status = lessonStatus(lesson, progress);
@@ -313,7 +402,7 @@
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.myGerman')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('breadcrumb.overview')) + '</strong>';
     } else if (ui.route === 'review') {
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.myGerman')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('nav.review')) + '</strong>';
-    } else if (ui.route === 'exercises' || ui.route === 'exercises-haben') {
+    } else if (isExerciseRoute(ui.route)) {
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.practice')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('breadcrumb.exercises')) + ' · ' + esc(localize(getExercisePage(), 'title')) + '</strong>';
     } else if (isVocabularyRoute(ui.route)) {
       const vocabularyLabels = { 'vocabulary-words': 'sidebar.words', 'vocabulary-phrases': 'sidebar.phrases', 'vocabulary-numbers': 'sidebar.numbers', 'vocabulary-weekdays': 'sidebar.weekdays', 'vocabulary-months': 'sidebar.months' };
@@ -428,6 +517,29 @@
     return '<article class="vocab-card vocabulary-word-card"><div class="vocab-card-top"><div><div class="vocab-word">' + esc(content.word) + '</div><div class="vocab-meaning">' + esc(content.meaning) + '</div></div><button type="button" class="speak-button" data-speak="' + esc(content.word) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: content.word })) + '">' + icon('volume-2', 'audio-icon') + '</button></div></article>';
   }
 
+  function renderVocabularyPhrase(item) {
+    const content = localized(item);
+    return '<div class="example-row"><div><div class="example-de">' + esc(content.de) + '</div><span class="example-pt">' + esc(content.pt) + '</span></div><button type="button" class="speak-button" data-speak="' + esc(content.de) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: content.de })) + '">' + icon('volume-2', 'audio-icon') + '</button></div>';
+  }
+
+  function renderVocabularyGroup(items, type, groupKey, index) {
+    const countKey = type === 'words' ? 'vocabulary.wordCount' : 'vocabulary.phraseCount';
+    const content = type === 'words' ? '<div class="vocab-grid vocabulary-word-grid">' + items.map(renderVocabularyWord).join('') + '</div>' : '<div class="example-list vocabulary-phrase-list">' + items.map(renderVocabularyPhrase).join('') + '</div>';
+    return '<details class="vocabulary-group"' + (index === 0 ? ' open' : '') + '><summary><span class="vocabulary-group-summary"><strong>' + esc(tr('vocabulary.group.' + groupKey)) + '</strong><small>' + esc(tr('vocabulary.group.' + groupKey + 'Copy')) + '</small></span><span class="vocabulary-group-count">' + items.length + ' ' + esc(tr(countKey)) + '</span></summary><div class="vocabulary-group-body">' + content + '</div></details>';
+  }
+
+  function renderVocabularyGroups(items, type) {
+    const groups = new Map();
+    items.forEach((item) => {
+      const key = item.group || 'foundation';
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(item);
+    });
+    const order = ['sein', 'haben', 'shared', 'foundation'];
+    const keys = order.filter((key) => groups.has(key));
+    return '<div class="vocabulary-groups">' + keys.map((key, index) => renderVocabularyGroup(groups.get(key), type, key, index)).join('') + '</div>';
+  }
+
   function renderNumberCard(item, index) {
     return '<article class="number-card"><span class="number-card-index">' + String(index + 1).padStart(2, '0') + '</span><div class="number-card-copy"><strong>' + esc(item[1]) + '</strong><span>' + esc(item[0]) + '</span></div><button type="button" class="speak-button" data-speak="' + esc(item[1]) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: item[1] })) + '">' + icon('volume-2', 'audio-icon') + '</button></article>';
   }
@@ -467,9 +579,9 @@
     ];
     let content = '';
     if (ui.route === 'vocabulary-words') {
-      content = '<div class="vocab-grid vocabulary-word-grid">' + vocabulary.words.map(renderVocabularyWord).join('') + '</div>';
+      content = renderVocabularyGroups(vocabulary.words, 'words');
     } else if (ui.route === 'vocabulary-phrases') {
-      content = '<div class="example-list vocabulary-phrase-list">' + vocabulary.phrases.map((phrase) => { const item = localized(phrase); return '<div class="example-row"><div><div class="example-de">' + esc(item.de) + '</div><span class="example-pt">' + esc(item.pt) + '</span></div><button type="button" class="speak-button" data-speak="' + esc(item.de) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: item.de })) + '">' + icon('volume-2', 'audio-icon') + '</button></div>'; }).join('') + '</div>';
+      content = renderVocabularyGroups(vocabulary.phrases, 'phrases');
     } else if (ui.route === 'vocabulary-numbers') {
       const rules = [
         { range: '20 → 100', title: 'Unidade + und + dezena', title_en: 'Unit + und + tens', description: 'A unidade vem antes da dezena. O und significa “e”: 21 é literalmente “um e vinte”.', description_en: 'The unit comes before the tens. Und means “and”: 21 is literally “one and twenty”.', icon: 'arrow-left-right', examples: [['21', 'einundzwanzig'], ['32', 'zweiunddreißig'], ['47', 'siebenundvierzig'], ['99', 'neunundneunzig']] },
@@ -553,9 +665,14 @@
     return '';
   }
 
-  function focusVerbAnswer() {
+  function focusVerbInteraction() {
     const input = document.querySelector('[data-verb-answer]');
-    if (input) input.focus();
+    if (input) {
+      input.focus();
+      return;
+    }
+    const option = document.querySelector('[data-verb-option]:not(:disabled)');
+    if (option) option.focus();
   }
 
   function renderSentenceStreak(session) {
@@ -566,11 +683,19 @@
     return '<div class="verb-streak-meter" data-verb-streak role="meter" aria-live="polite" aria-valuemin="0" aria-valuemax="10" aria-valuenow="' + visibleStreak + '" aria-valuetext="' + esc(copy) + '" aria-label="' + esc(tr('verb.streakLabel')) + '"><div class="verb-streak-summary"><span>' + esc(tr('verb.streakLabel')) + '</span><strong>' + streak + '</strong></div><div class="verb-streak-track" aria-hidden="true">' + segments + '</div><span class="verb-streak-copy">' + esc(copy) + '</span></div>';
   }
 
+  function renderQuestionType(content) {
+    return content.questionType ? '<span class="verb-question-type">' + esc(content.questionType) + '</span>' : '';
+  }
+
   function renderSentencePractice(page, mode, session) {
     const total = mode.items.length;
+    const contentMode = localized(mode);
     if (!total) return '<div class="verb-sentence-practice"><p>' + esc(tr('verb.resultEmptyCopy')) + '</p></div>';
     if (session.completed) {
-      return '<div class="verb-sentence-practice is-complete" data-verb-sentence-practice><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(tr('verb.completedCopy', { total })) + ' ' + esc(tr('verb.finalStreak', { count: session.streak || 0 })) + '</p></div><button type="button" class="button button-secondary" data-retry-verb="restart">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.restartSentences')) + '</button></div>';
+      const contentPage = localized(page);
+      const completedCopy = contentPage.completedCopy || tr('verb.completedCopy', { total });
+      const restartLabel = contentMode.restartLabel || tr('verb.restartSentences');
+      return '<div class="verb-sentence-practice is-complete" data-verb-sentence-practice><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(completedCopy) + ' ' + esc(tr('verb.finalStreak', { count: session.streak || 0 })) + '</p></div><button type="button" class="button button-secondary" data-retry-verb="restart">' + icon('rotate-ccw', 'button-icon') + esc(restartLabel) + '</button></div>';
     }
     const index = Math.min(Math.max(Number.isInteger(session.currentIndex) ? session.currentIndex : 0, 0), total - 1);
     session.currentIndex = index;
@@ -579,10 +704,13 @@
     const response = session.answers[item.id] || '';
     const status = session.status || 'idle';
     const disabled = status === 'correct' || status === 'wrong' ? ' disabled' : '';
-    let action = '<button type="button" class="button button-primary" data-check-verb>' + icon('check', 'button-icon') + esc(tr('verb.checkSentence')) + '</button>';
+    const inputLabel = contentMode.inputLabel || tr('verb.sentenceInput');
+    const checkLabel = contentMode.checkLabel || tr('verb.checkSentence');
+    const nextLabel = contentMode.nextLabel || tr('verb.nextSentence');
+    let action = '<button type="button" class="button button-primary" data-check-verb>' + icon('check', 'button-icon') + esc(checkLabel) + '</button>';
     if (status === 'correct') {
       const isLast = index === total - 1;
-      action = '<button type="button" class="button button-primary" data-next-verb>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('verb.completedTitle') : tr('verb.nextSentence')) + '</button>';
+      action = '<button type="button" class="button button-primary" data-next-verb>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('verb.completedTitle') : nextLabel) + '</button>';
     } else if (status === 'wrong') {
       action = '<button type="button" class="button button-secondary" data-retry-verb="current">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.tryAgain')) + '</button>';
     }
@@ -590,8 +718,124 @@
       renderSentenceStreak(session) +
       '<article class="verb-sentence-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
       '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + '</div>' +
-      '<div class="verb-sentence-copy"><h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
-      '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="verb-answer-' + esc(page.id) + '">' + esc(tr('verb.sentenceInput')) + '</label><input id="verb-answer-' + esc(page.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-answer data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
+      '<div class="verb-sentence-copy">' + renderQuestionType(content) + '<h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
+      '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="verb-answer-' + esc(page.id) + '">' + esc(inputLabel) + '</label><input id="verb-answer-' + esc(page.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-answer data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
+      renderSentenceFeedback(item, response, status) +
+      '<div class="verb-sentence-actions">' + action + '</div>' +
+      '</article></div>';
+  }
+
+  function renderChoiceFeedback(item, selectedIndex, status) {
+    const content = localized(item);
+    const correctIndex = content.optionIds.indexOf(content.correctOptionId);
+    const correctAnswer = content.options[correctIndex];
+    if (status === 'correct') {
+      return '<div class="verb-choice-feedback is-correct" role="status" aria-live="polite">' + icon('circle-check', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.correctNotice', { answer: correctAnswer })) + '</strong></div></div>';
+    }
+    if (status === 'wrong') {
+      const selectedAnswer = content.options[selectedIndex] || '';
+      return '<div class="verb-choice-feedback is-wrong" role="status" aria-live="polite"><div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><div class="verb-answer-comparison"><div><span>' + esc(tr('verb.youWrote')) + '</span><strong>' + esc(selectedAnswer) + '</strong></div><div><span>' + esc(tr('verb.correctAnswerLabel')) + '</span><strong>' + esc(correctAnswer) + '</strong></div></div></div></div>';
+    }
+    return '';
+  }
+
+  function renderChoicePractice(page, mode, session) {
+    const total = mode.items.length;
+    const contentMode = localized(mode);
+    if (!total) return '<div class="verb-choice-practice"><p>' + esc(tr('verb.resultEmptyCopy')) + '</p></div>';
+    if (session.completed) {
+      const contentPage = localized(page);
+      const completedCopy = contentMode.completedCopy || contentPage.completedCopy || tr('verb.completedCopy', { total });
+      const restartLabel = contentMode.restartLabel || tr('verb.restartSentences');
+      return '<div class="verb-choice-practice is-complete" data-verb-choice-practice><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(completedCopy) + ' ' + esc(tr('verb.finalStreak', { count: session.streak || 0 })) + '</p></div><button type="button" class="button button-secondary" data-retry-verb="restart">' + icon('rotate-ccw', 'button-icon') + esc(restartLabel) + '</button></div>';
+    }
+    const index = Math.min(Math.max(Number.isInteger(session.currentIndex) ? session.currentIndex : 0, 0), total - 1);
+    session.currentIndex = index;
+    const item = getCurrentVerbSentence(mode, session);
+    const content = localized(item);
+    const selectedOptionId = typeof session.answers[item.id] === 'string' ? session.answers[item.id] : '';
+    const selectedIndex = content.optionIds.indexOf(selectedOptionId);
+    const status = session.status || 'idle';
+    const disabled = status === 'correct' || status === 'wrong' ? ' disabled' : '';
+    const options = content.options.map((option, optionIndex) => {
+      const optionId = content.optionIds[optionIndex];
+      const selected = selectedOptionId === optionId;
+      return '<button type="button" role="radio" class="verb-choice-option' + (selected ? ' is-selected' : '') + '" data-verb-option data-verb-option-id="' + esc(optionId) + '" aria-checked="' + (selected ? 'true' : 'false') + '"' + disabled + '><span class="verb-choice-letter" aria-hidden="true">' + String.fromCharCode(65 + optionIndex) + '</span><span>' + esc(option) + '</span></button>';
+    }).join('');
+    const checkLabel = contentMode.checkLabel || tr('verb.checkSentence');
+    const nextLabel = contentMode.nextLabel || tr('verb.nextSentence');
+    let action = '<button type="button" class="button button-primary" data-check-verb>' + icon('check', 'button-icon') + esc(checkLabel) + '</button>';
+    if (status === 'correct') {
+      const isLast = index === total - 1;
+      action = '<button type="button" class="button button-primary" data-next-verb>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('verb.completedTitle') : nextLabel) + '</button>';
+    } else if (status === 'wrong') {
+      action = '<button type="button" class="button button-secondary" data-retry-verb="current">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.tryAgain')) + '</button>';
+    }
+    return '<div class="verb-choice-practice" data-verb-choice-practice>' +
+      renderSentenceStreak(session) +
+      '<article class="verb-choice-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
+      '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + '</div>' +
+      '<div class="verb-sentence-copy">' + renderQuestionType(content) + '<h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
+      '<div class="verb-choice-options" role="radiogroup" aria-label="' + esc(content.prompt) + '">' + options + '</div>' +
+      renderChoiceFeedback(item, selectedIndex, status) +
+      '<div class="verb-choice-actions">' + action + '</div>' +
+      '</article></div>';
+  }
+
+  function renderMixedPractice(page, mode, session) {
+    const total = mode.items.length;
+    const contentPage = localized(page);
+    const contentMode = localized(mode);
+    if (!total) return '<div class="verb-mixed-practice"><p>' + esc(tr('verb.resultEmptyCopy')) + '</p></div>';
+    if (session.completed) {
+      const completedCopy = contentMode.completedCopy || contentPage.completedCopy || tr('verb.completedCopy', { total });
+      const restartLabel = contentMode.restartLabel || tr('verb.restartSentences');
+      return '<div class="verb-mixed-practice is-complete" data-verb-mixed-practice><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(completedCopy) + ' ' + esc(tr('verb.finalStreak', { count: session.streak || 0 })) + '</p></div><button type="button" class="button button-secondary" data-retry-verb="restart">' + icon('rotate-ccw', 'button-icon') + esc(restartLabel) + '</button></div>';
+    }
+    const index = Math.min(Math.max(Number.isInteger(session.currentIndex) ? session.currentIndex : 0, 0), total - 1);
+    session.currentIndex = index;
+    const item = getCurrentVerbSentence(mode, session);
+    const content = localized(item);
+    const status = session.status || 'idle';
+    const checkLabel = contentMode.checkLabel || tr('verb.checkSentence');
+    const nextLabel = contentMode.nextLabel || tr('verb.nextSentence');
+    let action = '<button type="button" class="button button-primary" data-check-verb>' + icon('check', 'button-icon') + esc(checkLabel) + '</button>';
+    if (status === 'correct') {
+      const isLast = index === total - 1;
+      action = '<button type="button" class="button button-primary" data-next-verb>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('verb.completedTitle') : nextLabel) + '</button>';
+    } else if (status === 'wrong') {
+      action = '<button type="button" class="button button-secondary" data-retry-verb="current">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.tryAgain')) + '</button>';
+    }
+
+    if (isChoiceItem(item)) {
+      const selectedOptionId = typeof session.answers[item.id] === 'string' ? session.answers[item.id] : '';
+      const selectedIndex = content.optionIds.indexOf(selectedOptionId);
+      const disabled = status === 'correct' || status === 'wrong' ? ' disabled' : '';
+      const options = content.options.map((option, optionIndex) => {
+        const optionId = content.optionIds[optionIndex];
+        const selected = selectedOptionId === optionId;
+        return '<button type="button" role="radio" class="verb-choice-option' + (selected ? ' is-selected' : '') + '" data-verb-option data-verb-option-id="' + esc(optionId) + '" aria-checked="' + (selected ? 'true' : 'false') + '"' + disabled + '><span class="verb-choice-letter" aria-hidden="true">' + String.fromCharCode(65 + optionIndex) + '</span><span>' + esc(option) + '</span></button>';
+      }).join('');
+      return '<div class="verb-mixed-practice" data-verb-mixed-practice>' +
+        renderSentenceStreak(session) +
+        '<article class="verb-choice-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
+        '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</div>' +
+        '<div class="verb-sentence-copy">' + renderQuestionType(content) + '<h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
+        '<div class="verb-choice-options" role="radiogroup" aria-label="' + esc(content.prompt) + '">' + options + '</div>' +
+        renderChoiceFeedback(item, selectedIndex, status) +
+        '<div class="verb-choice-actions">' + action + '</div>' +
+        '</article></div>';
+    }
+
+    const response = String(session.answers[item.id] || '');
+    const disabled = status === 'correct' || status === 'wrong' ? ' disabled' : '';
+    const inputLabel = contentMode.inputLabel || tr('verb.sentenceInput');
+    return '<div class="verb-mixed-practice" data-verb-mixed-practice>' +
+      renderSentenceStreak(session) +
+      '<article class="verb-sentence-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
+      '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</div>' +
+      '<div class="verb-sentence-copy">' + renderQuestionType(content) + '<h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
+      '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="verb-answer-' + esc(page.id) + '">' + esc(inputLabel) + '</label><input id="verb-answer-' + esc(page.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-answer data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
       renderSentenceFeedback(item, response, status) +
       '<div class="verb-sentence-actions">' + action + '</div>' +
       '</article></div>';
@@ -615,12 +859,26 @@
     const contentPage = localized(page);
     const contentMode = localized(mode);
     const session = getVerbSession(mode.id);
-    const practiceContent = mode.id === 'sentences'
+    const practiceContent = isMixedMode(mode)
+      ? renderMixedPractice(page, mode, session)
+      : isChoiceMode(mode)
+      ? renderChoicePractice(page, mode, session)
+      : isStreakMode(mode)
       ? renderSentencePractice(page, mode, session)
       : '<div class="verb-prompt-list">' + mode.items.map((item, index) => renderVerbRow(item, session, index)).join('') + '</div><div class="verb-form-actions"><button type="button" class="button button-primary" data-check-verb>' + esc(tr('verb.check')) + '</button><button type="button" class="button button-secondary" data-reset-verb>' + esc(tr('verb.reset')) + '</button></div>' + renderVerbResult(page, mode, session);
-    view.innerHTML = '<div class="fade-in exercise-page"><section class="exercise-hero"><div><p class="view-kicker">' + esc(tr('verb.practiceKicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(tr('verb.heroIntro', { verb: contentPage.verb, copy: contentPage.heroCopy })) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(tr('verb.present')) + '</span><span class="meta-pill">' + esc(tr('verb.challenges', { count: mode.items.length })) + '</span><span class="meta-pill">' + esc(tr('verb.noRush')) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>' + esc(contentPage.verb) + '</span><small>' + esc(contentPage.meaning) + '</small></div></section>' +
-      '<div class="practice-tabs" role="tablist" aria-label="' + esc(tr('verb.tabsAria')) + '"><button type="button" class="practice-tab' + (mode.id === 'conjugation' ? ' is-active' : '') + '" data-exercise-mode="conjugation" role="tab" aria-controls="verb-practice-panel" aria-selected="' + (mode.id === 'conjugation' ? 'true' : 'false') + '"><span>01</span><strong>' + esc(tr('verb.conjugation')) + '</strong><small>' + esc(tr('verb.conjugationShort')) + '</small></button><button type="button" class="practice-tab' + (mode.id === 'sentences' ? ' is-active' : '') + '" data-exercise-mode="sentences" role="tab" aria-controls="verb-practice-panel" aria-selected="' + (mode.id === 'sentences' ? 'true' : 'false') + '"><span>02</span><strong>' + esc(tr('verb.sentences')) + '</strong><small>' + esc(tr('verb.sentencesShort')) + '</small></button></div>' +
-      '<section class="verb-practice-card" id="verb-practice-panel" role="tabpanel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(contentMode.shortLabel) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(tr('verb.equals', { verb: contentPage.verb, meaning: contentPage.meaning })) + '</span></div></div>' + practiceContent + '</section>' +
+    const practiceModes = Object.values(page.modes).filter((tab) => tab.visible !== false);
+    const heroIntro = contentPage.heroIntro || tr('verb.heroIntro', { verb: contentPage.verb, copy: contentPage.heroCopy });
+    const primaryMeta = contentPage.metaPrimary || tr('verb.present');
+    const tertiaryMeta = contentPage.metaThird || tr('verb.noRush');
+    const ruleCopy = contentPage.ruleCopy || tr('verb.equals', { verb: contentPage.verb, meaning: contentPage.meaning });
+    const tabs = practiceModes.map((tab, index) => {
+      const contentTab = localized(tab);
+      const active = mode.id === tab.id;
+      return '<button type="button" class="practice-tab' + (active ? ' is-active' : '') + '" data-exercise-mode="' + esc(tab.id) + '" role="tab" aria-controls="verb-practice-panel" aria-selected="' + (active ? 'true' : 'false') + '"><span>' + String(index + 1).padStart(2, '0') + '</span><strong>' + esc(contentTab.label) + '</strong><small>' + esc(contentTab.shortLabel) + '</small></button>';
+    }).join('');
+    view.innerHTML = '<div class="fade-in exercise-page"><section class="exercise-hero"><div><p class="view-kicker">' + esc(tr('verb.practiceKicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(heroIntro) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(primaryMeta) + '</span><span class="meta-pill">' + esc(tr('verb.challenges', { count: mode.items.length })) + '</span><span class="meta-pill">' + esc(tertiaryMeta) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>' + esc(contentPage.verb) + '</span><small>' + esc(contentPage.meaning) + '</small></div></section>' +
+      '<div class="practice-tabs" role="tablist" aria-label="' + esc(tr('verb.tabsAria')) + '">' + tabs + '</div>' +
+      '<section class="verb-practice-card" id="verb-practice-panel" role="tabpanel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(contentMode.shortLabel) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(ruleCopy) + '</span></div></div>' + practiceContent + '</section>' +
       '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('tip.speak')) + '</p></div>';
     icons.refresh(view);
   }
@@ -822,7 +1080,7 @@
     updateBreadcrumb();
     if (ui.route === 'dashboard') renderDashboard();
     else if (ui.route === 'review') renderReview();
-    else if (ui.route === 'exercises' || ui.route === 'exercises-haben') renderExercises();
+    else if (isExerciseRoute(ui.route)) renderExercises();
     else if (isVocabularyRoute(ui.route)) renderVocabularyPage();
     else renderLesson(getLesson(ui.activeLessonId));
     icons.refresh(document);
@@ -866,6 +1124,22 @@
     if (event.target.closest('[data-toggle-sidebar]')) { toggleSidebar(); return; }
     if (event.target.closest('[data-close-sidebar]')) { closeSidebar(); return; }
     if (event.target.closest('[data-reset-progress]')) { resetAllProgress(); return; }
+    const verbOption = event.target.closest('[data-verb-option]');
+    if (verbOption) {
+      const mode = getVerbMode();
+      const session = getVerbSession(mode.id);
+      const item = getCurrentVerbSentence(mode, session);
+      if ((!isChoiceMode(mode) && !isChoiceItem(item)) || session.status !== 'idle') return;
+      const optionId = verbOption.dataset.verbOptionId;
+      if (!item || !optionId || !item.optionIds.includes(optionId)) return;
+      session.answers[item.id] = optionId;
+      verbOption.closest('.verb-choice-options').querySelectorAll('[data-verb-option]').forEach((option) => {
+        const selected = option.dataset.verbOptionId === optionId;
+        option.classList.toggle('is-selected', selected);
+        option.setAttribute('aria-checked', String(selected));
+      });
+      return;
+    }
     const option = event.target.closest('[data-option]');
     if (option) {
       const card = option.closest('[data-exercise-card]');
@@ -904,7 +1178,7 @@
     if (event.target.matches('.verb-input')) {
       const mode = getVerbMode();
       const session = getVerbSession(mode.id);
-      if (mode.id === 'sentences') {
+      if (isStreakMode(mode)) {
         const item = getCurrentVerbSentence(mode, session);
         if (item) session.answers[item.id] = event.target.value;
         session.checked = false;
@@ -942,7 +1216,7 @@
   function nextVerbSentence() {
     const mode = getVerbMode();
     const session = getVerbSession(mode.id);
-    if (mode.id !== 'sentences' || session.status !== 'correct') return;
+    if (!isStreakMode(mode) || session.status !== 'correct') return;
     if (session.currentIndex >= session.order.length - 1) {
       session.completed = true;
       renderExercises();
@@ -952,13 +1226,13 @@
     session.status = 'idle';
     session.checked = false;
     renderExercises();
-    focusVerbAnswer();
+    focusVerbInteraction();
   }
 
   function retryVerbSentence() {
     const mode = getVerbMode();
     const session = getVerbSession(mode.id);
-    if (mode.id !== 'sentences') return;
+    if (!isStreakMode(mode)) return;
     if (session.completed) {
       resetVerbPractice();
       return;
@@ -971,7 +1245,7 @@
     session.status = 'idle';
     session.checked = false;
     renderExercises();
-    focusVerbAnswer();
+    focusVerbInteraction();
   }
 
   function checkSentencePractice() {
@@ -987,6 +1261,11 @@
     const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
     const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
     session.answers[item.id] = response;
+    recordStreakResult(session, item, correct);
+    renderExercises();
+  }
+
+  function recordStreakResult(session, item, correct) {
     session.results[item.id] = correct;
     session.checked = true;
     session.status = correct ? 'correct' : 'wrong';
@@ -997,12 +1276,60 @@
       session.streak = 0;
     }
     if (correct && session.currentIndex === session.order.length - 1) session.completed = true;
+  }
+
+  function checkChoicePractice() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    const item = getCurrentVerbSentence(mode, session);
+    if (!item) return;
+    const selectedOptionId = session.answers[item.id];
+    if (typeof selectedOptionId !== 'string' || !item.optionIds.includes(selectedOptionId)) {
+      showToast(tr('toast.answerRequired'));
+      return;
+    }
+    const correct = selectedOptionId === item.correctOptionId;
+    recordStreakResult(session, item, correct);
+    renderExercises();
+  }
+
+  function checkMixedPractice() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    const item = getCurrentVerbSentence(mode, session);
+    if (!item) return;
+    if (isChoiceItem(item)) {
+      const selectedOptionId = session.answers[item.id];
+      if (typeof selectedOptionId !== 'string' || !item.optionIds.includes(selectedOptionId)) {
+        showToast(tr('toast.answerRequired'));
+        return;
+      }
+      recordStreakResult(session, item, selectedOptionId === item.correctOptionId);
+    } else {
+      const response = String(session.answers[item.id] || '').trim();
+      if (!response) {
+        showToast(tr('toast.answerRequired'));
+        return;
+      }
+      const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
+      const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
+      session.answers[item.id] = response;
+      recordStreakResult(session, item, correct);
+    }
     renderExercises();
   }
 
   function checkVerbPractice() {
     const mode = getVerbMode();
-    if (mode.id === 'sentences') {
+    if (isMixedMode(mode)) {
+      checkMixedPractice();
+      return;
+    }
+    if (isChoiceMode(mode)) {
+      checkChoicePractice();
+      return;
+    }
+    if (isStreakMode(mode)) {
       checkSentencePractice();
       return;
     }

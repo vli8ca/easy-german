@@ -23,13 +23,14 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 
 ## Highlights
 
-- 10 structured A1 lessons, from pronunciation to real-life modal verbs
+- 11 structured A1 lessons, from pronunciation to real-life modal verbs
 - Portuguese and English interface localization
 - Clear explanations with German examples and translations
 - Pronunciation support using the browser's German text-to-speech engine
 - Vocabulary pages for words, phrases, numbers, weekdays, and months
 - Interactive exercises with instant feedback and explanations
 - Dedicated practice for `sein` and `haben`
+- Number-writing practice from 1 to 10, in order or randomized
 - 50 quick `sein` sentences and 50 quick `haben` sentences
 - Progress tracking stored locally in the browser
 - Responsive layout for mobile, tablet, and desktop
@@ -49,6 +50,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 | 08 | Negation | Use `nicht` and `kein` to say “not” and “no” |
 | 09 | Accusative case | Understand who does the action and what receives it |
 | 10 | Modals and real-life German | `können`, `müssen`, `möchten`, and practical situations |
+| 11 | Connectors and prepositions | Join ideas and talk about place, direction, time, and relationships |
 
 ## Practice areas
 
@@ -70,6 +72,7 @@ The practice area focuses on the verbs beginners need constantly:
 
 - Conjugation drills for `sein` and `haben`
 - Short translation prompts
+- Number-writing drills from 1 to 10, with ordered and randomized modes
 - One-at-a-time interaction with streak feedback
 - 50 beginner-friendly sentences for each verb
 - German answers with keyboard-friendly support for umlauts and `ß`
