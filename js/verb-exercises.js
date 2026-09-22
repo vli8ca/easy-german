@@ -88,6 +88,71 @@
     makeChoiceItem('sein-choice-50', 'É a sua vez.', 'It is your turn.', 'Vocabulário novo: an der Reihe = na sua vez · du + sein', 'New vocabulary: an der Reihe = your turn · du + sein', ['Du bin an der Reihe', 'Du bist an der Reihe', 'Du ist an der Reihe', 'Du sind an der Reihe'], 1)
   ];
 
+  function makeHabenChoiceItem(spec) {
+    const prefix = spec.prefix ? spec.prefix + ' ' : '';
+    const options = [spec.correctForm].concat(spec.distractors).map((form) => {
+      return prefix ? prefix + form + ' ' + spec.subject + spec.complement : spec.subject + ' ' + form + spec.complement;
+    });
+    return makeChoiceItem(spec.id, spec.prompt, spec.promptEn, spec.detail, spec.detailEn, options, 0);
+  }
+
+  const habenChoiceItems = [
+    { id: 'haben-choice-01', prompt: 'Eu tenho uma caneta azul.', promptEn: 'I have a blue pen.', detail: 'Dica: ich + haben · einen blauen Stift', detailEn: 'Hint: ich + haben · a blue pen', subject: 'Ich', complement: ' einen blauen Stift.', correctForm: 'habe', distractors: ['hast', 'hat', 'haben'] },
+    { id: 'haben-choice-02', prompt: 'Eu tenho uma irmã mais velha.', promptEn: 'I have an older sister.', detail: 'Dica: ich + haben · eine ältere Schwester', detailEn: 'Hint: ich + haben · an older sister', subject: 'Ich', complement: ' eine ältere Schwester.', correctForm: 'habe', distractors: ['habt', 'hat', 'haben'] },
+    { id: 'haben-choice-03', prompt: 'Eu tenho um mapa da cidade.', promptEn: 'I have a city map.', detail: 'Dica: ich + haben · der Stadtplan', detailEn: 'Hint: ich + haben · the city map', subject: 'Ich', complement: ' einen Stadtplan.', correctForm: 'habe', distractors: ['hast', 'habt', 'hat'] },
+    { id: 'haben-choice-04', prompt: 'Eu tenho duas chaves.', promptEn: 'I have two keys.', detail: 'Dica: ich + haben · zwei Schlüssel', detailEn: 'Hint: ich + haben · two keys', subject: 'Ich', complement: ' zwei Schlüssel.', correctForm: 'habe', distractors: ['haben', 'hast', 'habt'] },
+    { id: 'haben-choice-05', prompt: 'Eu tenho uma pergunta importante.', promptEn: 'I have an important question.', detail: 'Dica: ich + haben · eine wichtige Frage', detailEn: 'Hint: ich + haben · an important question', subject: 'Ich', complement: ' eine wichtige Frage.', correctForm: 'habe', distractors: ['hat', 'hast', 'habt'] },
+    { id: 'haben-choice-06', prompt: 'Eu tenho um quarto pequeno.', promptEn: 'I have a small room.', detail: 'Dica: ich + haben · ein kleines Zimmer', detailEn: 'Hint: ich + haben · a small room', subject: 'Ich', complement: ' ein kleines Zimmer.', correctForm: 'habe', distractors: ['haben', 'hat', 'hast'] },
+    { id: 'haben-choice-07', prompt: 'Eu tenho um plano para amanhã.', promptEn: 'I have a plan for tomorrow.', detail: 'Dica: ich + haben · einen Plan für morgen', detailEn: 'Hint: ich + haben · a plan for tomorrow', subject: 'Ich', complement: ' einen Plan für morgen.', correctForm: 'habe', distractors: ['habt', 'haben', 'hat'] },
+    { id: 'haben-choice-08', prompt: 'Eu tenho um caderno novo.', promptEn: 'I have a new notebook.', detail: 'Dica: ich + haben · ein neues Heft', detailEn: 'Hint: ich + haben · a new notebook', subject: 'Ich', complement: ' ein neues Heft.', correctForm: 'habe', distractors: ['hast', 'hat', 'habt'] },
+    { id: 'haben-choice-09', prompt: 'Eu tenho medo de cães.', promptEn: 'I am afraid of dogs.', detail: 'Dica: ich + haben · Angst vor Hunden', detailEn: 'Hint: ich + haben · afraid of dogs', subject: 'Ich', complement: ' Angst vor Hunden.', correctForm: 'habe', distractors: ['haben', 'hast', 'hat'] },
+    { id: 'haben-choice-10', prompt: 'Depois do esporte, estou com sede.', promptEn: 'After sports, I am thirsty.', detail: 'Dica: inversão · Nach dem Sport + ich + haben', detailEn: 'Hint: inversion · Nach dem Sport + ich + haben', prefix: 'Nach dem Sport', subject: 'ich', complement: ' Durst.', correctForm: 'habe', distractors: ['hast', 'haben', 'habt'] },
+
+    { id: 'haben-choice-11', prompt: 'Você tem um guarda-chuva.', promptEn: 'You have an umbrella.', detail: 'Dica: du + haben · einen Regenschirm', detailEn: 'Hint: du + haben · an umbrella', subject: 'Du', complement: ' einen Regenschirm.', correctForm: 'hast', distractors: ['habe', 'hat', 'habt'] },
+    { id: 'haben-choice-12', prompt: 'Você tem uma bicicleta nova.', promptEn: 'You have a new bicycle.', detail: 'Dica: du + haben · ein neues Fahrrad', detailEn: 'Hint: du + haben · a new bicycle', subject: 'Du', complement: ' ein neues Fahrrad.', correctForm: 'hast', distractors: ['haben', 'habe', 'hat'] },
+    { id: 'haben-choice-13', prompt: 'Você tem tempo para a reunião.', promptEn: 'You have time for the meeting.', detail: 'Dica: du + haben · Zeit für das Treffen', detailEn: 'Hint: du + haben · time for the meeting', subject: 'Du', complement: ' Zeit für das Treffen.', correctForm: 'hast', distractors: ['hat', 'habt', 'haben'] },
+    { id: 'haben-choice-14', prompt: 'Você tem uma mensagem para mim.', promptEn: 'You have a message for me.', detail: 'Dica: du + haben · eine Nachricht für mich', detailEn: 'Hint: du + haben · a message for me', subject: 'Du', complement: ' eine Nachricht für mich.', correctForm: 'hast', distractors: ['habe', 'haben', 'habt'] },
+    { id: 'haben-choice-15', prompt: 'Você tem um ingresso para o concerto.', promptEn: 'You have a ticket for the concert.', detail: 'Dica: du + haben · eine Eintrittskarte', detailEn: 'Hint: du + haben · a ticket', subject: 'Du', complement: ' eine Eintrittskarte für das Konzert.', correctForm: 'hast', distractors: ['hat', 'habe', 'haben'] },
+    { id: 'haben-choice-16', prompt: 'Você tem uma ideia melhor.', promptEn: 'You have a better idea.', detail: 'Dica: du + haben · eine bessere Idee', detailEn: 'Hint: du + haben · a better idea', subject: 'Du', complement: ' eine bessere Idee.', correctForm: 'hast', distractors: ['habt', 'hat', 'habe'] },
+    { id: 'haben-choice-17', prompt: 'Você tem um casaco quente.', promptEn: 'You have a warm jacket.', detail: 'Dica: du + haben · eine warme Jacke', detailEn: 'Hint: du + haben · a warm jacket', subject: 'Du', complement: ' eine warme Jacke.', correctForm: 'hast', distractors: ['haben', 'habe', 'habt'] },
+    { id: 'haben-choice-18', prompt: 'Você tem poucos minutos.', promptEn: 'You have a few minutes.', detail: 'Dica: du + haben · wenige Minuten', detailEn: 'Hint: du + haben · a few minutes', subject: 'Du', complement: ' wenige Minuten.', correctForm: 'hast', distractors: ['hat', 'habe', 'haben'] },
+    { id: 'haben-choice-19', prompt: 'Hoje à noite, você tem sorte.', promptEn: 'Tonight, you are lucky.', detail: 'Dica: inversão · Heute Abend + du + haben', detailEn: 'Hint: inversion · Heute Abend + du + haben', prefix: 'Heute Abend', subject: 'du', complement: ' Glück.', correctForm: 'hast', distractors: ['habe', 'haben', 'habt'] },
+    { id: 'haben-choice-20', prompt: 'Você está com dor de cabeça.', promptEn: 'You have a headache.', detail: 'Dica: du + haben · Kopfschmerzen', detailEn: 'Hint: du + haben · a headache', subject: 'Du', complement: ' Kopfschmerzen.', correctForm: 'hast', distractors: ['hat', 'habt', 'habe'] },
+
+    { id: 'haben-choice-21', prompt: 'Ele tem uma bicicleta vermelha.', promptEn: 'He has a red bicycle.', detail: 'Dica: er + haben · ein rotes Fahrrad', detailEn: 'Hint: er + haben · a red bicycle', subject: 'Er', complement: ' ein rotes Fahrrad.', correctForm: 'hat', distractors: ['habe', 'hast', 'haben'] },
+    { id: 'haben-choice-22', prompt: 'Ele tem uma consulta na terça-feira.', promptEn: 'He has an appointment on Tuesday.', detail: 'Dica: er + haben · am Dienstag', detailEn: 'Hint: er + haben · on Tuesday', subject: 'Er', complement: ' am Dienstag einen Termin.', correctForm: 'hat', distractors: ['habt', 'hast', 'haben'] },
+    { id: 'haben-choice-23', prompt: 'Ele tem um quarto no hotel.', promptEn: 'He has a room in the hotel.', detail: 'Dica: er + haben · ein Zimmer', detailEn: 'Hint: er + haben · a room', subject: 'Er', complement: ' ein Zimmer im Hotel.', correctForm: 'hat', distractors: ['habe', 'haben', 'hast'] },
+    { id: 'haben-choice-24', prompt: 'Ele tem uma solução simples.', promptEn: 'He has a simple solution.', detail: 'Dica: er + haben · eine einfache Lösung', detailEn: 'Hint: er + haben · a simple solution', subject: 'Er', complement: ' eine einfache Lösung.', correctForm: 'hat', distractors: ['hast', 'habt', 'habe'] },
+    { id: 'haben-choice-25', prompt: 'Ele tem três irmãos.', promptEn: 'He has three brothers.', detail: 'Dica: er + haben · drei Brüder', detailEn: 'Hint: er + haben · three brothers', subject: 'Er', complement: ' drei Brüder.', correctForm: 'hat', distractors: ['haben', 'hast', 'habt'] },
+    { id: 'haben-choice-26', prompt: 'Ela tem uma planta na sala.', promptEn: 'She has a plant in the living room.', detail: 'Dica: sie + haben · eine Pflanze', detailEn: 'Hint: sie + haben · a plant', subject: 'Sie', complement: ' eine Pflanze im Wohnzimmer.', correctForm: 'hat', distractors: ['habe', 'haben', 'habt'] },
+    { id: 'haben-choice-27', prompt: 'Ela tem uma reunião às nove.', promptEn: 'She has a meeting at nine.', detail: 'Dica: sie + haben · um neun Uhr', detailEn: 'Hint: sie + haben · at nine', subject: 'Sie', complement: ' um neun Uhr eine Besprechung.', correctForm: 'hat', distractors: ['hast', 'habe', 'haben'] },
+    { id: 'haben-choice-28', prompt: 'Isso tem um significado especial.', promptEn: 'It has a special meaning.', detail: 'Dica: es + haben · eine besondere Bedeutung', detailEn: 'Hint: es + haben · a special meaning', subject: 'Es', complement: ' eine besondere Bedeutung.', correctForm: 'hat', distractors: ['habe', 'habt', 'haben'] },
+    { id: 'haben-choice-29', prompt: 'A criança tem um brinquedo novo.', promptEn: 'The child has a new toy.', detail: 'Dica: das Kind + haben · ein neues Spielzeug', detailEn: 'Hint: das Kind + haben · a new toy', subject: 'Das Kind', complement: ' ein neues Spielzeug.', correctForm: 'hat', distractors: ['hast', 'haben', 'habe'] },
+    { id: 'haben-choice-30', prompt: 'O professor tem um marcador.', promptEn: 'The teacher has a marker.', detail: 'Dica: der Lehrer + haben · einen Marker', detailEn: 'Hint: der Lehrer + haben · a marker', subject: 'Der Lehrer', complement: ' einen Marker.', correctForm: 'hat', distractors: ['habt', 'habe', 'haben'] },
+
+    { id: 'haben-choice-31', prompt: 'Nós temos um jardim atrás da casa.', promptEn: 'We have a garden behind the house.', detail: 'Dica: wir + haben · einen Garten hinter dem Haus', detailEn: 'Hint: wir + haben · a garden behind the house', subject: 'Wir', complement: ' einen Garten hinter dem Haus.', correctForm: 'haben', distractors: ['habe', 'habt', 'hat'] },
+    { id: 'haben-choice-32', prompt: 'Nós temos muitos livros.', promptEn: 'We have many books.', detail: 'Dica: wir + haben · viele Bücher', detailEn: 'Hint: wir + haben · many books', subject: 'Wir', complement: ' viele Bücher.', correctForm: 'haben', distractors: ['hast', 'hat', 'habt'] },
+    { id: 'haben-choice-33', prompt: 'Na sexta-feira, nós temos uma reunião.', promptEn: 'On Friday, we have a meeting.', detail: 'Dica: inversão · Am Freitag + wir + haben', detailEn: 'Hint: inversion · Am Freitag + wir + haben', prefix: 'Am Freitag', subject: 'wir', complement: ' eine Besprechung.', correctForm: 'haben', distractors: ['habe', 'habt', 'hat'] },
+    { id: 'haben-choice-34', prompt: 'Nós temos um problema com o computador.', promptEn: 'We have a problem with the computer.', detail: 'Dica: wir + haben · ein Problem', detailEn: 'Hint: wir + haben · a problem', subject: 'Wir', complement: ' ein Problem mit dem Computer.', correctForm: 'haben', distractors: ['hast', 'habe', 'habt'] },
+    { id: 'haben-choice-35', prompt: 'Nós temos planos para o fim de semana.', promptEn: 'We have plans for the weekend.', detail: 'Dica: wir + haben · Pläne für das Wochenende', detailEn: 'Hint: wir + haben · plans for the weekend', subject: 'Wir', complement: ' Pläne für das Wochenende.', correctForm: 'haben', distractors: ['hat', 'hast', 'habt'] },
+    { id: 'haben-choice-36', prompt: 'Eles têm uma casa perto da escola.', promptEn: 'They have a house near the school.', detail: 'Dica: sie + haben · ein Haus nahe der Schule', detailEn: 'Hint: sie + haben · a house near the school', subject: 'Sie', complement: ' ein Haus nahe der Schule.', correctForm: 'haben', distractors: ['habe', 'hat', 'habt'] },
+    { id: 'haben-choice-37', prompt: 'Eles têm duas malas.', promptEn: 'They have two suitcases.', detail: 'Dica: sie + haben · zwei Koffer', detailEn: 'Hint: sie + haben · two suitcases', subject: 'Sie', complement: ' zwei Koffer.', correctForm: 'haben', distractors: ['hast', 'habe', 'hat'] },
+    { id: 'haben-choice-38', prompt: 'Eles têm uma resposta para a pergunta.', promptEn: 'They have an answer to the question.', detail: 'Dica: sie + haben · eine Antwort', detailEn: 'Hint: sie + haben · an answer', subject: 'Sie', complement: ' eine Antwort auf die Frage.', correctForm: 'haben', distractors: ['habt', 'hat', 'habe'] },
+    { id: 'haben-choice-39', prompt: 'As meninas têm uma festa hoje.', promptEn: 'The girls have a party today.', detail: 'Dica: die Mädchen + haben · heute', detailEn: 'Hint: die Mädchen + haben · today', subject: 'Die Mädchen', complement: ' heute eine Party.', correctForm: 'haben', distractors: ['hast', 'hat', 'habt'] },
+    { id: 'haben-choice-40', prompt: 'Meus pais têm um carro novo.', promptEn: 'My parents have a new car.', detail: 'Dica: meine Eltern + haben · ein neues Auto', detailEn: 'Hint: meine Eltern + haben · a new car', subject: 'Meine Eltern', complement: ' ein neues Auto.', correctForm: 'haben', distractors: ['habe', 'hat', 'habt'] },
+
+    { id: 'haben-choice-41', prompt: 'Vocês têm uma prova na segunda-feira.', promptEn: 'You have a test on Monday.', detail: 'Dica: ihr + haben · am Montag', detailEn: 'Hint: ihr + haben · on Monday', subject: 'Ihr', complement: ' am Montag eine Prüfung.', correctForm: 'habt', distractors: ['habe', 'hast', 'haben'] },
+    { id: 'haben-choice-42', prompt: 'Vocês têm muita energia.', promptEn: 'You have a lot of energy.', detail: 'Dica: ihr + haben · viel Energie', detailEn: 'Hint: ihr + haben · a lot of energy', subject: 'Ihr', complement: ' viel Energie.', correctForm: 'habt', distractors: ['hat', 'haben', 'habe'] },
+    { id: 'haben-choice-43', prompt: 'Vocês têm um lugar na primeira fila.', promptEn: 'You have a seat in the first row.', detail: 'Dica: ihr + haben · einen Platz', detailEn: 'Hint: ihr + haben · a seat', subject: 'Ihr', complement: ' einen Platz in der ersten Reihe.', correctForm: 'habt', distractors: ['hast', 'hat', 'haben'] },
+    { id: 'haben-choice-44', prompt: 'Vocês têm um convite para a festa.', promptEn: 'You have an invitation to the party.', detail: 'Dica: ihr + haben · eine Einladung', detailEn: 'Hint: ihr + haben · an invitation', subject: 'Ihr', complement: ' eine Einladung zur Party.', correctForm: 'habt', distractors: ['habe', 'hat', 'haben'] },
+    { id: 'haben-choice-45', prompt: 'Vocês têm uma boa razão.', promptEn: 'You have a good reason.', detail: 'Dica: ihr + haben · einen guten Grund', detailEn: 'Hint: ihr + haben · a good reason', subject: 'Ihr', complement: ' einen guten Grund.', correctForm: 'habt', distractors: ['hast', 'habe', 'haben'] },
+    { id: 'haben-choice-46', prompt: 'Depois da caminhada, vocês estão com fome.', promptEn: 'After the walk, you are hungry.', detail: 'Dica: inversão · Nach dem Spaziergang + ihr + haben', detailEn: 'Hint: inversion · Nach dem Spaziergang + ihr + haben', prefix: 'Nach dem Spaziergang', subject: 'ihr', complement: ' Hunger.', correctForm: 'habt', distractors: ['habe', 'hat', 'haben'] },
+    { id: 'haben-choice-47', prompt: 'Vocês têm férias em agosto.', promptEn: 'You have vacation in August.', detail: 'Dica: ihr + haben · im August Urlaub', detailEn: 'Hint: ihr + haben · vacation in August', subject: 'Ihr', complement: ' im August Urlaub.', correctForm: 'habt', distractors: ['hast', 'haben', 'hat'] },
+    { id: 'haben-choice-48', prompt: 'Vocês têm um cachorro muito tranquilo.', promptEn: 'You have a very calm dog.', detail: 'Dica: ihr + haben · einen ruhigen Hund', detailEn: 'Hint: ihr + haben · a calm dog', subject: 'Ihr', complement: ' einen sehr ruhigen Hund.', correctForm: 'habt', distractors: ['habe', 'hast', 'haben'] },
+    { id: 'haben-choice-49', prompt: 'Vocês têm pouca água.', promptEn: 'You have little water.', detail: 'Dica: ihr + haben · wenig Wasser', detailEn: 'Hint: ihr + haben · little water', subject: 'Ihr', complement: ' wenig Wasser.', correctForm: 'habt', distractors: ['hat', 'habe', 'haben'] },
+    { id: 'haben-choice-50', prompt: 'No domingo, vocês têm tempo.', promptEn: 'On Sunday, you have time.', detail: 'Dica: inversão · Am Sonntag + ihr + haben', detailEn: 'Hint: inversion · Am Sonntag + ihr + haben', prefix: 'Am Sonntag', subject: 'ihr', complement: ' Zeit.', correctForm: 'habt', distractors: ['hast', 'habe', 'haben'] }
+  ].map(makeHabenChoiceItem);
+
   window.KlarVerbPractice = {
     pages: {
       sein: {
@@ -281,6 +346,7 @@
           },
           sentences: {
             id: 'sentences',
+            visible: false,
             label: 'Frases rápidas',
             label_en: 'Quick sentences',
             shortLabel: '02 · Na vida real',
@@ -341,6 +407,51 @@
               { id: 'haben-hobby', prompt: 'Você tem um hobby.', prompt_en: 'You have a hobby.', detail: 'Dica: du + haben', detail_en: 'Hint: du + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Du hast ein Hobby'] },
               { id: 'haben-breakfast', prompt: 'Ele toma café da manhã às sete.', prompt_en: 'He has breakfast at seven.', detail: 'Dica: er + haben', detail_en: 'Hint: er + haben', placeholder: 'Escreva a frase em alemão…', placeholder_en: 'Write the sentence in German…', answers: ['Er hat um sieben Uhr Frühstück'] }
             ]
+          },
+          multipleChoice: {
+            id: 'multipleChoice',
+            visible: false,
+            interaction: 'multiple-choice',
+            shuffle: true,
+            label: 'Escolha correta',
+            label_en: 'Choose correctly',
+            shortLabel: '03 · Alternativas',
+            shortLabel_en: '03 · Multiple choice',
+            title: 'Escolha a forma correta de haben',
+            title_en: 'Choose the correct form of haben',
+            instruction: 'Leia a frase em português e escolha uma das quatro opções em alemão. As alternativas são parecidas de propósito: observe o sujeito e a forma de haben.',
+            instruction_en: 'Read the sentence in Portuguese and choose one of the four German options. The alternatives are intentionally similar: watch the subject and the form of haben.',
+            checkLabel: 'Verificar alternativa',
+            checkLabel_en: 'Check answer',
+            nextLabel: 'Próxima alternativa',
+            nextLabel_en: 'Next question',
+            restartLabel: 'Recomeçar alternativas',
+            restartLabel_en: 'Restart questions',
+            completedCopy: 'Você praticou 50 alternativas de haben. Recomece quando quiser para reforçar o vocabulário.',
+            completedCopy_en: 'You practiced 50 haben multiple-choice questions. Restart whenever you want to reinforce the vocabulary.',
+            items: habenChoiceItems
+          },
+          mixed: {
+            id: 'mixed',
+            interaction: 'mixed',
+            shuffle: true,
+            label: 'Treino misto',
+            label_en: 'Mixed practice',
+            shortLabel: '02 · Frases + alternativas',
+            shortLabel_en: '02 · Sentences + choices',
+            title: 'Treine haben de dois jeitos',
+            title_en: 'Practice haben in two ways',
+            instruction: 'Uma questão por vez: em algumas você escreve a frase; em outras escolhe a alternativa correta. As duas formas treinam o mesmo verbo e ampliam seu vocabulário.',
+            instruction_en: 'One question at a time: sometimes you write the sentence; sometimes you choose the correct option. Both formats train the same verb and expand your vocabulary.',
+            checkLabel: 'Verificar resposta',
+            checkLabel_en: 'Check answer',
+            nextLabel: 'Próxima questão',
+            nextLabel_en: 'Next question',
+            restartLabel: 'Recomeçar treino misto',
+            restartLabel_en: 'Restart mixed practice',
+            completedCopy: 'Você praticou 100 questões de haben: 50 de escrita e 50 de alternativas.',
+            completedCopy_en: 'You practiced 100 haben questions: 50 written and 50 multiple-choice.',
+            items: []
           }
         }
       },
@@ -421,13 +532,17 @@
     }
   };
 
-  const seinPage = window.KlarVerbPractice.pages.sein;
-  const mixedWritingItems = seinPage.modes.sentences.items.map((item) => Object.assign({}, item, { interaction: 'text', questionType: 'Escrita', questionType_en: 'Writing' }));
-  const mixedChoiceItems = seinPage.modes.multipleChoice.items.map((item) => Object.assign({}, item, { interaction: 'multiple-choice', questionType: 'Múltipla escolha', questionType_en: 'Multiple choice' }));
-  const mixedItems = [];
-  for (let index = 0; index < Math.max(mixedWritingItems.length, mixedChoiceItems.length); index += 1) {
-    if (mixedWritingItems[index]) mixedItems.push(mixedWritingItems[index]);
-    if (mixedChoiceItems[index]) mixedItems.push(mixedChoiceItems[index]);
+  function buildMixedMode(page) {
+    const mixedWritingItems = page.modes.sentences.items.map((item) => Object.assign({}, item, { interaction: 'text', questionType: 'Escrita', questionType_en: 'Writing' }));
+    const mixedChoiceItems = page.modes.multipleChoice.items.map((item) => Object.assign({}, item, { interaction: 'multiple-choice', questionType: 'Múltipla escolha', questionType_en: 'Multiple choice' }));
+    const mixedItems = [];
+    for (let index = 0; index < Math.max(mixedWritingItems.length, mixedChoiceItems.length); index += 1) {
+      if (mixedWritingItems[index]) mixedItems.push(mixedWritingItems[index]);
+      if (mixedChoiceItems[index]) mixedItems.push(mixedChoiceItems[index]);
+    }
+    page.modes.mixed.items = mixedItems;
   }
-  seinPage.modes.mixed.items = mixedItems;
+
+  buildMixedMode(window.KlarVerbPractice.pages.sein);
+  buildMixedMode(window.KlarVerbPractice.pages.haben);
 }());

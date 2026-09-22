@@ -15,7 +15,7 @@ assert.match(html, /data-language="pt"/);
 assert.match(html, /data-language="en"/);
 assert.match(html, /data-i18n="language\.label"/);
 assert.match(html, /data-i18n-aria-label="language\.select"/);
-assert.match(html, /id="lesson-count">11<\/span>/);
+assert.match(html, /id="lesson-count">12<\/span>/);
 assert.match(fs.readFileSync(path.join(root, 'js', 'app.js'), 'utf8'), /lessonCount\.textContent = String\(lessons\.length\)/);
 assert.match(fs.readFileSync(path.join(root, 'css', 'styles.css'), 'utf8'), /\.order-answer:empty::before\s*\{\s*content:\s*attr\(data-placeholder\)/);
 

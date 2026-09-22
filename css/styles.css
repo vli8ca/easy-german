@@ -516,6 +516,8 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .verb-rule-note-mark .lucide { width: 12px; height: 12px; }
 .verb-prompt-list { display: grid; gap: 8px; padding: 18px 0 2px; }
 .verb-sentence-practice { padding: 20px 0 2px; }
+.sequential-progress { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 13px; margin-bottom: 12px; border: 1px solid #e4d9b5; border-radius: 12px; color: var(--ink-faint); background: #fffaf0; font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
+.sequential-progress strong { color: var(--teal-deep); font-size: 12px; letter-spacing: .03em; }
 .verb-streak-meter { display: grid; grid-template-columns: auto minmax(150px, 1fr) auto; gap: 10px 14px; align-items: center; margin-bottom: 12px; padding: 11px 13px; border: 1px solid #e4d9b5; border-radius: 12px; background: #fffaf0; }
 .verb-streak-summary { display: grid; grid-template-columns: auto auto; gap: 7px; align-items: end; min-width: max-content; }
 .verb-streak-summary span { color: #927526; font-family: var(--mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }

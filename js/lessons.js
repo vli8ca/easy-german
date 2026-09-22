@@ -3,7 +3,81 @@
 
   const lessons = [
     {
-      id: 'pronunciation', number: 1, title: 'Pronúncia e leitura',
+      id: 'first-sentences', number: 1, level: 'A1', practiceMode: 'sequential-translate',
+      title: 'Frases iniciais',
+      description: 'Aprenda suas primeiras frases em alemão para cumprimentar, se apresentar, falar da rotina e fazer perguntas simples.',
+      duration: '25 min', focus: 'Construir frases do dia a dia',
+      introduction: 'Nesta aula, você vai traduzir frases curtas e úteis, uma por uma. Começamos com cumprimentos e apresentações, passamos por casa, trabalho e horários e terminamos com perguntas básicas.',
+      objectives: ['Cumprimentar e se apresentar em alemão', 'Falar sobre lugares, rotina, família e horários', 'Fazer e entender perguntas simples no nível A1'],
+      sections: [],
+      vocabulary: [
+        { word: 'Hallo!', meaning: 'olá', example: 'Hallo!' },
+        { word: 'Guten Morgen!', meaning: 'bom dia', example: 'Guten Morgen!' },
+        { word: 'der Name', meaning: 'o nome', example: 'Mein Name ist Ana.' },
+        { word: 'heißen', meaning: 'chamar-se', example: 'Ich heiße Bruno.' },
+        { word: 'kommen aus', meaning: 'vir de', example: 'Ich komme aus Brasilien.' },
+        { word: 'wohnen', meaning: 'morar', example: 'Ich wohne in Berlin.' },
+        { word: 'sprechen', meaning: 'falar', example: 'Ich spreche Portugiesisch.' },
+        { word: 'der Bahnhof', meaning: 'a estação de trem', example: 'Wo ist der Bahnhof?' },
+        { word: 'die Familie', meaning: 'a família', example: 'Wir sind eine kleine Familie.' },
+        { word: 'der Zug', meaning: 'o trem', example: 'Wann kommt der Zug?' }
+      ],
+      summary: ['Cumprimentos e apresentações ajudam você a iniciar uma conversa.', 'Frases curtas podem falar de origem, cidade, rotina, família e horários.', 'O verbo conjugado aparece cedo na frase em declarações e perguntas.', 'Aprenda cada frase como um bloco útil e observe as palavras que se repetem.', 'A prática sequencial reforça a tradução do português para o alemão.'],
+      exercises: [
+        { id: 'fs1', type: 'translate', prompt: 'Traduza para o alemão: “Olá!”', answer: 'Hallo!', answers: ['Hallo!'], explanation: 'Hallo! é uma forma simples e comum de dizer “Olá!” em alemão.' },
+        { id: 'fs2', type: 'translate', prompt: 'Traduza para o alemão: “Bom dia!”', answer: 'Guten Morgen!', answers: ['Guten Morgen!'], explanation: 'Guten Morgen! significa “Bom dia!” e é usado pela manhã.' },
+        { id: 'fs3', type: 'translate', prompt: 'Traduza para o alemão: “Meu nome é Ana.”', answer: 'Mein Name ist Ana.', answers: ['Mein Name ist Ana.'], explanation: 'Mein Name ist Ana. apresenta seu nome literalmente como “Meu nome é Ana”.' },
+        { id: 'fs4', type: 'translate', prompt: 'Traduza para o alemão: “Eu me chamo Bruno.”', answer: 'Ich heiße Bruno.', answers: ['Ich heiße Bruno.'], explanation: 'Ich heiße Bruno. usa heiße para dizer “eu me chamo”.' },
+        { id: 'fs5', type: 'translate', prompt: 'Traduza para o alemão: “Eu venho do Brasil.”', answer: 'Ich komme aus Brasilien.', answers: ['Ich komme aus Brasilien.'], explanation: 'A expressão Ich komme aus significa “Eu venho de” ou “Eu sou de”.' },
+        { id: 'fs6', type: 'translate', prompt: 'Traduza para o alemão: “Eu moro em Berlim.”', answer: 'Ich wohne in Berlin.', answers: ['Ich wohne in Berlin.'], explanation: 'Ich wohne in Berlin. significa “Eu moro em Berlim”.' },
+        { id: 'fs7', type: 'translate', prompt: 'Traduza para o alemão: “Eu falo português.”', answer: 'Ich spreche Portugiesisch.', answers: ['Ich spreche Portugiesisch.'], explanation: 'Ich spreche Portugiesisch. usa spreche para “falo” e Portugiesisch para “português”.' },
+        { id: 'fs8', type: 'translate', prompt: 'Traduza para o alemão: “Prazer em conhecer você.”', answer: 'Freut mich.', answers: ['Freut mich.'], explanation: 'Freut mich. é a forma curta e natural de dizer “Prazer” ou “Prazer em conhecer você”.' },
+        { id: 'fs9', type: 'translate', prompt: 'Traduza para o alemão: “Isto é um livro.”', answer: 'Das ist ein Buch.', answers: ['Das ist ein Buch.'], explanation: 'Das ist significa “Isto é” ou “Isso é”; ein Buch é “um livro”.' },
+        { id: 'fs10', type: 'translate', prompt: 'Traduza para o alemão: “Isto é uma bolsa.”', answer: 'Das ist eine Tasche.', answers: ['Das ist eine Tasche.'], explanation: 'Tasche é um substantivo feminino, por isso usamos eine: eine Tasche.' },
+        { id: 'fs11', type: 'translate', prompt: 'Traduza para o alemão: “O livro é novo.”', answer: 'Das Buch ist neu.', answers: ['Das Buch ist neu.'], explanation: 'Das Buch significa “o livro” e neu significa “novo”.' },
+        { id: 'fs12', type: 'translate', prompt: 'Traduza para o alemão: “A porta está aberta.”', answer: 'Die Tür ist offen.', answers: ['Die Tür ist offen.'], explanation: 'Die Tür é “a porta” e offen é “aberta” ou “aberto”.' },
+        { id: 'fs13', type: 'translate', prompt: 'Traduza para o alemão: “Eu tenho uma chave.”', answer: 'Ich habe einen Schlüssel.', answers: ['Ich habe einen Schlüssel.'], explanation: 'Ich habe significa “Eu tenho”; Schlüssel é masculino e aparece como einen Schlüssel aqui.' },
+        { id: 'fs14', type: 'translate', prompt: 'Traduza para o alemão: “Você tem um telefone.”', answer: 'Du hast ein Telefon.', answers: ['Du hast ein Telefon.'], explanation: 'Com du, o verbo haben fica hast: Du hast ein Telefon.' },
+        { id: 'fs15', type: 'translate', prompt: 'Traduza para o alemão: “O gato está no jardim.”', answer: 'Die Katze ist im Garten.', answers: ['Die Katze ist im Garten.'], explanation: 'Im é a contração de in dem; im Garten significa “no jardim”.' },
+        { id: 'fs16', type: 'translate', prompt: 'Traduza para o alemão: “Eu não tenho carro.”', answer: 'Ich habe kein Auto.', answers: ['Ich habe kein Auto.'], explanation: 'Kein nega um substantivo; kein Auto significa “nenhum carro” ou “não tenho carro”.' },
+        { id: 'fs17', type: 'translate', prompt: 'Traduza para o alemão: “Eu acordo às sete horas.”', answer: 'Ich stehe um sieben Uhr auf.', answers: ['Ich stehe um sieben Uhr auf.'], explanation: 'Stehe ... auf é o verbo separável aufstehen, “levantar-se” ou “acordar”.' },
+        { id: 'fs18', type: 'translate', prompt: 'Traduza para o alemão: “Eu tomo café da manhã às oito horas.”', answer: 'Ich frühstücke um acht Uhr.', answers: ['Ich frühstücke um acht Uhr.'], explanation: 'Frühstücken significa “tomar café da manhã”; um acht Uhr é “às oito horas”.' },
+        { id: 'fs19', type: 'translate', prompt: 'Traduza para o alemão: “Eu vou para o trabalho.”', answer: 'Ich gehe zur Arbeit.', answers: ['Ich gehe zur Arbeit.'], explanation: 'Zur é a contração de zu der; zur Arbeit significa “para o trabalho”.' },
+        { id: 'fs20', type: 'translate', prompt: 'Traduza para o alemão: “Eu trabalho de manhã.”', answer: 'Ich arbeite am Morgen.', answers: ['Ich arbeite am Morgen.'], explanation: 'Am Morgen significa “de manhã” ou literalmente “na manhã”.' },
+        { id: 'fs21', type: 'translate', prompt: 'Traduza para o alemão: “Eu aprendo alemão todos os dias.”', answer: 'Ich lerne jeden Tag Deutsch.', answers: ['Ich lerne jeden Tag Deutsch.'], explanation: 'Jeden Tag significa “todos os dias”; Deutsch é “alemão”.' },
+        { id: 'fs22', type: 'translate', prompt: 'Traduza para o alemão: “Eu bebo água.”', answer: 'Ich trinke Wasser.', answers: ['Ich trinke Wasser.'], explanation: 'Ich trinke Wasser. significa “Eu bebo água”.' },
+        { id: 'fs23', type: 'translate', prompt: 'Traduza para o alemão: “Ela lê um livro.”', answer: 'Sie liest ein Buch.', answers: ['Sie liest ein Buch.'], explanation: 'Com sie, lesen fica liest: Sie liest ein Buch.' },
+        { id: 'fs24', type: 'translate', prompt: 'Traduza para o alemão: “Nós cozinhamos à noite.”', answer: 'Wir kochen am Abend.', answers: ['Wir kochen am Abend.'], explanation: 'Wir kochen significa “nós cozinhamos”; am Abend é “à noite”.' },
+        { id: 'fs25', type: 'translate', prompt: 'Traduza para o alemão: “Você dorme cedo.”', answer: 'Du schläfst früh.', answers: ['Du schläfst früh.'], explanation: 'Com du, schlafen fica schläfst; früh significa “cedo”.' },
+        { id: 'fs26', type: 'translate', prompt: 'Traduza para o alemão: “Hoje estou cansado.”', answer: 'Heute bin ich müde.', answers: ['Heute bin ich müde.'], explanation: 'Quando Heute vem primeiro, o verbo aparece logo depois: Heute bin ich müde.' },
+        { id: 'fs27', type: 'translate', prompt: 'Traduza para o alemão: “Onde fica a estação de trem?”', answer: 'Wo ist der Bahnhof?', answers: ['Wo ist der Bahnhof?'], explanation: 'Wo pergunta “onde”; der Bahnhof é “a estação de trem”.' },
+        { id: 'fs28', type: 'translate', prompt: 'Traduza para o alemão: “A escola está aqui.”', answer: 'Die Schule ist hier.', answers: ['Die Schule ist hier.'], explanation: 'Die Schule significa “a escola” e hier significa “aqui”.' },
+        { id: 'fs29', type: 'translate', prompt: 'Traduza para o alemão: “Eu estou em casa.”', answer: 'Ich bin zu Hause.', answers: ['Ich bin zu Hause.'], explanation: 'Zu Hause é a expressão fixa para “em casa”.' },
+        { id: 'fs30', type: 'translate', prompt: 'Traduza para o alemão: “Nós estamos no escritório.”', answer: 'Wir sind im Büro.', answers: ['Wir sind im Büro.'], explanation: 'Wir sind significa “nós estamos”; im Büro significa “no escritório”.' },
+        { id: 'fs31', type: 'translate', prompt: 'Traduza para o alemão: “O supermercado está perto.”', answer: 'Der Supermarkt ist nah.', answers: ['Der Supermarkt ist nah.'], explanation: 'Nah significa “perto” e der Supermarkt é “o supermercado”.' },
+        { id: 'fs32', type: 'translate', prompt: 'Traduza para o alemão: “Eu vou ao banco.”', answer: 'Ich gehe zur Bank.', answers: ['Ich gehe zur Bank.'], explanation: 'Zur Bank significa “ao banco”, com a contração de zu der.' },
+        { id: 'fs33', type: 'translate', prompt: 'Traduza para o alemão: “Você trabalha em Munique?”', answer: 'Arbeitest du in München?', answers: ['Arbeitest du in München?'], explanation: 'Em uma pergunta sim/não, o verbo vem primeiro: Arbeitest du ...?' },
+        { id: 'fs34', type: 'translate', prompt: 'Traduza para o alemão: “Eles moram na Alemanha.”', answer: 'Sie wohnen in Deutschland.', answers: ['Sie wohnen in Deutschland.'], explanation: 'Sie pode significar “eles” neste contexto; wohnen significa “moram”.' },
+        { id: 'fs35', type: 'translate', prompt: 'Traduza para o alemão: “Que horas são?”', answer: 'Wie spät ist es?', answers: ['Wie spät ist es?'], explanation: 'Wie spät ist es? é a pergunta comum para saber as horas.' },
+        { id: 'fs36', type: 'translate', prompt: 'Traduza para o alemão: “São três horas.”', answer: 'Es ist drei Uhr.', answers: ['Es ist drei Uhr.'], explanation: 'Para dizer a hora, usamos Es ist ... Uhr.' },
+        { id: 'fs37', type: 'translate', prompt: 'Traduza para o alemão: “Hoje é segunda-feira.”', answer: 'Heute ist Montag.', answers: ['Heute ist Montag.'], explanation: 'Montag é “segunda-feira” e os dias da semana começam com letra maiúscula.' },
+        { id: 'fs38', type: 'translate', prompt: 'Traduza para o alemão: “Amanhã é terça-feira.”', answer: 'Morgen ist Dienstag.', answers: ['Morgen ist Dienstag.'], explanation: 'Morgen significa “amanhã” e Dienstag significa “terça-feira”.' },
+        { id: 'fs39', type: 'translate', prompt: 'Traduza para o alemão: “A aula começa às nove horas.”', answer: 'Der Unterricht beginnt um neun Uhr.', answers: ['Der Unterricht beginnt um neun Uhr.'], explanation: 'Unterricht significa “aula” ou “ensino”; beginnt é “começa”.' },
+        { id: 'fs40', type: 'translate', prompt: 'Traduza para o alemão: “Quando chega o trem?”', answer: 'Wann kommt der Zug?', answers: ['Wann kommt der Zug?'], explanation: 'Wann pergunta “quando”; der Zug é “o trem”.' },
+        { id: 'fs41', type: 'translate', prompt: 'Traduza para o alemão: “Eu tenho tempo hoje.”', answer: 'Ich habe heute Zeit.', answers: ['Ich habe heute Zeit.'], explanation: 'Ich habe Zeit significa “Eu tenho tempo”; heute adiciona “hoje”.' },
+        { id: 'fs42', type: 'translate', prompt: 'Traduza para o alemão: “Esta é minha mãe.”', answer: 'Das ist meine Mutter.', answers: ['Das ist meine Mutter.'], explanation: 'Meine Mutter significa “minha mãe”; Das ist apresenta a pessoa.' },
+        { id: 'fs43', type: 'translate', prompt: 'Traduza para o alemão: “Meu pai trabalha em casa.”', answer: 'Mein Vater arbeitet zu Hause.', answers: ['Mein Vater arbeitet zu Hause.'], explanation: 'Mein Vater é “meu pai” e zu Hause significa “em casa”.' },
+        { id: 'fs44', type: 'translate', prompt: 'Traduza para o alemão: “Eu tenho um irmão.”', answer: 'Ich habe einen Bruder.', answers: ['Ich habe einen Bruder.'], explanation: 'Bruder é masculino e objeto de haben, por isso usamos einen Bruder.' },
+        { id: 'fs45', type: 'translate', prompt: 'Traduza para o alemão: “Ela tem duas irmãs.”', answer: 'Sie hat zwei Schwestern.', answers: ['Sie hat zwei Schwestern.'], explanation: 'Com sie, haben fica hat; zwei Schwestern significa “duas irmãs”.' },
+        { id: 'fs46', type: 'translate', prompt: 'Traduza para o alemão: “Nós somos uma família pequena.”', answer: 'Wir sind eine kleine Familie.', answers: ['Wir sind eine kleine Familie.'], explanation: 'Wir sind significa “nós somos”; eine kleine Familie é “uma família pequena”.' },
+        { id: 'fs47', type: 'translate', prompt: 'Traduza para o alemão: “Como você se chama?”', answer: 'Wie heißt du?', answers: ['Wie heißt du?'], explanation: 'Wie heißt du? é a forma informal de perguntar o nome de alguém.' },
+        { id: 'fs48', type: 'translate', prompt: 'Traduza para o alemão: “De onde você vem?”', answer: 'Woher kommst du?', answers: ['Woher kommst du?'], explanation: 'Woher pergunta a origem; kommst du significa “você vem”.' },
+        { id: 'fs49', type: 'translate', prompt: 'Traduza para o alemão: “O que você faz?”', answer: 'Was machst du?', answers: ['Was machst du?'], explanation: 'Was significa “o que” e machst du significa “você faz”.' },
+        { id: 'fs50', type: 'translate', prompt: 'Traduza para o alemão: “Você fala inglês?”', answer: 'Sprichst du Englisch?', answers: ['Sprichst du Englisch?'], explanation: 'Sprichst du Englisch? é uma pergunta informal sobre falar inglês.' }
+      ]
+    },
+    {
+      id: 'pronunciation', number: 2, title: 'Pronúncia e leitura',
       description: 'Aprenda os sons que você vai ouvir todos os dias e ganhe segurança para ler suas primeiras palavras.',
       duration: '18 min', focus: 'Ouvir e reconhecer',
       introduction: 'O alemão fica muito mais fácil quando você para de tentar adivinhar os sons. Nesta aula, vamos criar um mapa de pronúncia prático: observe a combinação, ouça a palavra e repita em voz alta.',
@@ -39,7 +113,7 @@
       ]
     },
     {
-      id: 'pronouns', number: 2, title: 'Pronomes pessoais',
+      id: 'pronouns', number: 3, title: 'Pronomes pessoais',
       description: 'Descubra quem faz a ação e comece a montar frases sobre você, outras pessoas e o tratamento formal.',
       duration: '20 min', focus: 'Falar sobre pessoas',
       introduction: 'Pronomes são as pequenas palavras que ocupam o lugar de nomes. Eles aparecem antes do verbo e determinam a forma que o verbo vai assumir.',
@@ -68,7 +142,7 @@
       ]
     },
     {
-      id: 'sein-haben', number: 3, title: 'Sein e haben',
+      id: 'sein-haben', number: 4, title: 'Sein e haben',
       description: 'Domine os dois verbos mais importantes do alemão: ser/estar e ter, com frases úteis desde o primeiro dia.',
       duration: '24 min', focus: 'Bin, bist, habe',
       introduction: 'Sein e haben aparecem em apresentações, descrições, necessidades e situações do cotidiano. Vale aprender suas formas de cor, sempre ligadas a uma frase curta.',
@@ -107,7 +181,7 @@
       ]
     },
     {
-      id: 'sentence-structure', number: 4, title: 'Estrutura básica das frases',
+      id: 'sentence-structure', number: 5, title: 'Estrutura básica das frases',
       description: 'Entenda a posição 2 do verbo e construa frases claras mesmo quando você começa com hoje, amanhã ou outro elemento.',
       duration: '20 min', focus: 'Verbo na posição 2',
       introduction: 'A frase alemã fica previsível quando você encontra o verbo conjugado. Em uma declaração, ele costuma ocupar a segunda posição — o segundo elemento da frase, não necessariamente a segunda palavra.',
@@ -136,7 +210,7 @@
       ]
     },
     {
-      id: 'questions', number: 5, title: 'Perguntas em alemão',
+      id: 'questions', number: 6, title: 'Perguntas em alemão',
       description: 'Aprenda as palavras interrogativas essenciais e monte perguntas que resolvem situações reais na Alemanha.',
       duration: '21 min', focus: 'Perguntar e entender',
       introduction: 'Fazer uma boa pergunta é uma das formas mais rápidas de ganhar autonomia. Primeiro, reconheça a palavra interrogativa; depois, deixe o verbo fazer o trabalho.',
@@ -167,7 +241,7 @@
       ]
     },
     {
-      id: 'present-verbs', number: 6, title: 'Verbos no presente',
+      id: 'present-verbs', number: 7, title: 'Verbos no presente',
       description: 'Use a lógica dos verbos regulares para falar sobre trabalho, estudo, moradia, compras e rotina.',
       duration: '24 min', focus: 'Ações do dia a dia',
       introduction: 'A maioria dos verbos regulares segue um padrão claro. Retire -en para encontrar o radical e acrescente a terminação correspondente ao pronome.',
@@ -197,7 +271,7 @@
       ]
     },
     {
-      id: 'articles', number: 7, title: 'Artigos e gênero',
+      id: 'articles', number: 8, title: 'Artigos e gênero',
       description: 'Aprenda a tratar cada substantivo como um conjunto: artigo + palavra. Isso deixa sua fala muito mais natural.',
       duration: '22 min', focus: 'Der, die, das',
       introduction: 'Todo substantivo alemão tem gênero gramatical. Para quem fala português, a melhor estratégia é nunca memorizar a palavra sozinha: aprenda der Tisch, die Stadt, das Haus.',
@@ -231,7 +305,7 @@
       ]
     },
     {
-      id: 'negation', number: 8, title: 'Negação: nicht e kein',
+      id: 'negation', number: 9, title: 'Negação: nicht e kein',
       description: 'Diga que algo não acontece, não é caro ou que você não tem alguma coisa sem travar na hora de falar.',
       duration: '19 min', focus: 'Dizer “não”',
       introduction: 'Em alemão, há dois caminhos principais para negar. Pense primeiro no que você está negando: uma ação ou característica pede nicht; um substantivo sem artigo definido pede kein.',
@@ -264,7 +338,7 @@
       ]
     },
     {
-      id: 'accusative', number: 9, title: 'Acusativo',
+      id: 'accusative', number: 10, title: 'Acusativo',
       description: 'Uma introdução tranquila ao objeto direto: perceba por que der muda para den e ein para einen.',
       duration: '22 min', focus: 'Quem faz · o que recebe',
       introduction: 'Você já consegue formar frases. Agora vamos observar o que acontece com a pessoa ou coisa que recebe diretamente a ação. No início, concentre-se na mudança do masculino.',
@@ -298,7 +372,7 @@
       ]
     },
     {
-      id: 'modals-real-life', number: 10, title: 'Verbos modais e alemão da vida real',
+      id: 'modals-real-life', number: 11, title: 'Verbos modais e alemão da vida real',
       description: 'Feche o A1 Starter com kann, muss e möchte — e leve frases prontas para supermercado, restaurante, transporte e trabalho.',
       duration: '28 min', focus: 'Se virar na Alemanha',
       introduction: 'Verbos modais expressam o que você pode, precisa, quer ou gostaria de fazer. Eles deixam suas frases muito mais úteis: o modal conjugado fica na posição 2 e o infinitivo vai para o final.',
@@ -340,7 +414,7 @@
       ]
     },
     {
-      id: 'connectors-prepositions', number: 11, title: 'Conectores e preposições',
+      id: 'connectors-prepositions', number: 12, title: 'Conectores e preposições',
       description: 'Ligue ideias, indique lugar e diga para onde você vai com palavras pequenas que organizam a frase.',
       duration: '42 min', focus: 'Ligar ideias e indicar relações',
       introduction: 'Conectores unem ideias; preposições mostram relações como lugar, direção, tempo, companhia e finalidade. Nesta aula, vamos separar os dois papéis e praticar cada um com frases curtas.',
@@ -441,6 +515,79 @@
   ];
 
   const englishTranslations = {
+    'first-sentences': {
+      title: 'First sentences',
+      description: 'Learn your first German sentences for greetings, introductions, daily routines, simple questions, and everyday situations.',
+      focus: 'Building everyday sentences',
+      introduction: 'In this lesson, you will translate short, useful sentences one at a time. We start with greetings and introductions, move through home, work, and times, and finish with basic questions.',
+      objectives: ['Greet people and introduce yourself in German', 'Talk about places, routines, family, and times', 'Ask and understand simple A1 questions'],
+      sections: [],
+      vocabulary: [
+        { meaning: 'hello' },
+        { meaning: 'good morning' },
+        { meaning: 'the name' },
+        { meaning: 'to be called' },
+        { meaning: 'to come from' },
+        { meaning: 'to live' },
+        { meaning: 'to speak' },
+        { meaning: 'the train station' },
+        { meaning: 'the family' },
+        { meaning: 'the train' }
+      ],
+      summary: ['Greetings and introductions help you start a conversation.', 'Short sentences can talk about origin, city, routine, family, and times.', 'The conjugated verb appears early in German statements and questions.', 'Learn each sentence as a useful block and notice the words that repeat.', 'Sequential practice reinforces translating from Portuguese into German.'],
+      exercises: [
+        { prompt: 'Translate into German: “Hello!”', explanation: 'Hallo! is a simple and common way to say “Hello!” in German.' },
+        { prompt: 'Translate into German: “Good morning!”', explanation: 'Guten Morgen! means “Good morning!” and is used in the morning.' },
+        { prompt: 'Translate into German: “My name is Ana.”', explanation: 'Mein Name ist Ana. introduces your name literally as “My name is Ana.”' },
+        { prompt: 'Translate into German: “My name is Bruno.”', explanation: 'Ich heiße Bruno. uses heiße to say “my name is” or “I am called”.' },
+        { prompt: 'Translate into German: “I come from Brazil.”', explanation: 'Ich komme aus means “I come from” or “I am from”.' },
+        { prompt: 'Translate into German: “I live in Berlin.”', explanation: 'Ich wohne in Berlin. means “I live in Berlin.”' },
+        { prompt: 'Translate into German: “I speak Portuguese.”', explanation: 'Ich spreche Portugiesisch. uses spreche for “speak” and Portugiesisch for “Portuguese”.' },
+        { prompt: 'Translate into German: “Nice to meet you.”', explanation: 'Freut mich. is the short, natural way to say “Nice to meet you” or “My pleasure”.' },
+        { prompt: 'Translate into German: “This is a book.”', explanation: 'Das ist means “This is” or “That is”; ein Buch means “a book”.' },
+        { prompt: 'Translate into German: “This is a bag.”', explanation: 'Tasche is feminine, so German uses eine: eine Tasche.' },
+        { prompt: 'Translate into German: “The book is new.”', explanation: 'Das Buch means “the book” and neu means “new”.' },
+        { prompt: 'Translate into German: “The door is open.”', explanation: 'Die Tür means “the door” and offen means “open”.' },
+        { prompt: 'Translate into German: “I have a key.”', explanation: 'Ich habe means “I have”; Schlüssel is masculine and appears as einen Schlüssel here.' },
+        { prompt: 'Translate into German: “You have a telephone.”', explanation: 'With du, haben becomes hast: Du hast ein Telefon.' },
+        { prompt: 'Translate into German: “The cat is in the garden.”', explanation: 'Im is the contraction of in dem; im Garten means “in the garden”.' },
+        { prompt: 'Translate into German: “I do not have a car.”', explanation: 'Kein negates a noun; kein Auto means “no car” or “do not have a car”.' },
+        { prompt: 'Translate into German: “I get up at seven o’clock.”', explanation: 'Stehe ... auf comes from the separable verb aufstehen, “to get up”.' },
+        { prompt: 'Translate into German: “I have breakfast at eight o’clock.”', explanation: 'Frühstücken means “to have breakfast”; um acht Uhr means “at eight o’clock”.' },
+        { prompt: 'Translate into German: “I go to work.”', explanation: 'Zur is the contraction of zu der; zur Arbeit means “to work”.' },
+        { prompt: 'Translate into German: “I work in the morning.”', explanation: 'Am Morgen means “in the morning”, literally “in the morning”.' },
+        { prompt: 'Translate into German: “I learn German every day.”', explanation: 'Jeden Tag means “every day”; Deutsch means “German”.' },
+        { prompt: 'Translate into German: “I drink water.”', explanation: 'Ich trinke Wasser. means “I drink water.”' },
+        { prompt: 'Translate into German: “She reads a book.”', explanation: 'With sie, lesen becomes liest: Sie liest ein Buch.' },
+        { prompt: 'Translate into German: “We cook in the evening.”', explanation: 'Wir kochen means “we cook”; am Abend means “in the evening”.' },
+        { prompt: 'Translate into German: “You go to sleep early.”', explanation: 'With du, schlafen becomes schläfst; früh means “early”.' },
+        { prompt: 'Translate into German: “Today I am tired.”', explanation: 'When Heute comes first, the verb follows it: Heute bin ich müde.' },
+        { prompt: 'Translate into German: “Where is the train station?”', explanation: 'Wo asks “where”; der Bahnhof means “the train station”.' },
+        { prompt: 'Translate into German: “The school is here.”', explanation: 'Die Schule means “the school” and hier means “here”.' },
+        { prompt: 'Translate into German: “I am at home.”', explanation: 'Zu Hause is the fixed expression for “at home”.' },
+        { prompt: 'Translate into German: “We are in the office.”', explanation: 'Wir sind means “we are”; im Büro means “in the office”.' },
+        { prompt: 'Translate into German: “The supermarket is nearby.”', explanation: 'Nah means “near” or “nearby”, and der Supermarkt means “the supermarket”.' },
+        { prompt: 'Translate into German: “I go to the bank.”', explanation: 'Zur Bank means “to the bank”, with the contraction of zu der.' },
+        { prompt: 'Translate into German: “Do you work in Munich?”', explanation: 'In a yes-or-no question, the verb comes first: Arbeitest du ...?' },
+        { prompt: 'Translate into German: “They live in Germany.”', explanation: 'Sie can mean “they” in this context; wohnen means “live”.' },
+        { prompt: 'Translate into German: “What time is it?”', explanation: 'Wie spät ist es? is the common question for asking the time.' },
+        { prompt: 'Translate into German: “It is three o’clock.”', explanation: 'To tell the time, German uses Es ist ... Uhr.' },
+        { prompt: 'Translate into German: “Today is Monday.”', explanation: 'Montag means “Monday”, and days of the week begin with a capital letter.' },
+        { prompt: 'Translate into German: “Tomorrow is Tuesday.”', explanation: 'Morgen means “tomorrow” and Dienstag means “Tuesday”.' },
+        { prompt: 'Translate into German: “The class starts at nine o’clock.”', explanation: 'Unterricht means “class” or “lesson”; beginnt means “starts”.' },
+        { prompt: 'Translate into German: “When does the train arrive?”', explanation: 'Wann asks “when”; der Zug means “the train”.' },
+        { prompt: 'Translate into German: “I have time today.”', explanation: 'Ich habe Zeit means “I have time”; heute adds “today”.' },
+        { prompt: 'Translate into German: “This is my mother.”', explanation: 'Meine Mutter means “my mother”; Das ist introduces the person.' },
+        { prompt: 'Translate into German: “My father works at home.”', explanation: 'Mein Vater means “my father” and zu Hause means “at home”.' },
+        { prompt: 'Translate into German: “I have a brother.”', explanation: 'Bruder is masculine and is the object of haben, so German uses einen Bruder.' },
+        { prompt: 'Translate into German: “She has two sisters.”', explanation: 'With sie, haben becomes hat; zwei Schwestern means “two sisters”.' },
+        { prompt: 'Translate into German: “We are a small family.”', explanation: 'Wir sind means “we are”; eine kleine Familie means “a small family”.' },
+        { prompt: 'Translate into German: “What is your name?”', explanation: 'Wie heißt du? is the informal way to ask someone’s name.' },
+        { prompt: 'Translate into German: “Where do you come from?”', explanation: 'Woher asks about origin; kommst du means “do you come”.' },
+        { prompt: 'Translate into German: “What do you do?”', explanation: 'Was means “what” and machst du means “do you do”.' },
+        { prompt: 'Translate into German: “Do you speak English?”', explanation: 'Sprichst du Englisch? is an informal question about speaking English.' }
+      ]
+    },
     pronunciation: {
       title: 'Pronunciation and reading',
       description: 'Learn the sounds you will hear every day and gain confidence reading your first words.',

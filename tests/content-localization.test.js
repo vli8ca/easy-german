@@ -18,11 +18,11 @@ function requireEnglish(object, field, label) {
 }
 
 const lessons = loadWindow('js/lessons.js').KlarLessons;
-assert.equal(lessons.length, 11);
+assert.equal(lessons.length, 12);
 
 const connectorLesson = lessons.find((lesson) => lesson.id === 'connectors-prepositions');
 assert.ok(connectorLesson, 'the connectors and prepositions lesson must exist');
-assert.equal(connectorLesson.number, 11);
+assert.equal(connectorLesson.number, 12);
 assert.ok(connectorLesson.exercises.length >= 20, 'the lesson needs enough practice');
 assert.ok(connectorLesson.sections.some((section) => section.title === 'Conectores: uma ideia leva à outra'));
 assert.ok(connectorLesson.sections.some((section) => section.title === 'Preposições: lugar, direção, tempo e relações'));

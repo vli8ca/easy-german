@@ -217,6 +217,7 @@
   function getLesson(id) { return lessons.find((lesson) => lesson.id === id); }
   function getProgress() { return storage.getProgress(); }
   function isVocabularyRoute(route) { return vocabularyRoutes.includes(route); }
+  function isSequentialLesson(lesson) { return Boolean(lesson && lesson.practiceMode === 'sequential-translate'); }
 
   const exercisePageRoutes = {
     exercises: 'sein',
@@ -250,8 +251,49 @@
   }
 
   function getSession(lessonId) {
-    if (!ui.sessions[lessonId]) ui.sessions[lessonId] = { answers: {} };
+    const lesson = getLesson(lessonId);
+    if (!ui.sessions[lessonId]) {
+      ui.sessions[lessonId] = isSequentialLesson(lesson)
+        ? { answers: {}, currentIndex: 0, status: 'idle', completed: false }
+        : { answers: {} };
+    }
     return ui.sessions[lessonId];
+  }
+
+  function getSequentialSession(lesson) {
+    const session = getSession(lesson.id);
+    hydrateSequentialSession(lesson, session);
+    if (!Number.isInteger(session.currentIndex) || session.currentIndex < 0) session.currentIndex = 0;
+    if (!['idle', 'correct', 'wrong'].includes(session.status)) session.status = 'idle';
+    if (typeof session.completed !== 'boolean') session.completed = false;
+    if (!session.isRetry && getProgress().completedLessons.includes(lesson.id)) session.completed = true;
+    return session;
+  }
+
+  function hydrateSequentialSession(lesson, session) {
+    if (session.hydrated) return;
+    session.hydrated = true;
+    if (session.isRetry) return;
+    const progress = getProgress();
+    const savedScore = progress.lessonScores[lesson.id];
+    const savedExercises = savedScore && savedScore.exercises ? savedScore.exercises : {};
+    const nextIndex = lesson.exercises.findIndex((exercise) => !savedExercises[exercise.id] || !savedExercises[exercise.id].correct);
+    if (nextIndex === -1 && lesson.exercises.length) {
+      lesson.exercises.forEach((exercise) => {
+        session.answers[exercise.id] = { checked: true, correct: true, response: exercise.answer || exercise.answers[0], attempts: 1 };
+      });
+      session.currentIndex = lesson.exercises.length - 1;
+      session.completed = true;
+      return;
+    }
+    const index = nextIndex === -1 ? 0 : nextIndex;
+    lesson.exercises.slice(0, index).forEach((exercise) => {
+      const saved = savedExercises[exercise.id];
+      session.answers[exercise.id] = { checked: true, correct: true, response: exercise.answer || exercise.answers[0], attempts: 1 };
+      if (saved && saved.answeredAt) session.answers[exercise.id].answeredAt = saved.answeredAt;
+    });
+    session.currentIndex = index;
+    session.status = 'idle';
   }
 
   function getExercisePage() {
@@ -459,20 +501,64 @@
     }).join('');
   }
 
+  function renderSequentialPractice(lesson, session) {
+    const total = lesson.exercises.length;
+    if (!total) return '<div class="sequential-practice" data-sequential-practice><p>' + esc(tr('verb.resultEmptyCopy')) + '</p></div>';
+    if (session.completed) {
+      return '<div class="verb-sentence-practice sequential-practice is-complete" data-sequential-practice data-sequential-complete><div class="verb-completion-mark" aria-hidden="true">' + icon('circle-check') + '</div><div><h3>' + esc(tr('verb.completedTitle')) + '</h3><p>' + esc(tr('verb.completedCopy', { total })) + '</p></div><button type="button" class="button button-secondary" data-sequential-retry="restart">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.restartSentences')) + '</button></div>';
+    }
+
+    const index = Math.min(Math.max(Number.isInteger(session.currentIndex) ? session.currentIndex : 0, 0), total - 1);
+    session.currentIndex = index;
+    const item = lesson.exercises[index];
+    const content = localized(item);
+    const state = session.answers[item.id] || {};
+    const response = String(state.response || '');
+    const status = session.status || 'idle';
+    const disabled = status === 'idle' ? '' : ' disabled';
+    let feedback = '';
+    if (status === 'correct') {
+      feedback = '<div class="verb-sentence-feedback is-correct" role="status" aria-live="polite">' + icon('circle-check', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.correctNotice', { answer: content.answers[0] })) + '</strong><p>' + esc(content.explanation) + '</p></div></div>';
+    } else if (status === 'wrong') {
+      feedback = '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite">' + icon('circle-x', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><p>' + esc(tr('exercise.tryAgain')) + '</p></div></div>';
+    }
+    let action = '<button type="button" class="button button-primary" data-sequential-check>' + icon('check', 'button-icon') + esc(tr('verb.checkSentence')) + '</button>';
+    if (status === 'correct') {
+      const isLast = index === total - 1;
+      action = '<button type="button" class="button button-primary" data-sequential-next>' + icon(isLast ? 'check' : 'arrow-right', 'button-icon') + esc(isLast ? tr('lesson.completedButton') : tr('verb.nextSentence')) + '</button>';
+    } else if (status === 'wrong') {
+      action = '<button type="button" class="button button-secondary" data-sequential-retry="current">' + icon('rotate-ccw', 'button-icon') + esc(tr('verb.tryAgain')) + '</button>';
+    }
+
+    return '<div class="verb-sentence-practice sequential-practice" data-sequential-practice>' +
+      '<div class="sequential-progress" role="status"><span>' + esc(tr('lesson.practice')) + '</span><strong data-sequential-index>' + String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</strong></div>' +
+      '<article class="verb-sentence-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
+      '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + '</div>' +
+      '<div class="verb-sentence-copy"><span class="verb-question-type">' + esc(tr('exercise.translate')) + '</span><h3>' + esc(content.prompt) + '</h3><p>' + esc(tr('exercise.placeholderTranslate')) + '</p></div>' +
+      '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="sequential-answer-' + esc(lesson.id) + '">' + esc(tr('exercise.answer')) + '</label><input id="sequential-answer-' + esc(lesson.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-sequential-input data-sequential-answer-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(tr('exercise.placeholderTranslate')) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
+      feedback +
+      '<div class="verb-sentence-actions">' + action + '</div>' +
+      '</article></div>';
+  }
+
   function renderLesson(lesson) {
     const progress = getProgress();
-    const session = getSession(lesson.id);
+    const session = isSequentialLesson(lesson) ? getSequentialSession(lesson) : getSession(lesson.id);
     const content = localized(lesson);
     const percentage = lessonPercent(lesson, progress, session);
     const checked = Object.values(session.answers).filter((answer) => answer.checked).length;
     const lessonStatusIcon = progress.completedLessons.includes(lesson.id) ? 'circle-check' : checked ? 'circle-dot' : 'circle';
+    const practice = isSequentialLesson(lesson)
+      ? renderSequentialPractice(lesson, session)
+      : '<div class="exercise-list">' + (lesson.exercises || []).map((exercise, index) => exercises.renderExercise(exercise, index, lesson.id)).join('') + '</div>' + renderResultCard(lesson, session, 'lesson-result');
+    const canComplete = !isSequentialLesson(lesson) || session.completed || progress.completedLessons.includes(lesson.id);
     view.innerHTML = '<div class="fade-in"><section class="lesson-header"><div><p class="view-kicker">' + esc(tr('breadcrumb.lesson')) + ' ' + String(content.number).padStart(2, '0') + ' · ' + esc(content.focus) + '</p><h1>' + esc(content.title) + '</h1><p class="lesson-description">' + esc(content.description) + '</p><div class="lesson-meta"><span class="meta-pill">' + icon('clock-3', 'meta-icon') + esc(content.duration) + '</span><span class="meta-pill">' + icon('list-checks', 'meta-icon') + content.exercises.length + ' ' + esc(tr('lesson.exercises')) + '</span><span class="meta-pill">' + icon(lessonStatusIcon, 'meta-icon') + esc(progress.completedLessons.includes(lesson.id) ? tr('lesson.completed') : checked ? tr('lesson.inProgress') : tr('lesson.notStarted')) + '</span></div></div><div class="lesson-completion"><div class="lesson-completion-label"><span>' + esc(tr('lesson.progress')) + '</span><strong id="lesson-completion-value">' + percentage + '%</strong></div><div class="progress-track"><span id="lesson-completion-bar" style="width:' + percentage + '%"></span></div><p class="lesson-progress-note" id="lesson-progress-note">' + esc(tr('lesson.verified', { checked, total: content.exercises.length })) + '</p></div></section><div class="lesson-steps" aria-label="' + esc(tr('lesson.steps')) + '"><span class="lesson-step is-active"><span class="lesson-step-dot"></span>' + esc(tr('lesson.understand')) + '</span><span class="lesson-step"><span class="lesson-step-dot"></span>' + esc(tr('lesson.observe')) + '</span><span class="lesson-step"><span class="lesson-step-dot"></span>' + esc(tr('lesson.practice')) + '</span><span class="lesson-step"><span class="lesson-step-dot"></span>' + esc(tr('lesson.finish')) + '</span></div><div class="lesson-body">' +
       '<section class="content-section"><p class="view-kicker">01 · ' + esc(tr('lesson.introduction')) + '</p><p class="section-lede">' + esc(content.introduction) + '</p><div class="what-list">' + (content.objectives || []).map((objective, index) => '<div class="what-item"><span>0' + (index + 1) + '</span><p>' + esc(objective) + '</p></div>').join('') + '</div></section>' +
       (lesson.sections || []).map(renderSection).join('') +
       '<section class="content-section"><p class="view-kicker">08 · ' + esc(tr('lesson.vocabulary')) + '</p><h2>' + esc(tr('lesson.vocabularyTitle')) + '</h2><p class="section-lede">' + esc(tr('lesson.vocabularyCopy')) + '</p><div class="vocab-grid">' + (content.vocabulary || []).map(renderVocabulary).join('') + '</div></section>' +
-      '<section class="content-section exercises-section"><p class="view-kicker">09 · ' + esc(tr('lesson.practice')) + '</p><h2>' + esc(tr('exercise.pluralTitle')) + '</h2><p class="section-lede">' + esc(tr('lesson.practiceCopy')) + '</p><div class="exercise-list">' + (lesson.exercises || []).map((exercise, index) => exercises.renderExercise(exercise, index, lesson.id)).join('') + '</div>' + renderResultCard(lesson, session, 'lesson-result') + '</section>' +
+      '<section class="content-section exercises-section"><p class="view-kicker">09 · ' + esc(tr('lesson.practice')) + '</p><h2>' + esc(tr('exercise.pluralTitle')) + '</h2><p class="section-lede">' + esc(tr('lesson.practiceCopy')) + '</p>' + practice + '</section>' +
        '<section class="content-section"><p class="view-kicker">11 · ' + esc(tr('lesson.closing')) + '</p><div class="summary-card"><h3>' + esc(tr('lesson.summaryTitle')) + '</h3><ul>' + (content.summary || []).map((item) => '<li><span class="summary-icon" aria-hidden="true">' + icon('check', 'summary-icon-svg') + '</span><span>' + esc(item) + '</span></li>').join('') + '</ul></div></section>' +
-      '<footer class="lesson-footer"><div class="lesson-nav-buttons"><button type="button" class="button button-secondary" data-nav-lesson="prev"' + (content.number === 1 ? ' disabled' : '') + '>' + icon('arrow-left', 'button-icon') + esc(tr('lesson.previous')) + '</button><button type="button" class="button button-secondary" data-nav-lesson="next"' + (content.number === lessons.length ? ' disabled' : '') + '>' + esc(tr('lesson.next')) + icon('arrow-right', 'button-icon') + '</button></div><button type="button" class="button button-yellow finish-button" data-complete-lesson="' + esc(lesson.id) + '"' + (progress.completedLessons.includes(lesson.id) ? ' disabled' : '') + '>' + (progress.completedLessons.includes(lesson.id) ? icon('check', 'button-icon') + esc(tr('lesson.completedButton')) : esc(tr('lesson.complete'))) + '</button></footer>' +
+      '<footer class="lesson-footer"><div class="lesson-nav-buttons"><button type="button" class="button button-secondary" data-nav-lesson="prev"' + (content.number === 1 ? ' disabled' : '') + '>' + icon('arrow-left', 'button-icon') + esc(tr('lesson.previous')) + '</button><button type="button" class="button button-secondary" data-nav-lesson="next"' + (content.number === lessons.length ? ' disabled' : '') + '>' + esc(tr('lesson.next')) + icon('arrow-right', 'button-icon') + '</button></div><button type="button" class="button button-yellow finish-button" data-complete-lesson="' + esc(lesson.id) + '"' + (progress.completedLessons.includes(lesson.id) || !canComplete ? ' disabled' : '') + '>' + (progress.completedLessons.includes(lesson.id) ? icon('check', 'button-icon') + esc(tr('lesson.completedButton')) : esc(tr('lesson.complete'))) + '</button></footer>' +
        '</div></div>';
     icons.refresh(view);
   }
@@ -905,6 +991,82 @@
     return Array.isArray(response) ? response.join('|') : String(response);
   }
 
+  function getSequentialItem(lesson, session) {
+    const index = Math.min(Math.max(session.currentIndex, 0), lesson.exercises.length - 1);
+    session.currentIndex = index;
+    return lesson.exercises[index];
+  }
+
+  function focusSequentialInput() {
+    const input = document.querySelector('[data-sequential-input]');
+    if (input) input.focus();
+  }
+
+  function refreshSequentialLesson(lesson) {
+    renderSidebar(getProgress());
+    renderLesson(lesson);
+    updateBreadcrumb();
+    icons.refresh(document);
+  }
+
+  function handleSequentialCheck() {
+    const lesson = getLesson(ui.activeLessonId);
+    if (!isSequentialLesson(lesson)) return;
+    const session = getSequentialSession(lesson);
+    if (session.completed || session.status !== 'idle') return;
+    const item = getSequentialItem(lesson, session);
+    const input = document.querySelector('[data-sequential-input]');
+    const response = input ? String(input.value || '').trim() : '';
+    if (!response) {
+      showToast(tr('toast.answerRequired'));
+      return;
+    }
+    const correct = exercises.isCorrect(response, item);
+    const state = session.answers[item.id] || { attempts: 0 };
+    state.response = response;
+    state.checked = true;
+    state.correct = correct;
+    state.attempts = (state.attempts || 0) + 1;
+    session.answers[item.id] = state;
+    session.status = correct ? 'correct' : 'wrong';
+    storage.recordAnswer(lesson.id, item.id, correct);
+    refreshSequentialLesson(lesson);
+  }
+
+  function handleSequentialNext() {
+    const lesson = getLesson(ui.activeLessonId);
+    if (!isSequentialLesson(lesson)) return;
+    const session = getSequentialSession(lesson);
+    if (session.completed || session.status !== 'correct') return;
+    if (session.currentIndex >= lesson.exercises.length - 1) {
+      session.completed = true;
+      completeLesson(lesson.id);
+      return;
+    }
+    session.currentIndex += 1;
+    session.status = 'idle';
+    refreshSequentialLesson(lesson);
+    focusSequentialInput();
+  }
+
+  function handleSequentialRetry() {
+    const lesson = getLesson(ui.activeLessonId);
+    if (!isSequentialLesson(lesson)) return;
+    const session = getSequentialSession(lesson);
+    if (session.completed) {
+      ui.sessions[lesson.id] = { answers: {}, currentIndex: 0, status: 'idle', completed: false, isRetry: true };
+      refreshSequentialLesson(lesson);
+      focusSequentialInput();
+      return;
+    }
+    const item = getSequentialItem(lesson, session);
+    const previous = session.answers[item.id] || {};
+    session.answers[item.id] = { attempts: previous.attempts || 0, checked: false, correct: false, response: '' };
+    session.status = 'idle';
+    refreshSequentialLesson(lesson);
+    focusSequentialInput();
+  }
+
   function handleCheck(card) {
     const exercise = findExercise(card.dataset.lessonId, card.dataset.exerciseId);
     if (!exercise) return;
@@ -1024,7 +1186,10 @@
   }
 
   function resetLessonSession(id) {
-    ui.sessions[id] = { answers: {}, isRetry: true };
+    const lesson = getLesson(id);
+    ui.sessions[id] = isSequentialLesson(lesson)
+      ? { answers: {}, currentIndex: 0, status: 'idle', completed: false, isRetry: true }
+      : { answers: {}, isRetry: true };
     renderLesson(getLesson(id));
     renderSidebar(getProgress());
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1155,6 +1320,12 @@
     if (orderWord) { handleOrderWord(orderWord); return; }
     const orderReset = event.target.closest('[data-reset-order]');
     if (orderReset) { resetOrder(orderReset.closest('[data-exercise-card]')); return; }
+    const sequentialCheck = event.target.closest('[data-sequential-check]');
+    if (sequentialCheck) { handleSequentialCheck(); return; }
+    const sequentialNext = event.target.closest('[data-sequential-next]');
+    if (sequentialNext) { handleSequentialNext(); return; }
+    const sequentialRetry = event.target.closest('[data-sequential-retry]');
+    if (sequentialRetry) { handleSequentialRetry(); return; }
     const check = event.target.closest('[data-check-exercise]');
     if (check) { handleCheck(check.closest('[data-exercise-card]')); return; }
     const explanation = event.target.closest('[data-show-explanation]');
@@ -1175,6 +1346,19 @@
   });
 
   document.addEventListener('input', (event) => {
+    if (event.target.matches('[data-sequential-input]')) {
+      const lesson = getLesson(ui.activeLessonId);
+      if (!isSequentialLesson(lesson)) return;
+      const session = getSequentialSession(lesson);
+      const item = getSequentialItem(lesson, session);
+      if (session.status !== 'idle' || !item) return;
+      const state = session.answers[item.id] || { attempts: 0 };
+      state.response = event.target.value;
+      state.checked = false;
+      state.correct = false;
+      session.answers[item.id] = state;
+      return;
+    }
     if (event.target.matches('.verb-input')) {
       const mode = getVerbMode();
       const session = getVerbSession(mode.id);

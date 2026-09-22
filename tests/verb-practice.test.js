@@ -52,6 +52,109 @@ function readSource(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
 }
 
+function assertMultipleChoiceMode(pageId, page, allPracticeIds) {
+  const label = pageId + '/multipleChoice';
+  const mode = page.modes && page.modes.multipleChoice;
+  assert.ok(mode, pageId + ' precisa ter o modo multipleChoice');
+  assert.equal(mode.id, 'multipleChoice', label + '.id inesperado');
+  assert.equal(mode.interaction, 'multiple-choice', label + '.interaction inesperado');
+  assert.ok(Array.isArray(mode.items), label + '.items deve ser uma lista');
+  assert.equal(mode.items.length, 50, pageId + ' precisa ter exatamente 50 questões de alternativa');
+
+  const writingIds = new Set((page.modes.sentences.items || []).map((item) => item.id));
+  const choiceIds = new Set();
+  const correctForms = new Set();
+  const answerPositions = new Set();
+  const correctAnswers = new Set();
+  const expectedForms = pageId === 'sein'
+    ? ['bin', 'bist', 'ist', 'sind', 'seid']
+    : ['habe', 'hast', 'hat', 'haben', 'habt'];
+
+  mode.items.forEach((item, index) => {
+    const itemLabel = label + '/' + index;
+    assertNonEmpty(item.id, itemLabel + '.id');
+    assert.ok(!choiceIds.has(item.id), 'ID de alternativa duplicado em ' + pageId + ': ' + item.id);
+    assert.ok(!writingIds.has(item.id), 'ID de alternativa colide com frase escrita: ' + item.id);
+    assert.ok(!allPracticeIds.has(item.id), 'ID de alternativa colide com outro exercício: ' + item.id);
+    choiceIds.add(item.id);
+    allPracticeIds.add(item.id);
+
+    for (const field of ['prompt', 'prompt_en', 'detail', 'detail_en']) {
+      assertNonEmpty(item[field], itemLabel + '.' + field);
+    }
+    assert.ok(Array.isArray(item.options) && item.options.length === 4, itemLabel + '.options deve ter quatro itens');
+    assert.ok(Array.isArray(item.options_en) && item.options_en.length === 4, itemLabel + '.options_en deve ter quatro itens');
+    assert.ok(Array.isArray(item.optionIds) && item.optionIds.length === 4, itemLabel + '.optionIds deve ter quatro itens');
+    assert.equal(new Set(item.options.map((option) => option.trim().toLowerCase())).size, 4, itemLabel + '.options deve ser única');
+    assert.equal(new Set(item.optionIds).size, 4, itemLabel + '.optionIds deve ser único');
+    item.options.forEach((option, optionIndex) => assertNonEmpty(option, itemLabel + '.options[' + optionIndex + ']'));
+    item.options_en.forEach((option, optionIndex) => assertNonEmpty(option, itemLabel + '.options_en[' + optionIndex + ']'));
+    assert.ok(item.optionIds.includes(item.correctOptionId), itemLabel + '.correctOptionId inválido');
+
+    const correctIndex = item.optionIds.indexOf(item.correctOptionId);
+    const correctAnswer = item.options[correctIndex];
+    const correctFormMatch = correctAnswer.match(/\b(bin|bist|ist|sind|seid|habe|hast|hat|haben|habt)\b/);
+    assert.ok(correctFormMatch, itemLabel + ' não contém uma forma conjugada reconhecível');
+    assert.ok(expectedForms.includes(correctFormMatch[1]), itemLabel + ' mistura o verbo errado');
+    correctForms.add(correctFormMatch[1]);
+    answerPositions.add(correctIndex);
+    correctAnswers.add(correctAnswer);
+  });
+
+  assert.equal(choiceIds.size, 50, pageId + ' deve ter 50 IDs de alternativas únicos');
+  assert.equal(answerPositions.size, 4, pageId + ' deve variar a posição da resposta correta entre as quatro alternativas');
+  for (const form of expectedForms) {
+    assert.ok(correctForms.has(form), pageId + ' deve incluir a forma ' + form + ' nas respostas corretas');
+  }
+  assert.equal(correctAnswers.size, 50, pageId + ' deve variar as respostas corretas das alternativas');
+}
+
+function assertMixedMode(pageId, page, allPracticeIds) {
+  const label = pageId + '/mixed';
+  const mixed = page.modes && page.modes.mixed;
+  assert.ok(mixed, pageId + ' precisa ter o modo mixed');
+  assert.equal(mixed.id, 'mixed', label + '.id inesperado');
+  assert.equal(mixed.interaction, 'mixed', label + '.interaction inesperado');
+  assert.ok(Array.isArray(mixed.items), label + '.items deve ser uma lista');
+  assert.equal(mixed.items.length, 100, pageId + ' deve ter 100 questões no treino misto');
+  assert.ok(page.modes.multipleChoice, pageId + ' precisa ter o modo multipleChoice antes do modo mixed');
+
+  const writingIds = new Set(page.modes.sentences.items.map((item) => item.id));
+  const choiceIds = new Set(page.modes.multipleChoice.items.map((item) => item.id));
+  const mixedIds = new Set();
+  const mixedWritingIds = new Set();
+  const mixedChoiceIds = new Set();
+
+  mixed.items.forEach((item, index) => {
+    const itemLabel = label + '/' + index;
+    assertNonEmpty(item.id, itemLabel + '.id');
+    assert.ok(!mixedIds.has(item.id), 'ID duplicado no treino misto de ' + pageId + ': ' + item.id);
+    mixedIds.add(item.id);
+    assert.ok(allPracticeIds.has(item.id), itemLabel + ' deve reutilizar um item de escrita ou alternativa existente');
+    assert.ok(['text', 'multiple-choice'].includes(item.interaction), itemLabel + '.interaction inválido');
+
+    if (item.interaction === 'text') {
+      mixedWritingIds.add(item.id);
+      assert.equal(item.questionType, 'Escrita', itemLabel + '.questionType PT inesperado');
+      assert.equal(item.questionType_en, 'Writing', itemLabel + '.questionType EN inesperado');
+    } else {
+      mixedChoiceIds.add(item.id);
+      assert.equal(item.questionType, 'Múltipla escolha', itemLabel + '.questionType PT inesperado');
+      assert.equal(item.questionType_en, 'Multiple choice', itemLabel + '.questionType EN inesperado');
+    }
+  });
+
+  assert.equal(mixedWritingIds.size, 50, pageId + ' deve ter 50 questões escritas no treino misto');
+  assert.equal(mixedChoiceIds.size, 50, pageId + ' deve ter 50 questões de alternativa no treino misto');
+  assert.deepEqual(mixedWritingIds, writingIds, pageId + ' mixed deve conter todas as frases escritas');
+  assert.deepEqual(mixedChoiceIds, choiceIds, pageId + ' mixed deve conter todas as alternativas');
+
+  const visibleModes = Object.values(page.modes)
+    .filter((mode) => mode.visible !== false)
+    .map((mode) => mode.id);
+  assert.deepEqual(visibleModes, ['conjugation', 'mixed'], pageId + ' deve exibir somente conjugation e mixed');
+}
+
 function runScenario(name, scenario) {
   try {
     scenario();
@@ -103,74 +206,35 @@ const scenarios = [
     }
     assert.equal(ids.size, 100, 'a prática deve ter 100 frases no total');
   }],
-  ['adiciona 50 alternativas novas de sein com quatro opções estáveis', () => {
+  ['oferece 50 alternativas reutilizáveis para sein e haben', () => {
     const { verbPractice } = getModules();
-    const page = verbPractice.pages.sein;
-    const writing = page.modes.sentences;
-    const multipleChoice = page.modes.multipleChoice;
-    assert.ok(multipleChoice, 'sein precisa ter o modo multipleChoice');
-    assert.equal(verbPractice.pages.haben.modes.multipleChoice, undefined, 'o modo novo deve existir somente em sein');
-    assert.equal(multipleChoice.interaction, 'multiple-choice');
-    assert.equal(multipleChoice.items.length, 50, 'sein precisa ter exatamente 50 questões de alternativa');
-
-    const writingIds = new Set(writing.items.map((item) => item.id));
-    const writingAnswers = new Set(writing.items.flatMap((item) => item.answers.map((answer) => answer.trim().toLowerCase())));
-    const choiceIds = new Set();
-    const correctAnswers = new Set();
-    const conjugations = new Set();
-    const answerPositions = new Set();
-
-    multipleChoice.items.forEach((item, index) => {
-      const label = 'sein/multipleChoice/' + index;
-      assertNonEmpty(item.id, label + '.id');
-      assert.ok(!choiceIds.has(item.id), 'ID de alternativa duplicado: ' + item.id);
-      assert.ok(!writingIds.has(item.id), 'ID de alternativa colide com frase escrita: ' + item.id);
-      choiceIds.add(item.id);
-      for (const field of ['prompt', 'prompt_en', 'detail', 'detail_en']) assertNonEmpty(item[field], label + '.' + field);
-      assert.ok(Array.isArray(item.options) && item.options.length === 4, label + '.options deve ter quatro itens');
-      assert.ok(Array.isArray(item.options_en) && item.options_en.length === 4, label + '.options_en deve ter quatro itens');
-      assert.ok(Array.isArray(item.optionIds) && item.optionIds.length === 4, label + '.optionIds deve ter quatro itens');
-      assert.equal(new Set(item.options.map((option) => option.trim().toLowerCase())).size, 4, label + '.options deve ser único');
-      assert.equal(new Set(item.optionIds).size, 4, label + '.optionIds deve ser único');
-      item.options.forEach((option, optionIndex) => assertNonEmpty(option, label + '.options[' + optionIndex + ']'));
-      assert.ok(item.options.every((option) => !/\b(habe|hast|hat|haben|habt)\b/i.test(option)), label + ' deve praticar somente sein');
-      assert.ok(item.optionIds.includes(item.correctOptionId), label + '.correctOptionId inválido');
-      const correctIndex = item.optionIds.indexOf(item.correctOptionId);
-      const correctAnswer = item.options[correctIndex];
-      answerPositions.add(correctIndex);
-      assert.ok(!correctAnswers.has(correctAnswer), 'resposta correta repetida: ' + correctAnswer);
-      assert.ok(!writingAnswers.has(correctAnswer.trim().toLowerCase()), 'resposta correta reaproveita frase escrita: ' + correctAnswer);
-      correctAnswers.add(correctAnswer);
-      conjugations.add(correctAnswer.split(/\s+/)[1]);
-    });
-
-    assert.equal(choiceIds.size, 50, 'os IDs das alternativas devem ser únicos');
-    assert.equal(answerPositions.size, 4, 'a posição da resposta correta deve variar entre as quatro alternativas');
-    for (const form of ['bin', 'bist', 'ist', 'sind', 'seid']) {
-      assert.ok(conjugations.has(form), 'a prática de alternativas deve incluir a forma ' + form);
+    const allPracticeIds = new Set();
+    for (const pageId of ['sein', 'haben']) {
+      const page = verbPractice.pages[pageId];
+      assert.ok(page, 'página ' + pageId + ' não encontrada');
+      page.modes.conjugation.items.forEach((item) => allPracticeIds.add(item.id));
+      page.modes.sentences.items.forEach((item) => allPracticeIds.add(item.id));
+    }
+    for (const pageId of ['sein', 'haben']) {
+      const page = verbPractice.pages[pageId];
+      assertMultipleChoiceMode(pageId, page, allPracticeIds);
     }
   }],
-  ['une escrita e alternativas em um único treino misto de 100 questões', () => {
+  ['une escrita e alternativas em treinos mistos de 100 questões para sein e haben', () => {
     const { verbPractice } = getModules();
-    const page = verbPractice.pages.sein;
-    const mixed = page.modes.mixed;
-    assert.ok(mixed, 'sein precisa ter o modo mixed');
-    assert.equal(mixed.interaction, 'mixed');
-    assert.equal(mixed.items.length, 100, 'o treino misto deve ter 100 questões');
+    const allPracticeIds = new Set();
+    for (const pageId of ['sein', 'haben']) {
+      const page = verbPractice.pages[pageId];
+      assert.ok(page, 'página ' + pageId + ' não encontrada');
+      page.modes.conjugation.items.forEach((item) => allPracticeIds.add(item.id));
+      page.modes.sentences.items.forEach((item) => allPracticeIds.add(item.id));
+      assert.ok(page.modes.multipleChoice, pageId + ' precisa ter o modo multipleChoice antes do modo mixed');
+      page.modes.multipleChoice.items.forEach((item) => allPracticeIds.add(item.id));
+    }
+    for (const pageId of ['sein', 'haben']) {
+      assertMixedMode(pageId, verbPractice.pages[pageId], allPracticeIds);
+    }
 
-    const writingIds = new Set(page.modes.sentences.items.map((item) => item.id));
-    const choiceIds = new Set(page.modes.multipleChoice.items.map((item) => item.id));
-    const mixedIds = new Set(mixed.items.map((item) => item.id));
-    assert.equal(mixedIds.size, 100, 'o treino misto não pode repetir IDs');
-    assert.equal(mixed.items.filter((item) => item.interaction === 'text').length, 50, 'o treino misto deve ter 50 questões de escrita');
-    assert.equal(mixed.items.filter((item) => item.interaction === 'multiple-choice').length, 50, 'o treino misto deve ter 50 questões de alternativa');
-    assert.ok(mixed.items.filter((item) => item.interaction === 'text').every((item) => item.questionType === 'Escrita' && item.questionType_en === 'Writing'), 'as questões escritas precisam indicar o tipo');
-    assert.ok(mixed.items.filter((item) => item.interaction === 'multiple-choice').every((item) => item.questionType === 'Múltipla escolha' && item.questionType_en === 'Multiple choice'), 'as questões de alternativa precisam indicar o tipo');
-    assert.deepEqual(new Set(mixed.items.filter((item) => item.interaction === 'text').map((item) => item.id)), writingIds);
-    assert.deepEqual(new Set(mixed.items.filter((item) => item.interaction === 'multiple-choice').map((item) => item.id)), choiceIds);
-
-    const visibleModes = Object.values(page.modes).filter((mode) => mode.visible !== false).map((mode) => mode.id);
-    assert.deepEqual(visibleModes, ['conjugation', 'mixed'], 'somente conjugação e treino misto devem aparecer como abas');
     const appSource = readSource('js/app.js');
     assert.ok(appSource.includes('shuffleVerbMixedOrder'), 'a sessão mista deve ter uma ordem própria');
     assert.ok(appSource.includes('isMixedMode(mode)'), 'a UI deve detectar o modo misto pelo contrato');
