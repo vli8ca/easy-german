@@ -1,6 +1,20 @@
 (function () {
   'use strict';
 
+  const firstSentencesLesson = (window.KlarExerciseOnly || []).find((lesson) => lesson.id === 'first-sentences');
+  const firstSentenceItems = firstSentencesLesson
+    ? firstSentencesLesson.exercises.map((exercise) => ({
+      id: exercise.id,
+      prompt: exercise.prompt,
+      prompt_en: exercise.prompt_en,
+      detail: 'Traduza a frase para o alemão.',
+      detail_en: 'Translate the sentence into German.',
+      placeholder: 'Escreva a frase em alemão…',
+      placeholder_en: 'Write the sentence in German…',
+      answers: exercise.answers || [exercise.answer]
+    }))
+    : [];
+
   const numberItems = [
     { id: 'number-1', prompt: '1', prompt_en: '1', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['eins'] },
     { id: 'number-2', prompt: '2', prompt_en: '2', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['zwei'] },
@@ -155,6 +169,58 @@
 
   window.KlarVerbPractice = {
     pages: {
+      'first-sentences': {
+        id: 'first-sentences',
+        title: 'Frases iniciais',
+        title_en: 'First sentences',
+        subtitle: 'Treine frases curtas e úteis do nível A1, uma por vez.',
+        subtitle_en: 'Practice short, useful A1 sentences one at a time.',
+        verb: 'A1',
+        meaning: 'frases iniciais',
+        meaning_en: 'first sentences',
+        heroTitle: 'Frases iniciais',
+        heroTitle_en: 'First sentences',
+        heroAccent: 'uma por vez.',
+        heroAccent_en: 'one at a time.',
+        heroIntro: 'Treine frases curtas e úteis do nível A1, uma por vez.',
+        heroIntro_en: 'Practice short, useful A1 sentences one at a time.',
+        heroCopy: 'construa uma base de alemão escrevendo frases simples.',
+        heroCopy_en: 'build a German foundation by writing simple sentences.',
+        metaPrimary: 'Nível A1',
+        metaPrimary_en: 'A1 level',
+        metaThird: 'No seu ritmo',
+        metaThird_en: 'At your pace',
+        ruleCopy: 'Uma frase por vez: errar faz parte; acertar libera a próxima.',
+        ruleCopy_en: 'One sentence at a time: mistakes are part of learning; a correct answer unlocks the next one.',
+        perfectMessage: 'Perfeito. Suas primeiras frases estão ficando automáticas.',
+        perfectMessage_en: 'Perfect. Your first sentences are becoming automatic.',
+        completedCopy: 'Você praticou 50 frases iniciais de alemão.',
+        completedCopy_en: 'You practiced 50 first German sentences.',
+        modes: {
+          sentences: {
+            id: 'sentences',
+            interaction: 'streak',
+            shuffle: false,
+            label: 'Frases iniciais',
+            label_en: 'First sentences',
+            shortLabel: '01 · Uma por vez',
+            shortLabel_en: '01 · One at a time',
+            title: 'Escreva as frases iniciais em alemão',
+            title_en: 'Write the first sentences in German',
+            instruction: 'Traduza uma frase por vez. Se errar, tente novamente; ao acertar, avance para a próxima.',
+            instruction_en: 'Translate one sentence at a time. If you miss, try again; when you get it right, move to the next one.',
+            inputLabel: 'Digite a frase em alemão',
+            inputLabel_en: 'Type the sentence in German',
+            checkLabel: 'Verificar frase',
+            checkLabel_en: 'Check sentence',
+            nextLabel: 'Próxima frase',
+            nextLabel_en: 'Next sentence',
+            restartLabel: 'Recomeçar frases iniciais',
+            restartLabel_en: 'Restart first sentences',
+            items: firstSentenceItems
+          }
+        }
+      },
       sein: {
         id: 'sein',
         title: 'Ser ou estar',

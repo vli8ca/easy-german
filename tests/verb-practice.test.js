@@ -20,6 +20,11 @@ function loadVerbPracticeModules() {
   });
 
   vm.runInContext(
+    fs.readFileSync(path.join(root, 'js', 'lessons.js'), 'utf8'),
+    context,
+    { filename: 'js/lessons.js' }
+  );
+  vm.runInContext(
     fs.readFileSync(path.join(root, 'js', 'exercises.js'), 'utf8'),
     context,
     { filename: 'js/exercises.js' }
@@ -267,6 +272,27 @@ const scenarios = [
         }
       });
     }
+  }],
+  ['oferece frases iniciais como primeiro exercício unitário', () => {
+    const { verbPractice } = getModules();
+    assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers']);
+    const page = verbPractice.pages['first-sentences'];
+    assertNonEmpty(page.title, 'first-sentences.title');
+    assertNonEmpty(page.title_en, 'first-sentences.title_en');
+    assert.equal(Object.keys(page.modes).length, 1);
+    const mode = page.modes.sentences;
+    assert.equal(mode.interaction, 'streak');
+    assert.equal(mode.shuffle, false);
+    assert.equal(mode.items.length, 50);
+    assert.ok(mode.items.every((item) => item.id.startsWith('fs')));
+    assert.equal(new Set(mode.items.map((item) => item.id)).size, 50);
+    mode.items.forEach((item, index) => {
+      const label = 'first-sentences/' + index;
+      for (const field of ['prompt', 'prompt_en', 'detail', 'detail_en', 'placeholder', 'placeholder_en']) {
+        assertNonEmpty(item[field], label + '.' + field);
+      }
+      assert.ok(Array.isArray(item.answers) && item.answers.length > 0, label + '.answers deve existir');
+    });
   }],
   ['aceita grafia sem diacríticos para ä/ö/ü e ß', () => {
     const { exercises } = getModules();

@@ -13,7 +13,7 @@
     sessions: {},
     reviewSession: {},
     reviewQuestions: [],
-    exerciseModes: { sein: 'conjugation', haben: 'conjugation', numbers: 'sequence' },
+    exerciseModes: { 'first-sentences': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence' },
     verbSessions: {},
     sidebarSections: { vocabulary: false, lessons: false, exercises: false }
   };
@@ -220,6 +220,7 @@
   function isSequentialLesson(lesson) { return Boolean(lesson && lesson.practiceMode === 'sequential-translate'); }
 
   const exercisePageRoutes = {
+    'exercises-first-sentences': 'first-sentences',
     exercises: 'sein',
     'exercises-haben': 'haben',
     'exercises-numbers': 'numbers'

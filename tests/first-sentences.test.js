@@ -5,12 +5,12 @@ const vm = require('node:vm');
 
 const root = path.join(__dirname, '..');
 
-function loadLessons() {
+function loadModules() {
   const window = {};
   const context = { window, console };
-  const source = fs.readFileSync(path.join(root, 'js', 'lessons.js'), 'utf8');
-  vm.runInNewContext(source, context, { filename: 'js/lessons.js' });
-  return window.KlarLessons;
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'js', 'lessons.js'), 'utf8'), context, { filename: 'js/lessons.js' });
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'js', 'verb-exercises.js'), 'utf8'), context, { filename: 'js/verb-exercises.js' });
+  return window;
 }
 
 function assertNonEmpty(value, label) {
@@ -18,30 +18,38 @@ function assertNonEmpty(value, label) {
   assert.ok(value.trim(), `${label} não pode ficar vazio`);
 }
 
-const lessons = loadLessons();
+const modules = loadModules();
+const lessons = modules.KlarLessons;
+const verbPractice = modules.KlarVerbPractice;
 const appSource = fs.readFileSync(path.join(root, 'js', 'app.js'), 'utf8');
 
 assert.ok(Array.isArray(lessons), 'KlarLessons deve ser uma lista');
-assert.equal(lessons.length, 12, 'o curso deve ter a nova aula e as 11 aulas antigas');
+assert.equal(lessons.length, 11, 'o curso deve ter somente as 11 aulas do caminho');
+assert.equal(lessons.find((lesson) => lesson.id === 'first-sentences'), undefined, 'first-sentences não pode aparecer como aula');
 
-const firstLesson = lessons[0];
-assert.ok(firstLesson, 'a primeira aula deve existir');
-assert.equal(firstLesson.id, 'first-sentences');
-assert.equal(firstLesson.number, 1);
-assert.equal(firstLesson.level, 'A1');
-assert.equal(firstLesson.practiceMode, 'sequential-translate');
-assert.ok(Array.isArray(firstLesson.exercises), 'first-sentences.exercises deve ser uma lista');
-assert.equal(firstLesson.exercises.length, 50, 'first-sentences deve ter exatamente 50 exercícios');
+assert.ok(verbPractice && verbPractice.pages, 'as páginas de exercícios devem existir');
+assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers'], 'first-sentences deve ser o primeiro exercício');
+const firstExercisePage = verbPractice.pages['first-sentences'];
+assert.equal(firstExercisePage.id, 'first-sentences');
+for (const field of ['heroIntro', 'heroIntro_en', 'metaPrimary', 'metaPrimary_en', 'metaThird', 'metaThird_en', 'ruleCopy', 'ruleCopy_en']) {
+  assertNonEmpty(firstExercisePage[field], `first-sentences.${field}`);
+}
+assert.equal(Object.keys(firstExercisePage.modes).length, 1, 'first-sentences deve ter somente um módulo');
+const firstMode = firstExercisePage.modes.sentences;
+assert.ok(firstMode, 'first-sentences deve ter um módulo de frases');
+assert.equal(firstMode.interaction, 'streak');
+assert.equal(firstMode.shuffle, false);
+assert.ok(Array.isArray(firstMode.items), 'first-sentences.items deve ser uma lista');
+assert.equal(firstMode.items.length, 50, 'first-sentences deve ter exatamente 50 exercícios');
 
 const exerciseIds = new Set();
-firstLesson.exercises.forEach((exercise, index) => {
-  const label = `first-sentences.exercises[${index}]`;
-  assert.equal(exercise.type, 'translate', `${label}.type deve ser translate`);
+firstMode.items.forEach((exercise, index) => {
+  const label = `first-sentences.items[${index}]`;
   assertNonEmpty(exercise.id, `${label}.id`);
   assert.ok(!exerciseIds.has(exercise.id), `ID de exercício duplicado: ${exercise.id}`);
   exerciseIds.add(exercise.id);
 
-  for (const field of ['prompt', 'prompt_en', 'answer', 'explanation', 'explanation_en']) {
+  for (const field of ['prompt', 'prompt_en', 'detail', 'detail_en', 'placeholder', 'placeholder_en']) {
     assertNonEmpty(exercise[field], `${label}.${field}`);
   }
   assert.ok(Array.isArray(exercise.answers) && exercise.answers.length > 0, `${label}.answers deve ter ao menos uma resposta`);
@@ -51,7 +59,7 @@ firstLesson.exercises.forEach((exercise, index) => {
 });
 assert.equal(exerciseIds.size, 50, 'os 50 exercícios devem ter IDs únicos');
 
-const expectedOldLessonIds = [
+const expectedLessonIds = [
   'pronunciation',
   'pronouns',
   'sein-haben',
@@ -64,29 +72,13 @@ const expectedOldLessonIds = [
   'modals-real-life',
   'connectors-prepositions'
 ];
-const oldLessons = lessons.slice(1);
-assert.deepEqual(Array.from(oldLessons, (lesson) => lesson.id), expectedOldLessonIds, 'as aulas antigas devem continuar presentes e na mesma ordem');
-assert.deepEqual(Array.from(oldLessons, (lesson) => lesson.number), [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+assert.deepEqual(Array.from(lessons, (lesson) => lesson.id), expectedLessonIds, 'as aulas devem continuar presentes e na mesma ordem');
+assert.deepEqual(Array.from(lessons, (lesson) => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
-assert.match(appSource, /sequential-translate/, 'app.js deve reconhecer a prática sequential-translate');
-assert.match(appSource, /practiceMode/, 'app.js deve consultar o modo de prática da aula');
-assert.match(appSource, /hydrateSequentialSession/, 'app.js deve retomar o progresso sequencial salvo');
-assert.match(appSource, /session\.isRetry/, 'app.js deve preservar um reinício explícito da prática');
-assert.match(appSource, /lessonScores\[lesson\.id\]/, 'app.js deve reconstruir a sessão a partir do progresso da aula');
-for (const attribute of [
-  'data-sequential-practice',
-  'data-sequential-input',
-  'data-sequential-check',
-  'data-sequential-next',
-  'data-sequential-retry',
-  'data-sequential-index'
-]) {
-  assert.match(appSource, new RegExp(attribute), `app.js deve conter ${attribute}`);
-}
-
-assert.match(appSource, /closest\('\[data-sequential-check\]'\)/, 'app.js deve tratar a ação de conferir a frase sequencial');
-assert.match(appSource, /closest\('\[data-sequential-next\]'\)/, 'app.js deve tratar a ação de avançar na prática sequencial');
-assert.match(appSource, /closest\('\[data-sequential-retry\]'\)/, 'app.js deve tratar a tentativa novamente da prática sequencial');
-assert.match(appSource, /matches\('\[data-sequential-input\]'\)/, 'app.js deve tratar a entrada da frase sequencial');
+assert.match(appSource, /exercises-first-sentences/, 'app.js deve reconhecer a rota do exercício de frases iniciais');
+assert.match(appSource, /isStreakMode\(mode\)/, 'app.js deve usar o fluxo unitário de exercícios');
+assert.match(appSource, /data-check-verb/, 'app.js deve conferir a resposta do exercício');
+assert.match(appSource, /data-next-verb/, 'app.js deve avançar após o acerto');
+assert.match(appSource, /data-retry-verb/, 'app.js deve permitir tentar novamente após o erro');
 
 console.log('first sentences contract tests passed');

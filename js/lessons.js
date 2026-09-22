@@ -3,7 +3,7 @@
 
   const lessons = [
     {
-      id: 'first-sentences', number: 1, level: 'A1', practiceMode: 'sequential-translate',
+      id: 'first-sentences', number: 1, level: 'A1', practiceMode: 'sequential-translate', exerciseOnly: true,
       title: 'Frases iniciais',
       description: 'Aprenda suas primeiras frases em alemão para cumprimentar, se apresentar, falar da rotina e fazer perguntas simples.',
       duration: '25 min', focus: 'Construir frases do dia a dia',
@@ -77,7 +77,7 @@
       ]
     },
     {
-      id: 'pronunciation', number: 2, title: 'Pronúncia e leitura',
+      id: 'pronunciation', number: 1, title: 'Pronúncia e leitura',
       description: 'Aprenda os sons que você vai ouvir todos os dias e ganhe segurança para ler suas primeiras palavras.',
       duration: '18 min', focus: 'Ouvir e reconhecer',
       introduction: 'O alemão fica muito mais fácil quando você para de tentar adivinhar os sons. Nesta aula, vamos criar um mapa de pronúncia prático: observe a combinação, ouça a palavra e repita em voz alta.',
@@ -113,7 +113,7 @@
       ]
     },
     {
-      id: 'pronouns', number: 3, title: 'Pronomes pessoais',
+      id: 'pronouns', number: 2, title: 'Pronomes pessoais',
       description: 'Descubra quem faz a ação e comece a montar frases sobre você, outras pessoas e o tratamento formal.',
       duration: '20 min', focus: 'Falar sobre pessoas',
       introduction: 'Pronomes são as pequenas palavras que ocupam o lugar de nomes. Eles aparecem antes do verbo e determinam a forma que o verbo vai assumir.',
@@ -142,7 +142,7 @@
       ]
     },
     {
-      id: 'sein-haben', number: 4, title: 'Sein e haben',
+      id: 'sein-haben', number: 3, title: 'Sein e haben',
       description: 'Domine os dois verbos mais importantes do alemão: ser/estar e ter, com frases úteis desde o primeiro dia.',
       duration: '24 min', focus: 'Bin, bist, habe',
       introduction: 'Sein e haben aparecem em apresentações, descrições, necessidades e situações do cotidiano. Vale aprender suas formas de cor, sempre ligadas a uma frase curta.',
@@ -181,7 +181,7 @@
       ]
     },
     {
-      id: 'sentence-structure', number: 5, title: 'Estrutura básica das frases',
+      id: 'sentence-structure', number: 4, title: 'Estrutura básica das frases',
       description: 'Entenda a posição 2 do verbo e construa frases claras mesmo quando você começa com hoje, amanhã ou outro elemento.',
       duration: '20 min', focus: 'Verbo na posição 2',
       introduction: 'A frase alemã fica previsível quando você encontra o verbo conjugado. Em uma declaração, ele costuma ocupar a segunda posição — o segundo elemento da frase, não necessariamente a segunda palavra.',
@@ -210,7 +210,7 @@
       ]
     },
     {
-      id: 'questions', number: 6, title: 'Perguntas em alemão',
+      id: 'questions', number: 5, title: 'Perguntas em alemão',
       description: 'Aprenda as palavras interrogativas essenciais e monte perguntas que resolvem situações reais na Alemanha.',
       duration: '21 min', focus: 'Perguntar e entender',
       introduction: 'Fazer uma boa pergunta é uma das formas mais rápidas de ganhar autonomia. Primeiro, reconheça a palavra interrogativa; depois, deixe o verbo fazer o trabalho.',
@@ -241,7 +241,7 @@
       ]
     },
     {
-      id: 'present-verbs', number: 7, title: 'Verbos no presente',
+      id: 'present-verbs', number: 6, title: 'Verbos no presente',
       description: 'Use a lógica dos verbos regulares para falar sobre trabalho, estudo, moradia, compras e rotina.',
       duration: '24 min', focus: 'Ações do dia a dia',
       introduction: 'A maioria dos verbos regulares segue um padrão claro. Retire -en para encontrar o radical e acrescente a terminação correspondente ao pronome.',
@@ -271,7 +271,7 @@
       ]
     },
     {
-      id: 'articles', number: 8, title: 'Artigos e gênero',
+      id: 'articles', number: 7, title: 'Artigos e gênero',
       description: 'Aprenda a tratar cada substantivo como um conjunto: artigo + palavra. Isso deixa sua fala muito mais natural.',
       duration: '22 min', focus: 'Der, die, das',
       introduction: 'Todo substantivo alemão tem gênero gramatical. Para quem fala português, a melhor estratégia é nunca memorizar a palavra sozinha: aprenda der Tisch, die Stadt, das Haus.',
@@ -305,7 +305,7 @@
       ]
     },
     {
-      id: 'negation', number: 9, title: 'Negação: nicht e kein',
+      id: 'negation', number: 8, title: 'Negação: nicht e kein',
       description: 'Diga que algo não acontece, não é caro ou que você não tem alguma coisa sem travar na hora de falar.',
       duration: '19 min', focus: 'Dizer “não”',
       introduction: 'Em alemão, há dois caminhos principais para negar. Pense primeiro no que você está negando: uma ação ou característica pede nicht; um substantivo sem artigo definido pede kein.',
@@ -338,7 +338,7 @@
       ]
     },
     {
-      id: 'accusative', number: 10, title: 'Acusativo',
+      id: 'accusative', number: 9, title: 'Acusativo',
       description: 'Uma introdução tranquila ao objeto direto: perceba por que der muda para den e ein para einen.',
       duration: '22 min', focus: 'Quem faz · o que recebe',
       introduction: 'Você já consegue formar frases. Agora vamos observar o que acontece com a pessoa ou coisa que recebe diretamente a ação. No início, concentre-se na mudança do masculino.',
@@ -372,7 +372,7 @@
       ]
     },
     {
-      id: 'modals-real-life', number: 11, title: 'Verbos modais e alemão da vida real',
+      id: 'modals-real-life', number: 10, title: 'Verbos modais e alemão da vida real',
       description: 'Feche o A1 Starter com kann, muss e möchte — e leve frases prontas para supermercado, restaurante, transporte e trabalho.',
       duration: '28 min', focus: 'Se virar na Alemanha',
       introduction: 'Verbos modais expressam o que você pode, precisa, quer ou gostaria de fazer. Eles deixam suas frases muito mais úteis: o modal conjugado fica na posição 2 e o infinitivo vai para o final.',
@@ -414,7 +414,7 @@
       ]
     },
     {
-      id: 'connectors-prepositions', number: 12, title: 'Conectores e preposições',
+      id: 'connectors-prepositions', number: 11, title: 'Conectores e preposições',
       description: 'Ligue ideias, indique lugar e diga para onde você vai com palavras pequenas que organizam a frase.',
       duration: '42 min', focus: 'Ligar ideias e indicar relações',
       introduction: 'Conectores unem ideias; preposições mostram relações como lugar, direção, tempo, companhia e finalidade. Nesta aula, vamos separar os dois papéis e praticar cada um com frases curtas.',
@@ -1212,5 +1212,6 @@
 
   lessons.forEach((lesson) => applyEnglishTranslations(lesson, englishTranslations[lesson.id]));
 
-  window.KlarLessons = lessons;
+  window.KlarExerciseOnly = lessons.filter((lesson) => lesson.exerciseOnly);
+  window.KlarLessons = lessons.filter((lesson) => !lesson.exerciseOnly);
 }());

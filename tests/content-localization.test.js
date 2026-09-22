@@ -17,12 +17,15 @@ function requireEnglish(object, field, label) {
   }
 }
 
-const lessons = loadWindow('js/lessons.js').KlarLessons;
-assert.equal(lessons.length, 12);
+const contentContext = { window: {}, console };
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'lessons.js'), 'utf8'), contentContext, { filename: 'js/lessons.js' });
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'verb-exercises.js'), 'utf8'), contentContext, { filename: 'js/verb-exercises.js' });
+const lessons = contentContext.window.KlarLessons;
+assert.equal(lessons.length, 11);
 
 const connectorLesson = lessons.find((lesson) => lesson.id === 'connectors-prepositions');
 assert.ok(connectorLesson, 'the connectors and prepositions lesson must exist');
-assert.equal(connectorLesson.number, 12);
+assert.equal(connectorLesson.number, 11);
 assert.ok(connectorLesson.exercises.length >= 20, 'the lesson needs enough practice');
 assert.ok(connectorLesson.sections.some((section) => section.title === 'Conectores: uma ideia leva à outra'));
 assert.ok(connectorLesson.sections.some((section) => section.title === 'Preposições: lugar, direção, tempo e relações'));
@@ -58,7 +61,8 @@ lessons.forEach((lesson) => {
   });
 });
 
-const verbPractice = loadWindow('js/verb-exercises.js').KlarVerbPractice;
+const verbPractice = contentContext.window.KlarVerbPractice;
+assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers']);
 Object.values(verbPractice.pages).forEach((page) => {
   const pageLabel = `verb:${page.id}`;
   ['title', 'subtitle', 'meaning', 'heroTitle', 'heroAccent', 'heroCopy', 'perfectMessage'].forEach((field) => requireEnglish(page, field, pageLabel));

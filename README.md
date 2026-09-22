@@ -23,7 +23,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 
 ## Highlights
 
-- 12 structured A1 lessons, starting with first sentences and continuing to real-life modal verbs
+- 11 structured A1 lessons, from pronunciation to real-life modal verbs
 - Portuguese and English interface localization
 - Clear explanations with German examples and translations
 - Pronunciation support using the browser's German text-to-speech engine
@@ -32,7 +32,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 - Dedicated practice for `sein` and `haben`
 - Number-writing practice from 1 to 10, in order or randomized
 - 50 quick `sein` sentences and 50 quick `haben` sentences
-- 50 beginner sentence translations in a one-at-a-time A1 lesson
+- 50 beginner sentence translations in a one-at-a-time A1 exercise
 - Progress tracking stored locally in the browser
 - Responsive layout for mobile, tablet, and desktop
 - No account, backend, build pipeline, or installation required
@@ -41,18 +41,17 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 
 | # | Lesson | Focus |
 | --- | --- | --- |
-| 01 | First sentences | Greetings, introductions, routines, places, times, and basic questions |
-| 02 | Pronunciation and reading | Special sounds, sound combinations, and listening practice |
-| 03 | Personal pronouns | `ich`, `du`, `er`, `sie`, `es`, `wir`, `ihr`, and formal `Sie` |
-| 04 | `Sein` and `haben` | The two most important German verbs |
-| 05 | Basic sentence structure | The verb-in-second-position rule |
-| 06 | Questions in German | Asking and understanding everyday questions |
-| 07 | Present-tense verbs | Build sentences about daily actions |
-| 08 | Articles and gender | Learn `der`, `die`, and `das` with useful nouns |
-| 09 | Negation | Use `nicht` and `kein` to say “not” and “no” |
-| 10 | Accusative case | Understand who does the action and what receives it |
-| 11 | Modals and real-life German | `können`, `müssen`, `möchten`, and practical situations |
-| 12 | Connectors and prepositions | Join ideas and talk about place, direction, time, and relationships |
+| 01 | Pronunciation and reading | Special sounds, sound combinations, and listening practice |
+| 02 | Personal pronouns | `ich`, `du`, `er`, `sie`, `es`, `wir`, `ihr`, and formal `Sie` |
+| 03 | `Sein` and `haben` | The two most important German verbs |
+| 04 | Basic sentence structure | The verb-in-second-position rule |
+| 05 | Questions in German | Asking and understanding everyday questions |
+| 06 | Present-tense verbs | Build sentences about daily actions |
+| 07 | Articles and gender | Learn `der`, `die`, and `das` with useful nouns |
+| 08 | Negation | Use `nicht` and `kein` to say “not” and “no” |
+| 09 | Accusative case | Understand who does the action and what receives it |
+| 10 | Modals and real-life German | `können`, `müssen`, `möchten`, and practical situations |
+| 11 | Connectors and prepositions | Join ideas and talk about place, direction, time, and relationships |
 
 ## Practice areas
 
@@ -72,6 +71,7 @@ Every vocabulary item includes a translation, an example, and a listen button wh
 
 The practice area focuses on the verbs beginners need constantly:
 
+- One-at-a-time A1 sentence translations with retry-until-correct feedback
 - Conjugation drills for `sein` and `haben`
 - Short translation prompts
 - Number-writing drills from 1 to 10, with ordered and randomized modes
@@ -122,7 +122,7 @@ You can also serve the folder with any static file server.
 │   ├── lessons.js       # A1 course content
 │   ├── speech.js        # Browser speech integration
 │   ├── storage.js       # Local progress persistence
-│   └── verb-exercises.js  # Sein and haben practice data
+│   └── verb-exercises.js  # Sentence, Sein, haben, and number practice data
 └── tests/               # Static integration and content checks
 ```
 

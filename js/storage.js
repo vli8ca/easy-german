@@ -41,7 +41,7 @@
     const earned = [];
     if (total >= 1) earned.push('first-step');
     if (total >= 5) earned.push('guten-tag');
-    if (total >= 12) earned.push('a1-starter');
+    if (total >= 11) earned.push('a1-starter');
     progress.achievements = earned;
     return progress;
   }
