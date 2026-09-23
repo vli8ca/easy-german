@@ -15,10 +15,10 @@ vm.runInNewContext(
 const page = context.window.KlarVerbPractice.pages['w-fragen'];
 assert.ok(page, 'a página de W-Fragen deve existir');
 assert.equal(page.id, 'w-fragen');
-assert.deepEqual(Object.keys(page.modes), ['questions']);
+assert.deepEqual(Object.keys(page.modes), ['questions', 'random']);
 
 const mode = page.modes.questions;
-assert.equal(mode.interaction, 'streak');
+assert.equal(mode.interaction, 'form');
 assert.equal(mode.shuffle, false);
 assert.equal(mode.items.length, 10, 'W-Fragen deve ter exatamente 10 itens');
 
@@ -39,6 +39,16 @@ assert.equal(
   JSON.stringify(mode.items.map((item) => [item.answers[0], item.prompt])),
   JSON.stringify(expected),
   'as W-Fragen devem seguir a ordem e os significados da referência'
+);
+
+const randomMode = page.modes.random;
+assert.equal(randomMode.interaction, 'streak');
+assert.equal(randomMode.shuffle, true);
+assert.equal(randomMode.items.length, 10, 'o modo aleatório deve reutilizar as 10 W-Fragen');
+assert.deepEqual(
+  randomMode.items.map((item) => item.id),
+  mode.items.map((item) => item.id),
+  'o modo aleatório deve reutilizar as mesmas perguntas'
 );
 
 const ids = new Set();

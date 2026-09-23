@@ -28,6 +28,19 @@
     { id: 'number-10', prompt: '10', prompt_en: '10', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['zehn'] }
   ];
 
+  const wFragenItems = [
+    { id: 'w-was', prompt: 'o quê?', prompt_en: 'what?', detail: 'Pergunta sobre uma coisa ou informação.', detail_en: 'Question about a thing or piece of information.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Was'] },
+    { id: 'w-wer', prompt: 'quem?', prompt_en: 'who?', detail: 'Pergunta sobre uma pessoa.', detail_en: 'Question about a person.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wer'] },
+    { id: 'w-wo', prompt: 'onde?', prompt_en: 'where?', detail: 'Pergunta sobre um lugar.', detail_en: 'Question about a place.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wo'] },
+    { id: 'w-woher', prompt: 'de onde?', prompt_en: 'where from?', detail: 'Pergunta sobre a origem.', detail_en: 'Question about an origin.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Woher'] },
+    { id: 'w-wohin', prompt: 'para onde?', prompt_en: 'where to?', detail: 'Pergunta sobre um destino.', detail_en: 'Question about a destination.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wohin'] },
+    { id: 'w-wann', prompt: 'quando?', prompt_en: 'when?', detail: 'Pergunta sobre um momento ou horário.', detail_en: 'Question about a time or moment.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wann'] },
+    { id: 'w-warum', prompt: 'por quê?', prompt_en: 'why?', detail: 'Pergunta sobre um motivo.', detail_en: 'Question about a reason.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Warum'] },
+    { id: 'w-wie', prompt: 'como?', prompt_en: 'how?', detail: 'Pergunta sobre uma maneira ou condição.', detail_en: 'Question about a way or condition.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie'] },
+    { id: 'w-wie-viel', prompt: 'quanto?', prompt_en: 'how much?', detail: 'Pergunta sobre uma quantidade.', detail_en: 'Question about an amount.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie viel'] },
+    { id: 'w-wie-lange', prompt: 'quanto tempo?', prompt_en: 'how long?', detail: 'Pergunta sobre uma duração.', detail_en: 'Question about a duration.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie lange'] }
+  ];
+
   function makeChoiceItem(id, prompt, promptEn, detail, detailEn, options, answerIndex) {
     const answerPositions = [2, 0, 3, 1, 1, 3, 0, 2, 3, 1, 2, 0, 0, 3, 1, 2, 1, 2, 0, 3, 3, 0, 2, 1, 2, 1, 3, 0, 1, 3, 0, 2, 2, 3, 1, 0, 3, 2, 1, 0, 1, 3, 2, 0, 3, 1, 0, 2, 3, 0];
     const itemNumber = Number((id.match(/(\d+)$/) || [0, 0])[1]);
@@ -621,8 +634,8 @@
         id: 'w-fragen',
         title: 'W-Fragen',
         title_en: 'W-questions',
-        subtitle: 'Aprenda as palavras essenciais para fazer perguntas em alemão.',
-        subtitle_en: 'Learn the essential words for asking questions in German.',
+        subtitle: 'Aprenda as palavras essenciais para fazer perguntas em alemão, em ordem ou aleatoriamente.',
+        subtitle_en: 'Learn the essential words for asking questions in German, in order or at random.',
         verb: 'W?',
         meaning: 'perguntas abertas',
         meaning_en: 'open questions',
@@ -632,8 +645,8 @@
         heroAccent_en: 'for asking.',
         heroCopy: 'aprenda as palavras que abrem perguntas em alemão.',
         heroCopy_en: 'learn the words that open questions in German.',
-        heroIntro: 'Pratique as 10 W-Fragen mais importantes — uma por vez, com feedback imediato.',
-        heroIntro_en: 'Practice the 10 most important W-questions — one at a time, with instant feedback.',
+        heroIntro: 'Pratique as 10 W-Fragen mais importantes em uma lista guiada ou em ordem aleatória.',
+        heroIntro_en: 'Practice the 10 most important W-questions in a guided list or in random order.',
         metaPrimary: 'A1 · perguntas',
         metaPrimary_en: 'A1 · questions',
         metaThird: 'sem verbos',
@@ -647,36 +660,39 @@
         modes: {
           questions: {
             id: 'questions',
-            interaction: 'streak',
+            interaction: 'form',
             shuffle: false,
             label: 'W-Fragen',
             label_en: 'W-questions',
-            shortLabel: '01 · Uma por vez',
-            shortLabel_en: '01 · One at a time',
-            title: 'Escreva as W-Fragen em alemão',
-            title_en: 'Write the W-questions in German',
-            instruction: 'Veja o significado em português e escreva a pergunta correspondente em alemão. Ao acertar, avance para a próxima.',
-            instruction_en: 'Read the meaning in Portuguese and write the matching question in German. When you get it right, move to the next one.',
+            shortLabel: '01 · Perguntas em ordem',
+            shortLabel_en: '01 · Questions in order',
+            title: 'Complete as W-Fragen',
+            title_en: 'Complete the W-questions',
+            instruction: 'Veja o significado em português e escreva a W-Frage correspondente em alemão. Confira tudo ao final.',
+            instruction_en: 'Read the meaning in Portuguese and write the matching W-question in German. Check everything at the end.',
+            items: wFragenItems
+          },
+          random: {
+            id: 'random',
+            interaction: 'streak',
+            shuffle: true,
+            label: 'Perguntas aleatórias',
+            label_en: 'Random questions',
+            shortLabel: '02 · Ordem aleatória',
+            shortLabel_en: '02 · Random order',
+            title: 'Pratique as W-Fragen em ordem aleatória',
+            title_en: 'Practice the W-questions in random order',
+            instruction: 'As mesmas perguntas aparecem embaralhadas. Escreva a resposta, confira e avance para a próxima.',
+            instruction_en: 'The same questions appear shuffled. Write the answer, check it, and move to the next one.',
             inputLabel: 'Digite a W-Frage em alemão',
             inputLabel_en: 'Type the W-question in German',
             checkLabel: 'Verificar pergunta',
             checkLabel_en: 'Check question',
             nextLabel: 'Próxima pergunta',
             nextLabel_en: 'Next question',
-            restartLabel: 'Recomeçar W-Fragen',
-            restartLabel_en: 'Restart W-questions',
-            items: [
-              { id: 'w-was', prompt: 'o quê?', prompt_en: 'what?', detail: 'Pergunta sobre uma coisa ou informação.', detail_en: 'Question about a thing or piece of information.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Was'] },
-              { id: 'w-wer', prompt: 'quem?', prompt_en: 'who?', detail: 'Pergunta sobre uma pessoa.', detail_en: 'Question about a person.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wer'] },
-              { id: 'w-wo', prompt: 'onde?', prompt_en: 'where?', detail: 'Pergunta sobre um lugar.', detail_en: 'Question about a place.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wo'] },
-              { id: 'w-woher', prompt: 'de onde?', prompt_en: 'where from?', detail: 'Pergunta sobre a origem.', detail_en: 'Question about an origin.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Woher'] },
-              { id: 'w-wohin', prompt: 'para onde?', prompt_en: 'where to?', detail: 'Pergunta sobre um destino.', detail_en: 'Question about a destination.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wohin'] },
-              { id: 'w-wann', prompt: 'quando?', prompt_en: 'when?', detail: 'Pergunta sobre um momento ou horário.', detail_en: 'Question about a time or moment.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wann'] },
-              { id: 'w-warum', prompt: 'por quê?', prompt_en: 'why?', detail: 'Pergunta sobre um motivo.', detail_en: 'Question about a reason.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Warum'] },
-              { id: 'w-wie', prompt: 'como?', prompt_en: 'how?', detail: 'Pergunta sobre uma maneira ou condição.', detail_en: 'Question about a way or condition.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie'] },
-              { id: 'w-wie-viel', prompt: 'quanto?', prompt_en: 'how much?', detail: 'Pergunta sobre uma quantidade.', detail_en: 'Question about an amount.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie viel'] },
-              { id: 'w-wie-lange', prompt: 'quanto tempo?', prompt_en: 'how long?', detail: 'Pergunta sobre uma duração.', detail_en: 'Question about a duration.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie lange'] }
-            ]
+            restartLabel: 'Recomeçar em ordem aleatória',
+            restartLabel_en: 'Restart in random order',
+            items: wFragenItems
           }
         }
       }
