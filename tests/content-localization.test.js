@@ -23,6 +23,16 @@ vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'verb-exerci
 const lessons = contentContext.window.KlarLessons;
 assert.equal(lessons.length, 11);
 
+const conjugationLesson = lessons.find((lesson) => lesson.id === 'present-verbs');
+assert.ok(conjugationLesson, 'the verb conjugation lesson must exist');
+assert.equal(conjugationLesson.number, 3);
+assert.equal(conjugationLesson.title, 'Conjugação de verbos');
+assert.ok(conjugationLesson.exercises.length >= 12, 'the conjugation lesson needs enough practice');
+assert.ok(conjugationLesson.sections.some((section) => section.title === 'As terminações dos verbos regulares'));
+assert.ok(conjugationLesson.sections.some((section) => section.title === 'Padrão ou exceção?'));
+assert.equal(conjugationLesson.exercises.filter((exercise) => exercise.id.startsWith('v')).length, conjugationLesson.exercises.length);
+assert.equal(new Set(conjugationLesson.exercises.map((exercise) => exercise.id)).size, conjugationLesson.exercises.length);
+
 const connectorLesson = lessons.find((lesson) => lesson.id === 'connectors-prepositions');
 assert.ok(connectorLesson, 'the connectors and prepositions lesson must exist');
 assert.equal(connectorLesson.number, 11);

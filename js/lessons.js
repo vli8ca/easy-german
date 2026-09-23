@@ -142,7 +142,7 @@
       ]
     },
     {
-      id: 'sein-haben', number: 3, title: 'Sein e haben',
+      id: 'sein-haben', number: 4, title: 'Sein e haben',
       description: 'Domine os dois verbos mais importantes do alemão: ser/estar e ter, com frases úteis desde o primeiro dia.',
       duration: '24 min', focus: 'Bin, bist, habe',
       introduction: 'Sein e haben aparecem em apresentações, descrições, necessidades e situações do cotidiano. Vale aprender suas formas de cor, sempre ligadas a uma frase curta.',
@@ -181,7 +181,7 @@
       ]
     },
     {
-      id: 'sentence-structure', number: 4, title: 'Estrutura básica das frases',
+      id: 'sentence-structure', number: 5, title: 'Estrutura básica das frases',
       description: 'Entenda a posição 2 do verbo e construa frases claras mesmo quando você começa com hoje, amanhã ou outro elemento.',
       duration: '20 min', focus: 'Verbo na posição 2',
       introduction: 'A frase alemã fica previsível quando você encontra o verbo conjugado. Em uma declaração, ele costuma ocupar a segunda posição — o segundo elemento da frase, não necessariamente a segunda palavra.',
@@ -210,7 +210,7 @@
       ]
     },
     {
-      id: 'questions', number: 5, title: 'Perguntas em alemão',
+      id: 'questions', number: 6, title: 'Perguntas em alemão',
       description: 'Aprenda as palavras interrogativas essenciais e monte perguntas que resolvem situações reais na Alemanha.',
       duration: '21 min', focus: 'Perguntar e entender',
       introduction: 'Fazer uma boa pergunta é uma das formas mais rápidas de ganhar autonomia. Primeiro, reconheça a palavra interrogativa; depois, deixe o verbo fazer o trabalho.',
@@ -241,33 +241,54 @@
       ]
     },
     {
-      id: 'present-verbs', number: 6, title: 'Verbos no presente',
-      description: 'Use a lógica dos verbos regulares para falar sobre trabalho, estudo, moradia, compras e rotina.',
-      duration: '24 min', focus: 'Ações do dia a dia',
-      introduction: 'A maioria dos verbos regulares segue um padrão claro. Retire -en para encontrar o radical e acrescente a terminação correspondente ao pronome.',
-      objectives: ['Encontrar o radical do verbo', 'Conjugar machen e verbos frequentes', 'Falar sobre sua rotina'],
+      id: 'present-verbs', number: 3, title: 'Conjugação de verbos',
+      description: 'Aprenda o padrão que transforma um verbo no infinitivo em frases úteis no presente.',
+      duration: '28 min', focus: 'Formar frases no presente',
+      introduction: 'Depois de conhecer os pronomes, você já pode descobrir a lógica que aparece em muitos verbos alemães. Retire -en, encontre o radical e escolha a terminação que combina com a pessoa.',
+      objectives: ['Separar infinitivo, radical e terminação', 'Conjugar verbos regulares no presente', 'Usar verbos de rotina em frases completas'],
       sections: [
-        { type: 'rule', title: 'machen como modelo', segments: ['mach-', 'terminação', 'frase'], verbIndex: 0, caption: 'Radical + terminação. No presente, a terminação acompanha o pronome.' },
-        { type: 'table', title: 'As terminações regulares', headers: ['Pronome', 'Final', 'machen'], rows: [
-          ['ich', '-e', 'ich mache'], ['du', '-st', 'du machst'], ['er / sie / es', '-t', 'er macht'], ['wir', '-en', 'wir machen'], ['ihr', '-t', 'ihr macht'], ['sie / Sie', '-en', 'sie machen']
+        { type: 'rule', title: 'A fórmula do presente', segments: ['radical', 'terminação', 'frase'], verbIndex: 1, caption: 'Retire -en do infinitivo: lern-en → lern-. Depois, acrescente a terminação: ich lern-e.' },
+        { type: 'table', title: 'As terminações dos verbos regulares', lede: 'Use lernen como modelo. O pronome diz qual final o verbo recebe.', headers: ['Pronome', 'Terminação', 'lernen'], rows: [
+          ['ich', '-e', 'ich lerne'], ['du', '-st', 'du lernst'], ['er / sie / es', '-t', 'er lernt'], ['wir', '-en', 'wir lernen'], ['ihr', '-t', 'ihr lernt'], ['sie / Sie', '-en', 'sie lernen']
         ]},
-        { type: 'table', title: 'Verbos para sua primeira semana', headers: ['Infinitivo', 'Significado', 'Exemplo'], rows: [
-          ['machen', 'fazer', 'Ich mache Sport.'], ['arbeiten', 'trabalhar', 'Ich arbeite heute.'], ['lernen', 'aprender', 'Wir lernen Deutsch.'], ['wohnen', 'morar', 'Ich wohne in Stuttgart.'], ['kommen', 'vir', 'Ich komme aus Brasilien.'], ['kaufen', 'comprar', 'Wir kaufen Brot.'], ['brauchen', 'precisar', 'Ich brauche Hilfe.'], ['spielen', 'jogar / brincar', 'Die Kinder spielen.'], ['fragen', 'perguntar', 'Ich frage den Lehrer.']
+        { type: 'table', title: 'Do infinitivo à frase', lede: 'Aprenda o verbo junto com uma frase curta. Isso ajuda a lembrar a forma e o significado ao mesmo tempo.', headers: ['Infinitivo', 'Radical', 'Exemplo'], rows: [
+          ['machen', 'mach-', 'Ich mache Sport.'], ['arbeiten', 'arbeit-', 'Ich arbeite heute.'], ['lernen', 'lern-', 'Wir lernen Deutsch.'], ['wohnen', 'wohn-', 'Ich wohne in Stuttgart.'], ['kommen', 'komm-', 'Ich komme aus Brasilien.'], ['kaufen', 'kauf-', 'Wir kaufen Brot.'], ['brauchen', 'brauch-', 'Ich brauche Hilfe.'], ['spielen', 'spiel-', 'Die Kinder spielen.'], ['fragen', 'frag-', 'Ich frage den Lehrer.']
         ]},
-        { type: 'callout', title: 'Pequena atenção', text: 'Verbos cujo radical termina em -t ou -d podem ganhar um “e” de apoio em algumas formas: <strong>arbeiten → du arbeitest</strong>. Não tente aplicar o padrão de forma mecânica a todos os verbos.' }
+        { type: 'examples', title: 'Frases para usar hoje', lede: 'Observe a pessoa e a terminação. Depois, ouça a frase e repita em voz alta.', items: [
+          { de: 'Ich arbeite heute.', pt: 'Eu trabalho hoje.', note: 'ich + -e' }, { de: 'Du lernst Deutsch.', pt: 'Você aprende alemão.', note: 'du + -st' },
+          { de: 'Er wohnt in Berlin.', pt: 'Ele mora em Berlim.', note: 'er + -t' }, { de: 'Wir kaufen Brot.', pt: 'Nós compramos pão.', note: 'wir + -en' },
+          { de: 'Ihr spielt Fußball.', pt: 'Vocês jogam futebol.', note: 'ihr + -t' }, { de: 'Sie fragen den Lehrer.', pt: 'Eles perguntam ao professor / Você pergunta ao professor (formal).', note: 'sie/Sie + -en' }
+        ]},
+        { type: 'callout', title: 'O “e” de apoio', text: 'Quando o radical termina em <strong>-t</strong> ou <strong>-d</strong>, aparece um “e” antes de algumas terminações: <strong>arbeiten → du arbeitest</strong> e <strong>er arbeitet</strong>. Esse “e” deixa a pronúncia mais fácil.' },
+        { type: 'compare', title: 'Padrão ou exceção?', items: [
+          { label: 'Regular', description: 'A terminação se encaixa diretamente no radical.', examples: ['lernen → du lernst', 'machen → er macht'] },
+          { label: 'Com “e” de apoio', description: 'Radicais terminados em -t ou -d ganham uma vogal antes do final.', examples: ['arbeiten → du arbeitest', 'reden → er redet'] },
+          { label: 'Irregular', description: 'Alguns verbos mudam a vogal e precisam ser aprendidos como exceções.', examples: ['fahren → du fährst', 'sehen → er sieht'] }
+        ]}
       ],
       vocabulary: [
         { word: 'machen', meaning: 'fazer', example: 'Was machst du?' }, { word: 'arbeiten', meaning: 'trabalhar', example: 'Ich arbeite bei Bosch.' },
         { word: 'lernen', meaning: 'aprender', example: 'Ich lerne Deutsch.' }, { word: 'wohnen', meaning: 'morar', example: 'Wir wohnen in Deutschland.' },
-        { word: 'kaufen', meaning: 'comprar', example: 'Ich kaufe Brot.' }, { word: 'brauchen', meaning: 'precisar', example: 'Ich brauche Hilfe.' }
+        { word: 'kaufen', meaning: 'comprar', example: 'Ich kaufe Brot.' }, { word: 'brauchen', meaning: 'precisar', example: 'Ich brauche Hilfe.' },
+        { word: 'spielen', meaning: 'jogar / brincar', example: 'Die Kinder spielen.' }, { word: 'fragen', meaning: 'perguntar', example: 'Ich frage den Lehrer.' },
+        { word: 'heute', meaning: 'hoje', example: 'Heute arbeite ich.' }, { word: 'jeden Tag', meaning: 'todos os dias', example: 'Ich lerne jeden Tag.' }
       ],
-      summary: ['Retire -en para encontrar o radical de um verbo regular.', 'ich recebe -e; du recebe -st.', 'er/sie/es recebe -t; ihr também recebe -t.', 'wir e sie/Sie recebem -en.', 'Alguns radicais pedem um “e” de apoio, como arbeiten.'],
+      summary: ['Retire -en para encontrar o radical de um verbo regular.', 'ich recebe -e; du recebe -st.', 'er/sie/es e ihr recebem -t.', 'wir e sie/Sie recebem -en.', 'Alguns radicais pedem um “e” de apoio, como arbeiten; outros mudam a vogal e são irregulares.'],
       exercises: [
         { id: 'v1', type: 'fill', prompt: 'Ich ___ Deutsch. (lernen)', answer: 'lerne', explanation: 'ich recebe a terminação -e: lernen → ich lerne.' },
         { id: 'v2', type: 'fill', prompt: 'Du ___ in Berlin. (wohnen)', answer: 'wohnst', explanation: 'du recebe -st: wohnen → du wohnst.' },
-        { id: 'v3', type: 'fill', prompt: 'Er ___ bei Bosch. (arbeiten)', answer: 'arbeitet', explanation: 'arbeiten tem um “e” de apoio: er arbeitet.' },
+        { id: 'v3', type: 'multiple', prompt: 'Er ___ bei Bosch. (arbeiten)', options: ['arbeite', 'arbeitest', 'arbeitet', 'arbeiten'], answer: 'arbeitet', explanation: 'Com er, arbeiten vira arbeitet. O radical recebe um “e” de apoio antes de -t.' },
         { id: 'v4', type: 'multiple', prompt: 'Qual é a forma correta para wir + machen?', options: ['wir macht', 'wir machen', 'wir machst', 'wir mache'], answer: 'wir machen', explanation: 'wir recebe -en: wir machen.' },
-        { id: 'v5', type: 'translate', prompt: 'Traduza: “Eu preciso de ajuda.”', answers: ['Ich brauche Hilfe.', 'ich brauche hilfe'], answer: 'Ich brauche Hilfe.', explanation: 'brauchen → ich brauche; Hilfe é ajuda.' }
+        { id: 'v5', type: 'fill', prompt: 'Ihr ___ Fußball. (spielen)', answer: 'spielt', explanation: 'ihr recebe -t: spielen → ihr spielt.' },
+        { id: 'v6', type: 'multiple', prompt: 'Sie ___ aus Brasilien. (kommen)', options: ['komme', 'kommst', 'kommt', 'kommen'], answer: 'kommen', explanation: 'sie e Sie usam a forma plural: Sie kommen aus Brasilien.' },
+        { id: 'v7', type: 'fill', prompt: 'Ich ___ Hilfe. (brauchen)', answer: 'brauche', explanation: 'ich recebe -e: brauchen → ich brauche.' },
+        { id: 'v8', type: 'truefalse', prompt: 'Verdadeiro ou falso: du lernt Deutsch.', options: ['Verdadeiro', 'Falso'], answer: 'Falso', explanation: 'Com du, a terminação é -st: Du lernst Deutsch.' },
+        { id: 'v9', type: 'multiple', prompt: 'Qual frase está correta?', options: ['Ich arbeit heute.', 'Ich arbeite heute.', 'Ich arbeitest heute.', 'Ich arbeiten heute.'], answer: 'Ich arbeite heute.', explanation: 'Com ich, arbeiten vira arbeite; o “e” de apoio aparece antes da terminação -e.' },
+        { id: 'v10', type: 'fill', prompt: 'Du ___ heute. (arbeiten)', answer: 'arbeitest', explanation: 'Com du, arbeiten vira arbeitest: arbeit- + -e- + -st.' },
+        { id: 'v11', type: 'order', prompt: 'Ordene: Heute / wir / lernen / Deutsch', answer: ['Heute', 'lernen', 'wir', 'Deutsch'], explanation: 'A frase fica Heute lernen wir Deutsch. O verbo conjugado continua na posição 2.' },
+        { id: 'v12', type: 'translate', prompt: 'Traduza: “Eu compro pão.”', answers: ['Ich kaufe Brot.', 'ich kaufe brot'], answer: 'Ich kaufe Brot.', explanation: 'kaufen → ich kaufe; Brot significa pão.' },
+        { id: 'v13', type: 'translate', prompt: 'Traduza: “Nós moramos em Stuttgart.”', answers: ['Wir wohnen in Stuttgart.', 'wir wohnen in stuttgart'], answer: 'Wir wohnen in Stuttgart.', explanation: 'wohnen → wir wohnen; Stuttgart é o lugar.' },
+        { id: 'v14', type: 'translate', prompt: 'Traduza: “Eles jogam futebol.”', answers: ['Sie spielen Fußball.', 'sie spielen fussball'], answer: 'Sie spielen Fußball.', explanation: 'sie recebe -en: Sie spielen Fußball.' }
       ]
     },
     {
@@ -817,47 +838,76 @@
       ]
     },
     'present-verbs': {
-      title: 'Present-tense verbs',
-      description: 'Use the logic of regular verbs to talk about work, study, housing, shopping, and routine.',
-      focus: 'Everyday actions',
-      introduction: 'Most regular verbs follow a clear pattern. Remove -en to find the stem and add the ending that matches the pronoun.',
-      objectives: ['Find the verb stem', 'Conjugate machen and common verbs', 'Talk about your routine'],
+      title: 'Verb conjugation',
+      description: 'Learn the pattern that turns an infinitive into useful present-tense sentences.',
+      focus: 'Building present-tense sentences',
+      introduction: 'Once you know the pronouns, you can uncover the pattern behind many German verbs. Remove -en, find the stem, and choose the ending that matches the person.',
+      objectives: ['Separate infinitive, stem, and ending', 'Conjugate regular verbs in the present tense', 'Use routine verbs in complete sentences'],
       sections: [
         {
-          title: 'machen as a model',
-          segments: ['mach-', 'ending', 'sentence'],
-          caption: 'Stem + ending. In the present tense, the ending follows the pronoun.'
+          title: 'The present-tense formula',
+          segments: ['stem', 'ending', 'sentence'],
+          caption: 'Remove -en from the infinitive: lern-en → lern-. Then add the ending: ich lern-e.'
         },
         {
-          title: 'The regular endings',
-          headers: ['Pronoun', 'Ending', 'machen'],
+          title: 'Regular verb endings',
+          lede: 'Use lernen as the model. The pronoun tells you which ending the verb receives.',
+          headers: ['Pronoun', 'Ending', 'lernen'],
           rows: [
-            ['ich', '-e', 'ich mache'], ['du', '-st', 'du machst'], ['er / sie / es', '-t', 'er macht'], ['wir', '-en', 'wir machen'], ['ihr', '-t', 'ihr macht'], ['sie / Sie', '-en', 'sie machen']
+            ['ich', '-e', 'ich lerne'], ['du', '-st', 'du lernst'], ['er / sie / es', '-t', 'er lernt'], ['wir', '-en', 'wir lernen'], ['ihr', '-t', 'ihr lernt'], ['sie / Sie', '-en', 'sie lernen']
           ]
         },
         {
-          title: 'Verbs for your first week',
-          headers: ['Infinitive', 'Meaning', 'Example'],
+          title: 'From infinitive to sentence',
+          lede: 'Learn the verb together with a short sentence. This helps you remember the form and meaning at the same time.',
+          headers: ['Infinitive', 'Stem', 'Example'],
           rows: [
-            ['machen', 'to do', 'Ich mache Sport.'], ['arbeiten', 'to work', 'Ich arbeite heute.'], ['lernen', 'to learn', 'Wir lernen Deutsch.'], ['wohnen', 'to live', 'Ich wohne in Stuttgart.'], ['kommen', 'to come', 'Ich komme aus Brasilien.'], ['kaufen', 'to buy', 'Wir kaufen Brot.'], ['brauchen', 'to need', 'Ich brauche Hilfe.'], ['spielen', 'to play', 'Die Kinder spielen.'], ['fragen', 'to ask', 'Ich frage den Lehrer.']
+            ['machen', 'mach-', 'Ich mache Sport.'], ['arbeiten', 'arbeit-', 'Ich arbeite heute.'], ['lernen', 'lern-', 'Wir lernen Deutsch.'], ['wohnen', 'wohn-', 'Ich wohne in Stuttgart.'], ['kommen', 'komm-', 'Ich komme aus Brasilien.'], ['kaufen', 'kauf-', 'Wir kaufen Brot.'], ['brauchen', 'brauch-', 'Ich brauche Hilfe.'], ['spielen', 'spiel-', 'Die Kinder spielen.'], ['fragen', 'frag-', 'Ich frage den Lehrer.']
           ]
         },
         {
-          title: 'A small detail',
-          text: 'Verbs whose stem ends in -t or -d can gain a supporting “e” in some forms: <strong>arbeiten → du arbeitest</strong>. Do not try to apply the pattern mechanically to every verb.'
+          title: 'Sentences to use today',
+          lede: 'Notice the person and the ending. Then listen to the sentence and repeat it aloud.',
+          items: [
+            { en: 'I work today.', note: 'ich + -e' }, { en: 'You learn German.', note: 'du + -st' },
+            { en: 'He lives in Berlin.', note: 'er + -t' }, { en: 'We buy bread.', note: 'wir + -en' },
+            { en: 'You (plural) play soccer.', note: 'ihr + -t' }, { en: 'They ask the teacher / You ask the teacher (formal).', note: 'sie/Sie + -en' }
+          ]
+        },
+        {
+          title: 'The supporting “e”',
+          text: 'When the stem ends in <strong>-t</strong> or <strong>-d</strong>, an “e” appears before some endings: <strong>arbeiten → du arbeitest</strong> and <strong>er arbeitet</strong>. This “e” makes pronunciation easier.'
+        },
+        {
+          title: 'Pattern or exception?',
+          items: [
+            { label: 'Regular', description: 'The ending attaches directly to the stem.', examples: ['lernen → du lernst', 'machen → er macht'] },
+            { label: 'With a supporting “e”', description: 'Stems ending in -t or -d add a vowel before the ending.', examples: ['arbeiten → du arbeitest', 'reden → er redet'] },
+            { label: 'Irregular', description: 'Some verbs change their vowel and need to be learned as exceptions.', examples: ['fahren → du fährst', 'sehen → er sieht'] }
+          ]
         }
       ],
       vocabulary: [
         { meaning: 'to do' }, { meaning: 'to work' }, { meaning: 'to learn' },
-        { meaning: 'to live' }, { meaning: 'to buy' }, { meaning: 'to need' }
+        { meaning: 'to live' }, { meaning: 'to buy' }, { meaning: 'to need' },
+        { meaning: 'to play' }, { meaning: 'to ask' }, { meaning: 'today' }, { meaning: 'every day' }
       ],
-      summary: ['Remove -en to find the stem of a regular verb.', 'ich gets -e; du gets -st.', 'er/sie/es gets -t; ihr also gets -t.', 'wir and sie/Sie get -en.', 'Some stems need a supporting “e”, such as arbeiten.'],
+      summary: ['Remove -en to find the stem of a regular verb.', 'ich gets -e; du gets -st.', 'er/sie/es and ihr get -t.', 'wir and sie/Sie get -en.', 'Some stems need a supporting “e”, such as arbeiten; others change their vowel and are irregular.'],
       exercises: [
         { prompt: 'Ich ___ Deutsch. (lernen)', explanation: 'ich gets the -e ending: lernen → ich lerne.' },
         { prompt: 'Du ___ in Berlin. (wohnen)', explanation: 'du gets -st: wohnen → du wohnst.' },
-        { prompt: 'Er ___ bei Bosch. (arbeiten)', explanation: 'arbeiten has a supporting “e”: er arbeitet.' },
+        { prompt: 'Er ___ bei Bosch. (arbeiten)', options: ['arbeite', 'arbeitest', 'arbeitet', 'arbeiten'], explanation: 'With er, arbeiten becomes arbeitet. The stem gets a supporting “e” before -t.' },
         { prompt: 'What is the correct form for wir + machen?', options: ['wir macht', 'wir machen', 'wir machst', 'wir mache'], explanation: 'wir gets -en: wir machen.' },
-        { prompt: 'Translate: “I need help.”', explanation: 'brauchen → ich brauche; Hilfe means help.' }
+        { prompt: 'Ihr ___ Fußball. (spielen)', explanation: 'ihr gets -t: spielen → ihr spielt.' },
+        { prompt: 'Sie ___ aus Brasilien. (kommen)', options: ['komme', 'kommst', 'kommt', 'kommen'], explanation: 'sie and Sie use the plural form: Sie kommen aus Brasilien.' },
+        { prompt: 'Ich ___ Hilfe. (brauchen)', explanation: 'ich gets -e: brauchen → ich brauche.' },
+        { prompt: 'True or false: du lernt Deutsch.', options: ['True', 'False'], answer: 'False', explanation: 'With du, the ending is -st: Du lernst Deutsch.' },
+        { prompt: 'Which sentence is correct?', options: ['Ich arbeit heute.', 'Ich arbeite heute.', 'Ich arbeitest heute.', 'Ich arbeiten heute.'], explanation: 'With ich, arbeiten becomes arbeite; the supporting “e” appears before the -e ending.' },
+        { prompt: 'Du ___ heute. (arbeiten)', explanation: 'With du, arbeiten becomes arbeitest: arbeit- + -e- + -st.' },
+        { prompt: 'Put in order: Heute / wir / lernen / Deutsch', explanation: 'The sentence is Heute lernen wir Deutsch. The conjugated verb remains in position 2.' },
+        { prompt: 'Translate: “I buy bread.”', explanation: 'kaufen → ich kaufe; Brot means bread.' },
+        { prompt: 'Translate: “We live in Stuttgart.”', explanation: 'wohnen → wir wohnen; Stuttgart is the place.' },
+        { prompt: 'Translate: “They play soccer.”', explanation: 'sie gets -en: Sie spielen Fußball.' }
       ]
     },
     articles: {
@@ -1213,5 +1263,7 @@
   lessons.forEach((lesson) => applyEnglishTranslations(lesson, englishTranslations[lesson.id]));
 
   window.KlarExerciseOnly = lessons.filter((lesson) => lesson.exerciseOnly);
-  window.KlarLessons = lessons.filter((lesson) => !lesson.exerciseOnly);
+  window.KlarLessons = lessons
+    .filter((lesson) => !lesson.exerciseOnly)
+    .sort((left, right) => left.number - right.number);
 }());

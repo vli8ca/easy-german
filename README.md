@@ -43,10 +43,10 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 | --- | --- | --- |
 | 01 | Pronunciation and reading | Special sounds, sound combinations, and listening practice |
 | 02 | Personal pronouns | `ich`, `du`, `er`, `sie`, `es`, `wir`, `ihr`, and formal `Sie` |
-| 03 | `Sein` and `haben` | The two most important German verbs |
-| 04 | Basic sentence structure | The verb-in-second-position rule |
-| 05 | Questions in German | Asking and understanding everyday questions |
-| 06 | Present-tense verbs | Build sentences about daily actions |
+| 03 | Verb conjugation | Turn regular infinitives into useful present-tense sentences |
+| 04 | `Sein` and `haben` | The two most important German verbs |
+| 05 | Basic sentence structure | The verb-in-second-position rule |
+| 06 | Questions in German | Asking and understanding everyday questions |
 | 07 | Articles and gender | Learn `der`, `die`, and `das` with useful nouns |
 | 08 | Negation | Use `nicht` and `kein` to say “not” and “no” |
 | 09 | Accusative case | Understand who does the action and what receives it |

@@ -73,10 +73,10 @@ assert.deepEqual(
 const expectedLessonIds = [
   'pronunciation',
   'pronouns',
+  'present-verbs',
   'sein-haben',
   'sentence-structure',
   'questions',
-  'present-verbs',
   'articles',
   'negation',
   'accusative',
