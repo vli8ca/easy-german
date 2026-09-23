@@ -13,7 +13,7 @@
     sessions: {},
     reviewSession: {},
     reviewQuestions: [],
-    exerciseModes: { 'first-sentences': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence' },
+    exerciseModes: { 'first-sentences': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence', 'w-fragen': 'questions' },
     verbSessions: {},
     sidebarSections: { vocabulary: false, lessons: false, exercises: false }
   };
@@ -223,7 +223,8 @@
     'exercises-first-sentences': 'first-sentences',
     exercises: 'sein',
     'exercises-haben': 'haben',
-    'exercises-numbers': 'numbers'
+    'exercises-numbers': 'numbers',
+    'exercises-w-fragen': 'w-fragen'
   };
 
   function isExerciseRoute(route) { return Object.prototype.hasOwnProperty.call(exercisePageRoutes, route); }

@@ -275,11 +275,11 @@ const scenarios = [
   }],
   ['oferece frases iniciais como primeiro exercício unitário', () => {
     const { verbPractice } = getModules();
-    assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers']);
+    assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers', 'w-fragen']);
     const page = verbPractice.pages['first-sentences'];
     assertNonEmpty(page.title, 'first-sentences.title');
     assertNonEmpty(page.title_en, 'first-sentences.title_en');
-    assert.equal(Object.keys(page.modes).length, 1);
+    assert.deepEqual(Object.keys(page.modes), ['sentences', 'random']);
     const mode = page.modes.sentences;
     assert.equal(mode.interaction, 'streak');
     assert.equal(mode.shuffle, false);
@@ -293,6 +293,14 @@ const scenarios = [
       }
       assert.ok(Array.isArray(item.answers) && item.answers.length > 0, label + '.answers deve existir');
     });
+    const randomMode = page.modes.random;
+    assert.equal(randomMode.interaction, 'streak');
+    assert.equal(randomMode.shuffle, true);
+    assert.equal(randomMode.items.length, 50);
+    assert.deepEqual(
+      Array.from(randomMode.items, (item) => item.id),
+      Array.from(mode.items, (item) => item.id)
+    );
   }],
   ['aceita grafia sem diacríticos para ä/ö/ü e ß', () => {
     const { exercises } = getModules();

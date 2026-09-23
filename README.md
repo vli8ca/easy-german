@@ -32,7 +32,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 - Dedicated practice for `sein` and `haben`
 - Number-writing practice from 1 to 10, in order or randomized
 - 50 quick `sein` sentences and 50 quick `haben` sentences
-- 50 beginner sentence translations in a one-at-a-time A1 exercise
+- 50 beginner sentence translations in a one-at-a-time A1 exercise, in order or randomized
 - Progress tracking stored locally in the browser
 - Responsive layout for mobile, tablet, and desktop
 - No account, backend, build pipeline, or installation required
@@ -71,7 +71,7 @@ Every vocabulary item includes a translation, an example, and a listen button wh
 
 The practice area focuses on the verbs beginners need constantly:
 
-- One-at-a-time A1 sentence translations with retry-until-correct feedback
+- One-at-a-time A1 sentence translations with retry-until-correct feedback, in order or randomized
 - Conjugation drills for `sein` and `haben`
 - Short translation prompts
 - Number-writing drills from 1 to 10, with ordered and randomized modes

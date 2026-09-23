@@ -28,13 +28,13 @@ assert.equal(lessons.length, 11, 'o curso deve ter somente as 11 aulas do caminh
 assert.equal(lessons.find((lesson) => lesson.id === 'first-sentences'), undefined, 'first-sentences não pode aparecer como aula');
 
 assert.ok(verbPractice && verbPractice.pages, 'as páginas de exercícios devem existir');
-assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers'], 'first-sentences deve ser o primeiro exercício');
+assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers', 'w-fragen'], 'first-sentences deve ser o primeiro exercício');
 const firstExercisePage = verbPractice.pages['first-sentences'];
 assert.equal(firstExercisePage.id, 'first-sentences');
 for (const field of ['heroIntro', 'heroIntro_en', 'metaPrimary', 'metaPrimary_en', 'metaThird', 'metaThird_en', 'ruleCopy', 'ruleCopy_en']) {
   assertNonEmpty(firstExercisePage[field], `first-sentences.${field}`);
 }
-assert.equal(Object.keys(firstExercisePage.modes).length, 1, 'first-sentences deve ter somente um módulo');
+assert.deepEqual(Object.keys(firstExercisePage.modes), ['sentences', 'random'], 'first-sentences deve oferecer ordem normal e aleatória');
 const firstMode = firstExercisePage.modes.sentences;
 assert.ok(firstMode, 'first-sentences deve ter um módulo de frases');
 assert.equal(firstMode.interaction, 'streak');
@@ -58,6 +58,17 @@ firstMode.items.forEach((exercise, index) => {
   });
 });
 assert.equal(exerciseIds.size, 50, 'os 50 exercícios devem ter IDs únicos');
+
+const randomMode = firstExercisePage.modes.random;
+assert.ok(randomMode, 'first-sentences deve ter um módulo aleatório');
+assert.equal(randomMode.interaction, 'streak');
+assert.equal(randomMode.shuffle, true);
+assert.equal(randomMode.items.length, 50);
+assert.deepEqual(
+  Array.from(randomMode.items, (exercise) => exercise.id),
+  Array.from(firstMode.items, (exercise) => exercise.id),
+  'o modo aleatório deve reutilizar as mesmas frases'
+);
 
 const expectedLessonIds = [
   'pronunciation',

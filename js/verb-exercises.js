@@ -218,6 +218,28 @@
             restartLabel: 'Recomeçar frases iniciais',
             restartLabel_en: 'Restart first sentences',
             items: firstSentenceItems
+          },
+          random: {
+            id: 'random',
+            interaction: 'streak',
+            shuffle: true,
+            label: 'Frases aleatórias',
+            label_en: 'Random sentences',
+            shortLabel: '02 · Ordem aleatória',
+            shortLabel_en: '02 · Random order',
+            title: 'Escreva as frases iniciais em ordem aleatória',
+            title_en: 'Write the first sentences in random order',
+            instruction: 'As mesmas frases aparecem embaralhadas a cada nova tentativa. Traduza uma por vez e avance após o acerto.',
+            instruction_en: 'The same sentences appear in a new order each time. Translate one at a time and move on after a correct answer.',
+            inputLabel: 'Digite a frase em alemão',
+            inputLabel_en: 'Type the sentence in German',
+            checkLabel: 'Verificar frase',
+            checkLabel_en: 'Check sentence',
+            nextLabel: 'Próxima frase',
+            nextLabel_en: 'Next sentence',
+            restartLabel: 'Recomeçar em ordem aleatória',
+            restartLabel_en: 'Restart in random order',
+            items: firstSentenceItems
           }
         }
       },
@@ -592,6 +614,69 @@
             restartLabel: 'Recomeçar números',
             restartLabel_en: 'Restart numbers',
             items: numberItems
+          }
+        }
+      },
+      'w-fragen': {
+        id: 'w-fragen',
+        title: 'W-Fragen',
+        title_en: 'W-questions',
+        subtitle: 'Aprenda as palavras essenciais para fazer perguntas em alemão.',
+        subtitle_en: 'Learn the essential words for asking questions in German.',
+        verb: 'W?',
+        meaning: 'perguntas abertas',
+        meaning_en: 'open questions',
+        heroTitle: 'W-Fragen',
+        heroTitle_en: 'W-questions',
+        heroAccent: 'para perguntar.',
+        heroAccent_en: 'for asking.',
+        heroCopy: 'aprenda as palavras que abrem perguntas em alemão.',
+        heroCopy_en: 'learn the words that open questions in German.',
+        heroIntro: 'Pratique as 10 W-Fragen mais importantes — uma por vez, com feedback imediato.',
+        heroIntro_en: 'Practice the 10 most important W-questions — one at a time, with instant feedback.',
+        metaPrimary: 'A1 · perguntas',
+        metaPrimary_en: 'A1 · questions',
+        metaThird: 'sem verbos',
+        metaThird_en: 'no verbs',
+        ruleCopy: 'Leia o significado e escreva a W-Frage correspondente em alemão.',
+        ruleCopy_en: 'Read the meaning and write the matching W-question in German.',
+        perfectMessage: 'Perfeito. As W-Fragen já estão ficando automáticas.',
+        perfectMessage_en: 'Perfect. The W-questions are becoming automatic.',
+        completedCopy: 'Você praticou as 10 W-Fragen essenciais. Recomece quando quiser para reforçar a base.',
+        completedCopy_en: 'You practiced the 10 essential W-questions. Restart whenever you want to reinforce the basics.',
+        modes: {
+          questions: {
+            id: 'questions',
+            interaction: 'streak',
+            shuffle: false,
+            label: 'W-Fragen',
+            label_en: 'W-questions',
+            shortLabel: '01 · Uma por vez',
+            shortLabel_en: '01 · One at a time',
+            title: 'Escreva as W-Fragen em alemão',
+            title_en: 'Write the W-questions in German',
+            instruction: 'Veja o significado em português e escreva a pergunta correspondente em alemão. Ao acertar, avance para a próxima.',
+            instruction_en: 'Read the meaning in Portuguese and write the matching question in German. When you get it right, move to the next one.',
+            inputLabel: 'Digite a W-Frage em alemão',
+            inputLabel_en: 'Type the W-question in German',
+            checkLabel: 'Verificar pergunta',
+            checkLabel_en: 'Check question',
+            nextLabel: 'Próxima pergunta',
+            nextLabel_en: 'Next question',
+            restartLabel: 'Recomeçar W-Fragen',
+            restartLabel_en: 'Restart W-questions',
+            items: [
+              { id: 'w-was', prompt: 'o quê?', prompt_en: 'what?', detail: 'Pergunta sobre uma coisa ou informação.', detail_en: 'Question about a thing or piece of information.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Was'] },
+              { id: 'w-wer', prompt: 'quem?', prompt_en: 'who?', detail: 'Pergunta sobre uma pessoa.', detail_en: 'Question about a person.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wer'] },
+              { id: 'w-wo', prompt: 'onde?', prompt_en: 'where?', detail: 'Pergunta sobre um lugar.', detail_en: 'Question about a place.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wo'] },
+              { id: 'w-woher', prompt: 'de onde?', prompt_en: 'where from?', detail: 'Pergunta sobre a origem.', detail_en: 'Question about an origin.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Woher'] },
+              { id: 'w-wohin', prompt: 'para onde?', prompt_en: 'where to?', detail: 'Pergunta sobre um destino.', detail_en: 'Question about a destination.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wohin'] },
+              { id: 'w-wann', prompt: 'quando?', prompt_en: 'when?', detail: 'Pergunta sobre um momento ou horário.', detail_en: 'Question about a time or moment.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wann'] },
+              { id: 'w-warum', prompt: 'por quê?', prompt_en: 'why?', detail: 'Pergunta sobre um motivo.', detail_en: 'Question about a reason.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Warum'] },
+              { id: 'w-wie', prompt: 'como?', prompt_en: 'how?', detail: 'Pergunta sobre uma maneira ou condição.', detail_en: 'Question about a way or condition.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie'] },
+              { id: 'w-wie-viel', prompt: 'quanto?', prompt_en: 'how much?', detail: 'Pergunta sobre uma quantidade.', detail_en: 'Question about an amount.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie viel'] },
+              { id: 'w-wie-lange', prompt: 'quanto tempo?', prompt_en: 'how long?', detail: 'Pergunta sobre uma duração.', detail_en: 'Question about a duration.', placeholder: 'Digite em alemão…', placeholder_en: 'Type in German…', answers: ['Wie lange'] }
+            ]
           }
         }
       }
