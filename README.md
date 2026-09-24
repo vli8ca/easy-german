@@ -30,6 +30,8 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 - Vocabulary pages for words, phrases, numbers, weekdays, and months
 - Interactive exercises with instant feedback and explanations
 - Dedicated practice for `sein` and `haben`
+- A verb-learning section with present-tense conjugations for `lernen`, `machen`, and `spielen`
+- A guided, one-at-a-time set of 20 questions for those three verbs
 - Number-writing practice from 1 to 10, in order or randomized
 - 50 quick `sein` sentences and 50 quick `haben` sentences
 - 50 beginner sentence translations in a one-at-a-time A1 exercise, in order or randomized
@@ -69,7 +71,7 @@ Every vocabulary item includes a translation, an example, and a listen button wh
 
 ### Verb practice
 
-The practice area focuses on the verbs beginners need constantly:
+The verb area begins with three regular verbs and their present-tense forms, then offers 20 guided questions with immediate feedback. Existing practice pages also focus on verbs beginners need constantly:
 
 - One-at-a-time A1 sentence translations with retry-until-correct feedback, in order or randomized
 - Conjugation drills for `sein` and `haben`
@@ -122,6 +124,7 @@ You can also serve the folder with any static file server.
 │   ├── lessons.js       # A1 course content
 │   ├── speech.js        # Browser speech integration
 │   ├── storage.js       # Local progress persistence
+│   ├── verbs.js         # Beginner verb lessons and conjugation practice
 │   └── verb-exercises.js  # Sentence, Sein, haben, and number practice data
 └── tests/               # Static integration and content checks
 ```

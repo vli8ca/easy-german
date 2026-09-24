@@ -618,6 +618,35 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .verb-result-score > div > span { display: block; margin-top: 3px; color: var(--ink-soft); font-size: 10px; }
 .verb-result-message strong { display: block; color: var(--ink); font-size: 12px; }
 .verb-result-message span { display: block; margin-top: 4px; color: var(--ink-soft); font-size: 11px; }
+.verb-learning-page { max-width: 1220px; margin: 0 auto; }
+.verb-learning-section { margin: 34px 0 42px; }
+.verb-learning-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.verb-learning-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); box-shadow: var(--shadow-sm); }
+.verb-learning-card-heading { display: flex; align-items: center; gap: 11px; }
+.verb-learning-number { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; color: var(--coral); background: var(--coral-soft); font-family: var(--mono); font-size: 10px; }
+.verb-learning-card h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; color: var(--teal-deep); font-family: var(--display); font-size: 24px; }
+.verb-learning-card h2 small { color: var(--ink-faint); font-family: var(--sans); font-size: 11px; font-weight: 500; }
+.verb-learning-explanation { min-height: 56px; margin: 13px 0 14px; color: var(--ink-soft); font-size: 11px; line-height: 1.55; }
+.verb-conjugation-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+.verb-conjugation-table { width: 100%; border-collapse: collapse; text-align: left; }
+.verb-conjugation-table caption { padding: 9px 10px; color: var(--teal); background: #f4f8f4; font-size: 10px; font-weight: 700; text-align: left; }
+.verb-conjugation-table th, .verb-conjugation-table td { padding: 7px 8px; border-top: 1px solid var(--line); font-size: 10px; line-height: 1.35; }
+.verb-conjugation-table thead th { color: var(--ink-faint); font-family: var(--mono); font-size: 8px; font-weight: 600; letter-spacing: .035em; text-transform: uppercase; }
+.verb-conjugation-table tbody th { color: var(--ink); font-weight: 600; white-space: nowrap; }
+.verb-conjugation-table tbody td { color: var(--ink-soft); }
+.verb-conjugation-table tbody td:last-child strong { color: var(--teal-deep); font-size: 12px; }
+.verb-learning-example { display: grid; gap: 3px; padding: 11px 12px; margin-top: 11px; border-radius: 10px; background: var(--paper); }
+.verb-learning-example > span { color: var(--ink-faint); font-family: var(--mono); font-size: 8px; letter-spacing: .09em; text-transform: uppercase; }
+.verb-learning-example strong { color: var(--teal-deep); font-size: 12px; }
+.verb-learning-example p { margin: 0; color: var(--ink-soft); font-size: 10px; }
+.verb-learning-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin: 0 0 38px; }
+.verb-learning-notes > .section-heading { grid-column: 1 / -1; margin-bottom: 0; }
+.verb-learning-note { display: grid; grid-template-columns: 27px 1fr; gap: 10px; align-items: start; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,253,248,.75); }
+.verb-learning-note > span { color: var(--coral); font-family: var(--mono); font-size: 9px; }
+.verb-learning-note h3 { color: var(--teal-deep); font-size: 12px; }
+.verb-learning-note p { margin: 5px 0 0; color: var(--ink-soft); font-size: 10px; line-height: 1.5; }
+.verb-learning-practice { margin-top: 0; }
+.verb-learning-practice .verb-sentence-number { white-space: nowrap; }
 .exercise-page-note { display: flex; align-items: center; gap: 8px; max-width: 670px; margin: 20px auto 0; color: var(--ink-faint); font-size: 11px; line-height: 1.5; }
 .exercise-page-note span { color: var(--coral); }
 .exercise-page-note .lucide { width: 15px; height: 15px; }
@@ -651,6 +680,8 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
   .path-card { min-width: 138px; }
   .dashboard-hero { grid-template-columns: minmax(0, 1fr) 290px; gap: 25px; }
   .vocabulary-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .verb-learning-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .verb-learning-card:last-child { grid-column: 1 / -1; }
 }
 
 @media (max-width: 800px) {
@@ -665,6 +696,9 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
   .breadcrumb { margin-right: auto; }
   .main-content { padding: 38px 20px 60px; }
   .dashboard-hero, .lesson-header, .exercise-hero { grid-template-columns: 1fr; gap: 25px; }
+  .verb-learning-notes { grid-template-columns: 1fr; }
+  .verb-learning-grid { grid-template-columns: 1fr; }
+  .verb-learning-card:last-child { grid-column: auto; }
   .vocabulary-hero { grid-template-columns: 1fr; gap: 22px; align-items: start; }
   .vocabulary-hero-mark { width: 96px; height: 96px; border-radius: 24px; }
   .vocabulary-hero-mark .lucide { width: 32px; height: 32px; }

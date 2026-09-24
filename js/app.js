@@ -5,6 +5,7 @@
   const storage = window.KlarStorage;
   const exercises = window.KlarExercises;
   const verbPractice = window.KlarVerbPractice;
+  const verbLessons = window.KlarVerbs || { pages: {} };
   const icons = window.KlarIcons;
   const i18n = window.KlarI18n;
   const ui = {
@@ -15,7 +16,7 @@
     reviewQuestions: [],
     exerciseModes: { 'first-sentences': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence', 'w-fragen': 'questions' },
     verbSessions: {},
-    sidebarSections: { vocabulary: false, lessons: false, exercises: false }
+    sidebarSections: { vocabulary: false, lessons: false, verbs: false, exercises: false }
   };
 
   const vocabulary = {
@@ -217,6 +218,7 @@
   function getLesson(id) { return lessons.find((lesson) => lesson.id === id); }
   function getProgress() { return storage.getProgress(); }
   function isVocabularyRoute(route) { return vocabularyRoutes.includes(route); }
+  function isVerbLearningRoute(route) { return route === 'verbs-starter'; }
   function isSequentialLesson(lesson) { return Boolean(lesson && lesson.practiceMode === 'sequential-translate'); }
 
   const exercisePageRoutes = {
@@ -299,6 +301,7 @@
   }
 
   function getExercisePage() {
+    if (isVerbLearningRoute(ui.route)) return verbLessons.pages.starter;
     const pageId = exercisePageRoutes[ui.route] || 'sein';
     return verbPractice.pages[pageId] || verbPractice.pages.sein;
   }
@@ -446,6 +449,8 @@
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.myGerman')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('breadcrumb.overview')) + '</strong>';
     } else if (ui.route === 'review') {
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.myGerman')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('nav.review')) + '</strong>';
+    } else if (isVerbLearningRoute(ui.route)) {
+      breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.course')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('breadcrumb.verbs')) + ' · ' + esc(localize(getExercisePage(), 'title')) + '</strong>';
     } else if (isExerciseRoute(ui.route)) {
       breadcrumb.innerHTML = '<span>' + esc(tr('breadcrumb.practice')) + '</span><span aria-hidden="true">/</span><strong>' + esc(tr('breadcrumb.exercises')) + ' · ' + esc(localize(getExercisePage(), 'title')) + '</strong>';
     } else if (isVocabularyRoute(ui.route)) {
@@ -805,7 +810,7 @@
     return '<div class="verb-sentence-practice" data-verb-sentence-practice>' +
       renderSentenceStreak(session) +
       '<article class="verb-sentence-card' + (status === 'correct' ? ' is-correct' : status === 'wrong' ? ' is-wrong' : '') + '">' +
-      '<div class="verb-sentence-number" aria-hidden="true">' + String(index + 1).padStart(2, '0') + '</div>' +
+      '<div class="verb-sentence-number"' + (page.showQuestionCount ? ' role="status" aria-live="polite"' : ' aria-hidden="true"') + '>' + (page.showQuestionCount ? String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') : String(index + 1).padStart(2, '0')) + '</div>' +
       '<div class="verb-sentence-copy">' + renderQuestionType(content) + '<h3>' + esc(content.prompt) + '</h3><p>' + esc(content.detail) + '</p></div>' +
       '<div class="verb-sentence-input-wrap"><label class="verb-input-label" for="verb-answer-' + esc(page.id) + '">' + esc(inputLabel) + '</label><input id="verb-answer-' + esc(page.id) + '" class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-answer data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '"' + disabled + ' /></div>' +
       renderSentenceFeedback(item, response, status) +
@@ -969,6 +974,42 @@
       '<section class="verb-practice-card" id="verb-practice-panel" role="tabpanel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(contentMode.shortLabel) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(ruleCopy) + '</span></div></div>' + practiceContent + '</section>' +
       '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('tip.speak')) + '</p></div>';
     icons.refresh(view);
+  }
+
+  function renderVerbLearningCard(verb, index) {
+    const content = localized(verb);
+    const rows = content.forms.map((form) => '<tr><th scope="row" lang="de">' + esc(form.pronoun) + '</th><td>' + esc(form.meaning) + '</td><td><strong lang="de">' + esc(form.form) + '</strong></td></tr>').join('');
+    return '<article class="verb-learning-card" aria-labelledby="verb-learning-title-' + esc(content.infinitive) + '">' +
+      '<header class="verb-learning-card-heading"><span class="verb-learning-number">' + String(index + 1).padStart(2, '0') + '</span><div><h2 id="verb-learning-title-' + esc(content.infinitive) + '"><span lang="de">' + esc(content.infinitive) + '</span><small>' + esc(content.meaning) + '</small></h2></div></header>' +
+      '<p class="verb-learning-explanation">' + esc(content.explanation) + '</p>' +
+      '<div class="verb-conjugation-table-wrap"><table class="verb-conjugation-table"><caption>' + esc(tr('verbs.presentTable', { verb: content.infinitive })) + '</caption><thead><tr><th scope="col">' + esc(tr('verbs.pronoun')) + '</th><th scope="col">' + esc(tr('verbs.person')) + '</th><th scope="col">' + esc(tr('verbs.verbForm')) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<div class="verb-learning-example"><span>' + esc(tr('verbs.example')) + '</span><strong lang="de">' + esc(content.example) + '</strong><p>' + esc(content.exampleTranslation) + '</p></div>' +
+      '</article>';
+  }
+
+  function renderVerbLearning() {
+    const page = getExercisePage();
+    const contentPage = localized(page);
+    const mode = getVerbMode();
+    const contentMode = localized(mode);
+    const session = getVerbSession(mode.id);
+    const notes = contentPage.notes.map((note, index) => '<article class="verb-learning-note"><span>' + String(index + 1).padStart(2, '0') + '</span><div><h3>' + esc(note.title) + '</h3><p>' + esc(note.copy) + '</p></div></article>').join('');
+    const cards = contentPage.verbs.map(renderVerbLearningCard).join('');
+    const practiceContent = renderSentencePractice(page, mode, session);
+
+    view.innerHTML = '<div class="fade-in verb-learning-page">' +
+      '<section class="exercise-hero verbs-hero"><div><p class="view-kicker">' + esc(tr('verbs.kicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(contentPage.introduction) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(tr('verbs.present')) + '</span><span class="meta-pill">' + esc(tr('verbs.verbCount', { count: contentPage.verbs.length })) + '</span><span class="meta-pill">' + esc(tr('verbs.questionCount', { count: mode.items.length })) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>A1</span><small>' + esc(tr('sidebar.verbs')) + '</small></div></section>' +
+      '<section class="verb-learning-section"><div class="section-heading"><div><p class="view-kicker">' + esc(tr('verbs.studyKicker')) + '</p><h2>' + esc(tr('verbs.studyTitle')) + '</h2><p>' + esc(tr('verbs.studyCopy')) + '</p></div></div><div class="verb-learning-grid">' + cards + '</div></section>' +
+      '<section class="verb-learning-notes" aria-label="' + esc(tr('verbs.explanationTitle')) + '"><div class="section-heading"><div><p class="view-kicker">' + esc(tr('verbs.explanationKicker')) + '</p><h2>' + esc(tr('verbs.explanationTitle')) + '</h2></div></div>' + notes + '</section>' +
+      '<section class="verb-practice-card verb-learning-practice" id="verb-practice-panel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(tr('verbs.practiceKicker')) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(tr('verbs.practiceHint')) + '</span></div></div>' + practiceContent + '</section>' +
+      '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('verbs.pageNote')) + '</p>' +
+      '</div>';
+    icons.refresh(view);
+  }
+
+  function renderActiveVerbPractice() {
+    if (isVerbLearningRoute(ui.route)) renderVerbLearning();
+    else renderExercises();
   }
 
   function sessionForCard(card) {
@@ -1247,6 +1288,7 @@
     updateBreadcrumb();
     if (ui.route === 'dashboard') renderDashboard();
     else if (ui.route === 'review') renderReview();
+    else if (isVerbLearningRoute(ui.route)) renderVerbLearning();
     else if (isExerciseRoute(ui.route)) renderExercises();
     else if (isVocabularyRoute(ui.route)) renderVocabularyPage();
     else renderLesson(getLesson(ui.activeLessonId));
@@ -1405,13 +1447,13 @@
     if (!isStreakMode(mode) || session.status !== 'correct') return;
     if (session.currentIndex >= session.order.length - 1) {
       session.completed = true;
-      renderExercises();
+      renderActiveVerbPractice();
       return;
     }
     session.currentIndex += 1;
     session.status = 'idle';
     session.checked = false;
-    renderExercises();
+    renderActiveVerbPractice();
     focusVerbInteraction();
   }
 
@@ -1430,7 +1472,7 @@
     }
     session.status = 'idle';
     session.checked = false;
-    renderExercises();
+    renderActiveVerbPractice();
     focusVerbInteraction();
   }
 
@@ -1448,7 +1490,7 @@
     const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
     session.answers[item.id] = response;
     recordStreakResult(session, item, correct);
-    renderExercises();
+    renderActiveVerbPractice();
   }
 
   function recordStreakResult(session, item, correct) {
@@ -1544,7 +1586,7 @@
   function resetVerbPractice() {
     const mode = getVerbMode();
     ui.verbSessions[getExercisePage().id + ':' + mode.id] = createVerbSession(mode);
-    renderExercises();
+    renderActiveVerbPractice();
     showToast(tr('toast.verbReset'));
   }
   setSidebarState(sidebarIsOpen);
