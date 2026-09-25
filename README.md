@@ -30,8 +30,8 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 - Vocabulary pages for words, phrases, numbers, weekdays, and months
 - Interactive exercises with instant feedback and explanations
 - Dedicated practice for `sein` and `haben`
-- A verb-learning section with present-tense conjugations for `lernen`, `machen`, and `spielen`
-- A guided, one-at-a-time set of 20 questions for those three verbs
+- A verb-learning section with present-tense conjugations and scrollable usage dialogs for `lernen`, `machen`, and `spielen`
+- A guided, one-at-a-time conjugation set of 20 questions and a randomized set of 75 translation prompts (25 for each verb)
 - Number-writing practice from 1 to 10, in order or randomized
 - 50 quick `sein` sentences and 50 quick `haben` sentences
 - 50 beginner sentence translations in a one-at-a-time A1 exercise, in order or randomized
@@ -71,13 +71,13 @@ Every vocabulary item includes a translation, an example, and a listen button wh
 
 ### Verb practice
 
-The verb area begins with three regular verbs and their present-tense forms, then offers 20 guided questions with immediate feedback. Existing practice pages also focus on verbs beginners need constantly:
+The verb area begins with three regular verbs, their present-tense forms, and expandable explanations of their common uses. It offers 20 guided conjugation questions and 75 randomized sentence translations, with immediate feedback and 25 sentences for each verb. Existing practice pages also focus on verbs beginners need constantly:
 
 - One-at-a-time A1 sentence translations with retry-until-correct feedback, in order or randomized
 - Conjugation drills for `sein` and `haben`
 - Short translation prompts
 - Number-writing drills from 1 to 10, with ordered and randomized modes
-- One-at-a-time interaction with streak feedback
+- One-at-a-time interaction with streak feedback for both verb practice modes
 - 50 beginner-friendly sentences for each verb
 - German answers with keyboard-friendly support for umlauts and `ß`
 

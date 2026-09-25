@@ -66,6 +66,7 @@ Cada rota abaixo é renderizada dentro do elemento `#app-view`. A aplicação n�
 | `vocabulary-weekdays` | Vocabulário: dias da semana | 7 dias, uso com `am` e áudio |
 | `vocabulary-months` | Vocabulário: meses | 12 meses, uso com `im` e áudio |
 | `lesson` + `activeLessonId` | Aula | Uma das 10 aulas do curso, com teoria, vocabulário, exercícios e resumo |
+| `verbs-starter` | Primeiros verbos | Usos comuns, conjugação e treino de frases com `lernen`, `machen` e `spielen` |
 | `exercises` | Prática de `sein` | Conjugação e tradução de frases com `sein` |
 | `exercises-haben` | Prática de `haben` | Conjugação e tradução de frases com `haben` |
 
@@ -1163,6 +1164,15 @@ Formas esperadas:
 - é possível reiniciar a sequência;
 - resposta vazia não é conferida.
 
+### 26.5. Tela de estudo e prática de `lernen`, `machen` e `spielen`
+
+- Cada verbo apresenta a conjugação no presente e exemplos em português e inglês.
+- Um botão em cada cartão abre uma janela modal independente com usos comuns e frases-modelo traduzidas. O conteúdo tem rolagem própria; a janela fecha pelo botão, por `Escape` ou ao clicar fora dela.
+- O modo Conjugação mantém as 20 questões guiadas existentes, em sequência fixa e com feedback imediato.
+- O modo Treino de frases apresenta 75 traduções curtas, com exatamente 25 frases por verbo.
+- As 75 frases são embaralhadas a cada nova sessão e aparecem uma por vez, com tentativa novamente, sequência de acertos e conclusão ao final.
+- O treino inclui vocabulário cotidiano simples e aceita a normalização alemã já usada nas outras práticas.
+
 Conteúdo representativo das frases: tempo, objetos, família, animais, alimentação, dinheiro, trabalho, compromissos, férias, sorte, posse e negação com `haben`.
 
 ## 27. Regras dos exercícios das aulas
@@ -1268,10 +1278,10 @@ Esse estado não é uma conta de usuário e não é sincronizado entre dispositi
 
 ### 29.4. Fluxo de prática verbal
 
-1. Usuário abre `sein` ou `haben`.
-2. Usuário escolhe Conjugação ou Frases.
-3. No modo Conjugação, responde todos os 8 itens e confere em lote.
-4. No modo Frases, responde uma frase por vez.
+1. Usuário abre uma prática de `sein`, `haben` ou a seção de `lernen`, `machen` e `spielen`.
+2. Usuário escolhe uma modalidade de exercício. A tela de primeiros verbos também oferece blocos expansíveis com os usos e exemplos de cada verbo.
+3. No modo Conjugação de `sein` ou `haben`, responde todos os 8 itens e confere em lote; na seção de primeiros verbos, mantém as 20 questões guiadas existentes.
+4. Nos modos de frases, responde uma frase por vez; a seção de primeiros verbos embaralha 75 traduções, com 25 para cada verbo.
 5. Acertos e erros atualizam a sequência.
 6. A última frase leva ao estado de conclusão.
 
@@ -1284,7 +1294,7 @@ Os conteúdos possuem campos em português e, quando aplicável, campos ingleses
 - itens: título, pronúncia, tradução, descrição, exemplos e observações;
 - cenários: título e frases;
 - exercícios: enunciado, opções, explicação e resposta;
-- prática verbal: título, subtítulo, significado, instrução, prompt, dica, placeholder e respostas.
+- prática verbal: título, subtítulo, significado, instrução, prompt, dica, placeholder e respostas; o módulo de primeiros verbos também contém usos, exemplos e traduções bilíngues.
 
 Os testes do projeto verificam que os conteúdos bilíngues necessários existem para as 10 aulas e para as práticas verbais.
 

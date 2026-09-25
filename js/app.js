@@ -979,11 +979,15 @@
   function renderVerbLearningCard(verb, index) {
     const content = localized(verb);
     const rows = content.forms.map((form) => '<tr><th scope="row" lang="de">' + esc(form.pronoun) + '</th><td>' + esc(form.meaning) + '</td><td><strong lang="de">' + esc(form.form) + '</strong></td></tr>').join('');
+    const dialogId = 'verb-usage-dialog-' + content.infinitive;
+    const usages = content.usages.map((usage, usageIndex) => '<article class="verb-usage-item"><div class="verb-usage-title"><span>' + String(usageIndex + 1).padStart(2, '0') + '</span><h3>' + esc(usage.title) + '</h3></div><p>' + esc(usage.copy) + '</p><ul class="verb-usage-examples">' + usage.examples.map((example) => '<li><strong lang="de">' + esc(example.de) + '</strong><span>' + esc(example.pt) + '</span></li>').join('') + '</ul></article>').join('');
     return '<article class="verb-learning-card" aria-labelledby="verb-learning-title-' + esc(content.infinitive) + '">' +
       '<header class="verb-learning-card-heading"><span class="verb-learning-number">' + String(index + 1).padStart(2, '0') + '</span><div><h2 id="verb-learning-title-' + esc(content.infinitive) + '"><span lang="de">' + esc(content.infinitive) + '</span><small>' + esc(content.meaning) + '</small></h2></div></header>' +
       '<p class="verb-learning-explanation">' + esc(content.explanation) + '</p>' +
       '<div class="verb-conjugation-table-wrap"><table class="verb-conjugation-table"><caption>' + esc(tr('verbs.presentTable', { verb: content.infinitive })) + '</caption><thead><tr><th scope="col">' + esc(tr('verbs.pronoun')) + '</th><th scope="col">' + esc(tr('verbs.person')) + '</th><th scope="col">' + esc(tr('verbs.verbForm')) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
       '<div class="verb-learning-example"><span>' + esc(tr('verbs.example')) + '</span><strong lang="de">' + esc(content.example) + '</strong><p>' + esc(content.exampleTranslation) + '</p></div>' +
+      '<button type="button" class="verb-usage-trigger" data-open-verb-usage="' + esc(dialogId) + '" aria-haspopup="dialog" aria-controls="' + esc(dialogId) + '"><span>' + esc(tr('verbs.usageToggle')) + '</span><span class="verb-usage-count">' + content.usages.length + '</span><span class="verb-usage-trigger-mark" aria-hidden="true">↗</span></button>' +
+      '<dialog class="verb-usage-dialog" id="' + esc(dialogId) + '" aria-labelledby="' + esc(dialogId) + '-title"><header class="verb-usage-dialog-header"><div><p>' + esc(tr('verbs.usageDialogKicker')) + '</p><h2 id="' + esc(dialogId) + '-title">' + esc(tr('verbs.usageDialogTitle', { verb: content.infinitive })) + '</h2></div><button type="button" class="button button-secondary verb-usage-dialog-close" data-close-verb-usage aria-label="' + esc(tr('verbs.usageClose')) + '">' + icon('x', 'button-icon') + '</button></header><div class="verb-usage-dialog-content">' + usages + '</div></dialog>' +
       '</article>';
   }
 
@@ -993,15 +997,22 @@
     const mode = getVerbMode();
     const contentMode = localized(mode);
     const session = getVerbSession(mode.id);
+    const practiceModes = Object.values(page.modes).filter((tab) => tab.visible !== false);
     const notes = contentPage.notes.map((note, index) => '<article class="verb-learning-note"><span>' + String(index + 1).padStart(2, '0') + '</span><div><h3>' + esc(note.title) + '</h3><p>' + esc(note.copy) + '</p></div></article>').join('');
     const cards = contentPage.verbs.map(renderVerbLearningCard).join('');
+    const tabs = practiceModes.map((tab, index) => {
+      const contentTab = localized(tab);
+      const active = mode.id === tab.id;
+      return '<button type="button" class="practice-tab' + (active ? ' is-active' : '') + '" id="verb-learning-tab-' + esc(tab.id) + '" data-exercise-mode="' + esc(tab.id) + '" role="tab" aria-controls="verb-learning-practice-panel" aria-selected="' + (active ? 'true' : 'false') + '"><span>' + String(index + 1).padStart(2, '0') + '</span><strong>' + esc(contentTab.label) + '</strong><small>' + esc(contentTab.shortLabel) + '</small></button>';
+    }).join('');
     const practiceContent = renderSentencePractice(page, mode, session);
 
     view.innerHTML = '<div class="fade-in verb-learning-page">' +
       '<section class="exercise-hero verbs-hero"><div><p class="view-kicker">' + esc(tr('verbs.kicker')) + '</p><h1>' + esc(contentPage.heroTitle) + '<br><span>' + esc(contentPage.heroAccent) + '</span></h1><p class="exercise-hero-copy">' + esc(contentPage.introduction) + '</p><div class="exercise-hero-meta"><span class="meta-pill">' + esc(tr('verbs.present')) + '</span><span class="meta-pill">' + esc(tr('verbs.verbCount', { count: contentPage.verbs.length })) + '</span><span class="meta-pill">' + esc(tr('verbs.questionCount', { count: mode.items.length })) + '</span></div></div><div class="exercise-hero-mark" aria-hidden="true"><span>A1</span><small>' + esc(tr('sidebar.verbs')) + '</small></div></section>' +
       '<section class="verb-learning-section"><div class="section-heading"><div><p class="view-kicker">' + esc(tr('verbs.studyKicker')) + '</p><h2>' + esc(tr('verbs.studyTitle')) + '</h2><p>' + esc(tr('verbs.studyCopy')) + '</p></div></div><div class="verb-learning-grid">' + cards + '</div></section>' +
       '<section class="verb-learning-notes" aria-label="' + esc(tr('verbs.explanationTitle')) + '"><div class="section-heading"><div><p class="view-kicker">' + esc(tr('verbs.explanationKicker')) + '</p><h2>' + esc(tr('verbs.explanationTitle')) + '</h2></div></div>' + notes + '</section>' +
-      '<section class="verb-practice-card verb-learning-practice" id="verb-practice-panel"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(tr('verbs.practiceKicker')) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(tr('verbs.practiceHint')) + '</span></div></div>' + practiceContent + '</section>' +
+      '<div class="practice-tabs" role="tablist" aria-label="' + esc(tr('verb.tabsAria')) + '">' + tabs + '</div>' +
+      '<section class="verb-practice-card verb-learning-practice" id="verb-learning-practice-panel" role="tabpanel" aria-labelledby="verb-learning-tab-' + esc(mode.id) + '"><div class="verb-practice-heading"><div><p class="view-kicker">' + esc(tr('verbs.practiceKicker')) + '</p><h2>' + esc(contentMode.title) + '</h2><p>' + esc(contentMode.instruction) + '</p></div><div class="verb-rule-note"><span class="verb-rule-note-mark" aria-hidden="true">' + icon('info') + '</span><span>' + esc(mode.id === 'practice' ? tr('verbs.practiceHint') : tr('verbs.phrasesHint')) + '</span></div></div>' + practiceContent + '</section>' +
       '<p class="exercise-page-note"><span aria-hidden="true">' + icon('sparkles') + '</span> ' + esc(tr('verbs.pageNote')) + '</p>' +
       '</div>';
     icons.refresh(view);
@@ -1305,6 +1316,23 @@
       i18n.setLanguage(language.dataset.language);
       return;
     }
+    const openVerbUsage = event.target.closest('[data-open-verb-usage]');
+    if (openVerbUsage) {
+      const dialog = document.getElementById(openVerbUsage.dataset.openVerbUsage);
+      if (dialog && !dialog.open) dialog.showModal();
+      return;
+    }
+    const closeVerbUsage = event.target.closest('[data-close-verb-usage]');
+    if (closeVerbUsage) {
+      const dialog = closeVerbUsage.closest('.verb-usage-dialog');
+      if (dialog && dialog.open) dialog.close();
+      return;
+    }
+    const usageDialog = event.target.closest('.verb-usage-dialog');
+    if (usageDialog && event.target === usageDialog) {
+      usageDialog.close();
+      return;
+    }
     const sectionToggle = event.target.closest('[data-toggle-sidebar-section]');
     if (sectionToggle) {
       const sectionId = sectionToggle.dataset.toggleSidebarSection;
@@ -1326,8 +1354,7 @@
     const exerciseMode = event.target.closest('[data-exercise-mode]');
     if (exerciseMode) {
       ui.exerciseModes[getExercisePage().id] = exerciseMode.dataset.exerciseMode;
-      renderExercises();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderActiveVerbPractice();
       return;
     }
     if (event.target.closest('[data-toggle-sidebar]')) { toggleSidebar(); return; }

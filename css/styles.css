@@ -620,7 +620,7 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .verb-result-message span { display: block; margin-top: 4px; color: var(--ink-soft); font-size: 11px; }
 .verb-learning-page { max-width: 1220px; margin: 0 auto; }
 .verb-learning-section { margin: 34px 0 42px; }
-.verb-learning-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.verb-learning-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; align-items: start; }
 .verb-learning-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); box-shadow: var(--shadow-sm); }
 .verb-learning-card-heading { display: flex; align-items: center; gap: 11px; }
 .verb-learning-number { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; color: var(--coral); background: var(--coral-soft); font-family: var(--mono); font-size: 10px; }
@@ -639,6 +639,29 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 .verb-learning-example > span { color: var(--ink-faint); font-family: var(--mono); font-size: 8px; letter-spacing: .09em; text-transform: uppercase; }
 .verb-learning-example strong { color: var(--teal-deep); font-size: 12px; }
 .verb-learning-example p { margin: 0; color: var(--ink-soft); font-size: 10px; }
+.verb-usage-trigger { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 42px; padding: 0; margin-top: 13px; border: 0; border-top: 1px solid var(--line); color: var(--teal-deep); background: transparent; cursor: pointer; font-size: 10px; font-weight: 700; text-align: left; }
+.verb-usage-trigger:hover { color: var(--coral); }
+.verb-usage-trigger:focus-visible { border-radius: 6px; outline: 2px solid var(--coral); outline-offset: 2px; }
+.verb-usage-trigger-mark { margin-left: auto; color: var(--coral); font-family: var(--mono); font-size: 16px; }
+.verb-usage-count { display: grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 7px; color: var(--ink-faint); background: var(--paper); font-family: var(--mono); font-size: 9px; }
+.verb-usage-dialog { width: min(760px, calc(100vw - 32px)); max-width: calc(100vw - 32px); max-height: min(84vh, 760px); max-height: min(84dvh, 760px); padding: 0; border: 1px solid var(--line); border-radius: 20px; color: var(--ink); background: var(--white); box-shadow: 0 28px 90px rgba(20, 43, 39, .28); overflow: hidden; }
+.verb-usage-dialog:not([open]) { display: none; }
+.verb-usage-dialog[open] { display: flex; flex-direction: column; }
+.verb-usage-dialog::backdrop { background: rgba(17, 43, 40, .62); backdrop-filter: blur(3px); }
+.verb-usage-dialog-header { display: flex; flex: 0 0 auto; justify-content: space-between; align-items: center; gap: 18px; padding: 18px 22px; border-bottom: 1px solid var(--line); background: var(--white); }
+.verb-usage-dialog-header p { margin: 0 0 4px; color: var(--coral); font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.verb-usage-dialog-header h2 { color: var(--teal-deep); font-family: var(--display); font-size: 25px; }
+.verb-usage-dialog-close { flex: 0 0 auto; min-height: 38px; padding: 0 12px; }
+.verb-usage-dialog-content { display: grid; flex: 1 1 auto; gap: 10px; min-height: 0; padding: 16px 22px 22px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.verb-usage-item { padding: 11px; border-radius: 10px; background: var(--paper); }
+.verb-usage-title { display: flex; align-items: baseline; gap: 7px; }
+.verb-usage-title > span { flex: 0 0 auto; color: var(--coral); font-family: var(--mono); font-size: 8px; }
+.verb-usage-title h3 { color: var(--teal-deep); font-size: 11px; line-height: 1.4; }
+.verb-usage-item > p { margin: 5px 0 8px; color: var(--ink-soft); font-size: 10px; line-height: 1.5; }
+.verb-usage-examples { display: grid; gap: 7px; padding: 0; margin: 0; list-style: none; }
+.verb-usage-examples li { display: grid; gap: 2px; padding-top: 6px; border-top: 1px solid var(--line); }
+.verb-usage-examples strong { color: var(--teal-deep); font-size: 10px; line-height: 1.45; }
+.verb-usage-examples span { color: var(--ink-soft); font-size: 9px; line-height: 1.4; }
 .verb-learning-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin: 0 0 38px; }
 .verb-learning-notes > .section-heading { grid-column: 1 / -1; margin-bottom: 0; }
 .verb-learning-note { display: grid; grid-template-columns: 27px 1fr; gap: 10px; align-items: start; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,253,248,.75); }
@@ -718,6 +741,11 @@ h3 { font-size: 17px; letter-spacing: -.02em; }
 
 @media (max-width: 560px) {
   .main-content { padding-right: 16px; padding-left: 16px; }
+  .verb-usage-dialog { width: calc(100vw - 20px); max-width: calc(100vw - 20px); max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); border-radius: 15px; }
+  .verb-usage-dialog-header { gap: 10px; padding: 14px 15px; }
+  .verb-usage-dialog-header h2 { font-size: 22px; }
+  .verb-usage-dialog-content { gap: 8px; padding: 11px 12px 14px; }
+  .verb-usage-item { padding: 10px; }
   .language-selector { margin-right: 2px; margin-left: 2px; }
   .language-button { min-height: 36px; }
   h1 { font-size: 40px; }
