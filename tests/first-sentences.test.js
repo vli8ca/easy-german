@@ -28,7 +28,7 @@ assert.equal(lessons.length, 11, 'o curso deve ter somente as 11 aulas do caminh
 assert.equal(lessons.find((lesson) => lesson.id === 'first-sentences'), undefined, 'first-sentences não pode aparecer como aula');
 
 assert.ok(verbPractice && verbPractice.pages, 'as páginas de exercícios devem existir');
-assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'sein', 'haben', 'numbers', 'w-fragen'], 'first-sentences deve ser o primeiro exercício');
+assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'first-sentences-2', 'sein', 'haben', 'numbers', 'w-fragen'], 'as frases iniciais devem ser os primeiros exercícios');
 const firstExercisePage = verbPractice.pages['first-sentences'];
 assert.equal(firstExercisePage.id, 'first-sentences');
 for (const field of ['heroIntro', 'heroIntro_en', 'metaPrimary', 'metaPrimary_en', 'metaThird', 'metaThird_en', 'ruleCopy', 'ruleCopy_en']) {

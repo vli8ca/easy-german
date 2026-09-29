@@ -14,7 +14,7 @@
     sessions: {},
     reviewSession: {},
     reviewQuestions: [],
-    exerciseModes: { 'first-sentences': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence', 'w-fragen': 'questions' },
+    exerciseModes: { 'first-sentences': 'sentences', 'first-sentences-2': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence', 'w-fragen': 'questions' },
     verbSessions: {},
     sidebarSections: { vocabulary: false, lessons: false, verbs: false, exercises: false }
   };
@@ -223,6 +223,7 @@
 
   const exercisePageRoutes = {
     'exercises-first-sentences': 'first-sentences',
+    'exercises-first-sentences-2': 'first-sentences-2',
     exercises: 'sein',
     'exercises-haben': 'haben',
     'exercises-numbers': 'numbers',
