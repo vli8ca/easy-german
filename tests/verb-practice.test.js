@@ -302,27 +302,29 @@ const scenarios = [
       Array.from(mode.items, (item) => item.id)
     );
   }],
-  ['aceita grafia sem diacríticos para ä/ö/ü e ß', () => {
+  ['preserva diacríticos que podem mudar o significado e permite variantes explícitas', () => {
     const { exercises } = getModules();
     const pairs = [
       ['glücklich', 'glucklich'],
       ['schön', 'schon'],
       ['für', 'fur'],
+      ['Maße', 'Masse'],
       ['Straße', 'Strasse']
     ];
 
     for (const [canonical, ascii] of pairs) {
-      assert.equal(
+      assert.notEqual(
         exercises.normalizeGermanAnswer(canonical),
         exercises.normalizeGermanAnswer(ascii),
-        'normalização divergente para ' + canonical + '/' + ascii
+        'a normalização não deve fundir ' + canonical + '/' + ascii
       );
       assert.equal(
         exercises.isCorrect(ascii, { answers: [canonical] }),
-        true,
-        'a grafia sem diacrítico deveria ser aceita para ' + canonical
+        false,
+        'a variante precisa estar cadastrada explicitamente para ' + canonical
       );
     }
+    assert.equal(exercises.isCorrect('schoen', { answers: ['schön', 'schoen'] }), true, 'a variante explícita deve ser aceita');
   }],
   ['expõe o contrato estático da UI one-at-a-time', () => {
     const appSource = readSource('js/app.js');

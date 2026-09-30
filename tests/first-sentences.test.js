@@ -24,7 +24,7 @@ const verbPractice = modules.KlarVerbPractice;
 const appSource = fs.readFileSync(path.join(root, 'js', 'app.js'), 'utf8');
 
 assert.ok(Array.isArray(lessons), 'KlarLessons deve ser uma lista');
-assert.equal(lessons.length, 11, 'o curso deve ter somente as 11 aulas do caminho');
+assert.equal(lessons.length, 12, 'o curso deve ter as 12 aulas do caminho');
 assert.equal(lessons.find((lesson) => lesson.id === 'first-sentences'), undefined, 'first-sentences não pode aparecer como aula');
 
 assert.ok(verbPractice && verbPractice.pages, 'as páginas de exercícios devem existir');
@@ -81,10 +81,11 @@ const expectedLessonIds = [
   'negation',
   'accusative',
   'modals-real-life',
-  'connectors-prepositions'
+  'connectors-prepositions',
+  'der-die-das'
 ];
 assert.deepEqual(Array.from(lessons, (lesson) => lesson.id), expectedLessonIds, 'as aulas devem continuar presentes e na mesma ordem');
-assert.deepEqual(Array.from(lessons, (lesson) => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+assert.deepEqual(Array.from(lessons, (lesson) => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
 assert.match(appSource, /exercises-first-sentences/, 'app.js deve reconhecer a rota do exercício de frases iniciais');
 assert.match(appSource, /isStreakMode\(mode\)/, 'app.js deve usar o fluxo unitário de exercícios');

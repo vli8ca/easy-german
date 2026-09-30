@@ -23,7 +23,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 
 ## Highlights
 
-- 11 structured A1 lessons, from pronunciation to real-life modal verbs
+- 12 structured A1 lessons, from pronunciation to practical article patterns and real-life modal verbs
 - Portuguese and English interface localization
 - Clear explanations with German examples and translations
 - Pronunciation support using the browser's German text-to-speech engine
@@ -54,6 +54,7 @@ The guiding idea is simple: learn small, useful pieces of German and practice th
 | 09 | Accusative case | Understand who does the action and what receives it |
 | 10 | Modals and real-life German | `können`, `müssen`, `möchten`, and practical situations |
 | 11 | Connectors and prepositions | Join ideas and talk about place, direction, time, and relationships |
+| 12 | Choosing `der`, `die`, and `das` | Use reliable gender clues, plurals, and compound nouns |
 
 ## Practice areas
 

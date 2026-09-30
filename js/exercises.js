@@ -40,8 +40,8 @@
   }
 
   /**
-   * Normalizes an A1 German answer while accepting keyboard-friendly
-   * spellings without umlauts or the German sharp s.
+   * Normalizes an answer without merging German letters that can change meaning.
+   * Alternative keyboard spellings must be listed explicitly in exercise.answers.
    *
    * @param {*} value The answer to normalize.
    * @returns {string} A comparable normalized answer.
@@ -49,11 +49,7 @@
   function normalizeGermanAnswer(value) {
     return normalize(value)
       .trim()
-      .normalize('NFC')
-      .replace(/ä/g, 'a')
-      .replace(/ö/g, 'o')
-      .replace(/ü/g, 'u')
-      .replace(/ß/g, 'ss');
+      .normalize('NFC');
   }
 
   function renderOptions(exercise) {

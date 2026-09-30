@@ -318,11 +318,11 @@
       ],
       summary: ['der é masculino; die é feminino e plural; das é neutro.', 'O gênero alemão nem sempre coincide com o gênero em português.', 'Aprenda substantivos com artigo.', 'ein acompanha der e das; eine acompanha die.', 'O plural usa die no artigo definido.'],
       exercises: [
-        { id: 'a1', type: 'multiple', prompt: '___ Auto', options: ['der', 'die', 'das'], answer: 'das', explanation: 'Carro é das Auto.' },
-        { id: 'a2', type: 'multiple', prompt: '___ Frau', options: ['der', 'die', 'das'], answer: 'die', explanation: 'Mulher é die Frau.' },
-        { id: 'a3', type: 'multiple', prompt: '___ Bahnhof', options: ['der', 'die', 'das'], answer: 'der', explanation: 'Estação de trem é der Bahnhof.' },
-        { id: 'a4', type: 'multiple', prompt: 'Qual forma significa “uma casa”?', options: ['ein Haus', 'eine Haus', 'der Haus', 'ein Hause'], answer: 'ein Haus', explanation: 'Haus é neutro, então usamos ein Haus.' },
-        { id: 'a5', type: 'translate', prompt: 'Traduza: “a escola”', answers: ['die Schule'], answer: 'die Schule', explanation: 'Escola é die Schule. Guarde o artigo junto.' }
+        { id: 'art01', type: 'multiple', prompt: '___ Auto', options: ['der', 'die', 'das'], answer: 'das', explanation: 'Carro é das Auto.' },
+        { id: 'art02', type: 'multiple', prompt: '___ Frau', options: ['der', 'die', 'das'], answer: 'die', explanation: 'Mulher é die Frau.' },
+        { id: 'art03', type: 'multiple', prompt: '___ Bahnhof', options: ['der', 'die', 'das'], answer: 'der', explanation: 'Estação de trem é der Bahnhof.' },
+        { id: 'art04', type: 'multiple', prompt: 'Qual forma significa “uma casa”?', options: ['ein Haus', 'eine Haus', 'der Haus', 'ein Hause'], answer: 'ein Haus', explanation: 'Haus é neutro, então usamos ein Haus.' },
+        { id: 'art05', type: 'translate', prompt: 'Traduza: “a escola”', answers: ['die Schule'], answer: 'die Schule', explanation: 'Escola é die Schule. Guarde o artigo junto.' }
       ]
     },
     {
@@ -531,6 +531,68 @@
         { id: 'cp22', type: 'fill', prompt: 'Ich bin ___ Hause.', answer: 'zu', explanation: 'A expressão fixa “em casa” é zu Hause.' },
         { id: 'cp23', type: 'multiple', prompt: 'Das ist ___ dich.', options: ['für', 'mit', 'zu', 'in'], answer: 'für', explanation: 'Für indica para quem algo é destinado: für dich.' },
         { id: 'cp24', type: 'translate', prompt: 'Traduza: “O presente é para minha mãe.”', answer: 'Das Geschenk ist für meine Mutter.', answers: ['Das Geschenk ist für meine Mutter.'], explanation: 'Für introduz a pessoa que recebe ou para quem algo é destinado.' }
+      ]
+    },
+    {
+      id: 'der-die-das', number: 12, level: 'A1', title: 'Como saber: der, die ou das?',
+      description: 'Entenda por que o gênero parece imprevisível, use pistas sem tratá-las como regras perfeitas e aprenda um jeito simples de memorizar cada substantivo.',
+      duration: '20 min', focus: 'Reconhecer pistas e memorizar o artigo',
+      introduction: 'Se der, die e das ainda parecem aleatórios, você não está fazendo nada errado: o gênero alemão nem sempre dá para adivinhar. Nesta aula, você vai aprender o que realmente ajuda: guardar o artigo junto da palavra e usar algumas pistas como apoio.',
+      objectives: ['Entender que o gênero gramatical faz parte de cada substantivo', 'Usar terminações e grupos de palavras como pistas, sem confiar cegamente nelas', 'Memorizar artigo + substantivo na forma do dicionário', 'Reconhecer die no plural e notar quando um caso muda a forma do artigo'],
+      sections: [
+        { type: 'callout', title: 'Primeiro, tire a pressão', text: '<strong>Não existe uma fórmula que acerte todos os substantivos.</strong> Em alemão, cada substantivo tem gênero gramatical próprio. A tradução em português não decide esse gênero. Aprender <strong>der Tisch</strong>, <strong>die Sonne</strong> ou <strong>das Auto</strong> como um bloco faz parte de aprender a palavra — não é falta de lógica sua.' },
+        { type: 'examples', title: 'O gênero não precisa combinar com o português', lede: 'Compare as palavras completas. O artigo pertence ao substantivo alemão, mesmo quando o artigo em português é diferente.', items: [
+          { de: 'der Tisch', pt: 'a mesa', note: 'Tisch é masculino em alemão; “mesa” é feminino em português.' },
+          { de: 'die Sonne', pt: 'o sol', note: 'Sonne é feminino em alemão; “sol” é masculino em português.' },
+          { de: 'das Auto', pt: 'o carro', note: 'Auto é neutro em alemão; “carro” é masculino em português.' },
+          { de: 'das Mädchen', pt: 'a menina', note: 'Mädchen é neutro por causa da terminação -chen.' }
+        ]},
+        { type: 'table', title: 'Terminações que dão pistas', lede: 'Estas terminações costumam apontar para um gênero. Use-as para fazer uma boa hipótese e depois confirme a palavra com seu artigo.', headers: ['Pista no final', 'Gênero frequente', 'Exemplos para guardar'], rows: [
+          ['-ung, -heit, -keit', 'geralmente feminino: die', 'die Zeitung · die Freiheit · die Möglichkeit'],
+          ['-schaft, -ion', 'geralmente feminino: die', 'die Freundschaft · die Situation'],
+          ['-chen, -lein', 'neutro: das', 'das Mädchen · das Häuschen · das Büchlein']
+        ]},
+        { type: 'table', title: 'Três grupos fáceis de reconhecer', lede: 'Dias da semana, meses e estações são normalmente masculinos. No plural, o artigo definido é die para substantivos dos três gêneros.', headers: ['Grupo', 'Exemplos'], suppressFirstColumnAudio: true, rows: [
+          ['Dias da semana: der', 'der Montag · der Freitag'],
+          ['Meses: der', 'der Januar · der Oktober'],
+          ['Estações: der', 'der Sommer · der Winter'],
+          ['Plural: die', 'die Männer · die Frauen · die Kinder']
+        ]},
+        { type: 'examples', title: 'Palavra composta? Olhe para a última parte', lede: 'Em uma palavra composta alemã, o gênero vem do último substantivo. Leia a palavra de trás para frente para achar essa parte.', items: [
+          { de: 'die Autobahn', pt: 'a autoestrada', note: 'O final é Bahn: die Bahn, então die Autobahn.' },
+          { de: 'das Kinderzimmer', pt: 'o quarto infantil', note: 'O final é Zimmer: das Zimmer, então das Kinderzimmer.' },
+          { de: 'der Fußball', pt: 'o futebol / a bola de futebol', note: 'O final é Ball: der Ball, então der Fußball.' }
+        ]},
+        { type: 'table', title: 'Seu ritual para uma palavra nova', lede: 'Quando encontrar um substantivo, faça estes passos. Aos poucos, o artigo vai ficando automático.', headers: ['Passo', 'Ação', 'Exemplo'], rows: [
+          ['1', 'Procure a palavra com artigo em uma fonte confiável.', 'Tisch → der Tisch'],
+          ['2', 'Anote e repita artigo + substantivo como uma unidade.', 'der Tisch, der Tisch'],
+          ['3', 'Use uma pista de terminação ou grupo, se houver.', 'Zeitung termina em -ung: pista para die'],
+          ['4', 'Revise em uma frase simples, mantendo a forma do dicionário.', 'Der Tisch ist groß.']
+        ]},
+        { type: 'callout', title: 'Uma última diferença: gênero e caso', text: 'Esta aula trabalha principalmente com a forma de dicionário, chamada nominativo: <strong>der Hund</strong>. Em uma frase, o papel do substantivo pode mudar a forma do artigo: <strong>Ich sehe den Hund</strong> (“Eu vejo o cachorro”). O gênero continua masculino; <strong>den</strong> aparece por causa do caso acusativo. Primeiro memorize a forma de dicionário; depois aprenda as mudanças de caso.' }
+      ],
+      vocabulary: [
+        { word: 'der Tisch', meaning: 'a mesa', example: 'Der Tisch ist groß.', example_en: 'The table is big.' },
+        { word: 'die Sonne', meaning: 'o sol', example: 'Die Sonne scheint.', example_en: 'The sun is shining.' },
+        { word: 'das Auto', meaning: 'o carro', example: 'Das Auto ist neu.', example_en: 'The car is new.' },
+        { word: 'die Zeitung', meaning: 'o jornal', example: 'Die Zeitung ist hier.', example_en: 'The newspaper is here.' },
+        { word: 'die Freiheit', meaning: 'a liberdade', example: 'Freiheit ist wichtig.', example_en: 'Freedom is important.' },
+        { word: 'die Möglichkeit', meaning: 'a possibilidade', example: 'Die Möglichkeit ist gut.', example_en: 'The possibility is good.' },
+        { word: 'das Mädchen', meaning: 'a menina', example: 'Das Mädchen lernt Deutsch.', example_en: 'The girl is learning German.' },
+        { word: 'der Montag', meaning: 'a segunda-feira', example: 'Der Montag ist lang.', example_en: 'Monday is long.' },
+        { word: 'der Sommer', meaning: 'o verão', example: 'Der Sommer ist warm.', example_en: 'Summer is warm.' },
+        { word: 'die Autobahn', meaning: 'a autoestrada', example: 'Die Autobahn ist lang.', example_en: 'The highway is long.' }
+      ],
+      summary: ['O gênero gramatical é uma característica do substantivo alemão e nem sempre se adivinha pela tradução.', 'Aprenda cada substantivo junto do artigo na forma do dicionário: der Tisch, die Sonne, das Auto.', 'Terminações e grupos de palavras dão pistas úteis, mas confirme o artigo em vez de tratar toda tendência como regra.', 'Em palavras compostas, o último substantivo determina o gênero; no plural, o artigo definido é die.', 'O caso pode mudar a forma do artigo: der Hund vira den Hund no acusativo, sem mudar o gênero.'],
+      exercises: [
+        { id: 'ddd01', type: 'multiple', prompt: 'Qual terminação costuma ser uma boa pista para o artigo feminino die?', options: ['-ung', '-chen', '-lein', '-ment'], answer: '-ung', explanation: 'Substantivos terminados em -ung são geralmente femininos: die Zeitung. A terminação é uma pista muito forte, mas ainda vale aprender a palavra inteira.' },
+        { id: 'ddd02', type: 'multiple', prompt: 'Complete o bloco correto para “menina”: ___ Mädchen.', options: ['der', 'die', 'das'], answer: 'das', explanation: 'Mädchen termina em -chen, uma terminação de diminutivo que usa das. A palavra é das Mädchen, mesmo significando “a menina”.' },
+        { id: 'ddd03', type: 'multiple', prompt: 'Qual grupo costuma usar o artigo masculino der?', options: ['Dias da semana, meses e estações', 'Todos os substantivos no plural', 'Palavras terminadas em -keit'], answer: 'Dias da semana, meses e estações', explanation: 'Dias, meses e estações são normalmente masculinos: der Montag, der Januar, der Sommer.' },
+        { id: 'ddd04', type: 'fill', prompt: 'Complete o artigo definido plural: ___ Kinder (as crianças).', answer: 'die', explanation: 'O artigo definido no plural é die para todos os gêneros: die Männer, die Frauen, die Kinder.' },
+        { id: 'ddd05', type: 'multiple', prompt: 'Por que dizemos “die Autobahn”?', options: ['A última parte é Bahn, que é die Bahn.', 'Toda palavra que começa com Auto usa die.', 'Palavras compostas são sempre femininas.'], answer: 'A última parte é Bahn, que é die Bahn.', explanation: 'Em um composto, olhe para o último substantivo: die Bahn → die Autobahn. O começo Auto não determina o gênero.' },
+        { id: 'ddd06', type: 'translate', prompt: 'Traduza “a possibilidade” para o alemão, incluindo o artigo.', answers: ['die Möglichkeit'], answer: 'die Möglichkeit', explanation: 'Possibilidade é die Möglichkeit. A terminação -keit é uma pista frequente de feminino; guarde artigo e substantivo juntos.' },
+        { id: 'ddd07', type: 'multiple', prompt: 'Na forma de dicionário é “der Hund”. Complete: Ich sehe ___ Hund. (Eu vejo o cachorro.)', options: ['der', 'den', 'das'], answer: 'den', explanation: 'Der Hund é a forma de dicionário. Como Hund é o objeto direto nesta frase, o caso acusativo muda o artigo masculino para den; o gênero continua masculino.' },
+        { id: 'ddd08', type: 'translate', prompt: 'Traduza “a autoestrada” para o alemão, incluindo o artigo.', answers: ['die Autobahn'], answer: 'die Autobahn', explanation: 'Autobahn termina no substantivo Bahn. Como dizemos die Bahn, o composto também é die Autobahn.' }
       ]
     }
   ];
@@ -1206,6 +1268,60 @@
         { prompt: 'Complete: Ich bin ___ Hause.', explanation: 'The fixed expression for “at home” is zu Hause.' },
         { prompt: 'Das ist ___ dich.', options: ['für', 'mit', 'zu', 'in'], explanation: 'Für indicates who something is intended for: für dich.' },
         { prompt: 'Translate: “The gift is for my mother.”', explanation: 'Für introduces the person who receives something or who it is intended for.' }
+      ]
+    },
+    'der-die-das': {
+      title: 'How to choose der, die, or das',
+      description: 'Understand why gender can seem unpredictable, use clues without treating them as perfect rules, and learn a simple way to memorize each noun.',
+      focus: 'Recognizing clues and memorizing the article',
+      introduction: 'If der, die, and das still seem random, you are not doing anything wrong: German gender cannot always be guessed. In this lesson, you will learn what really helps: keeping the article with the word and using a few clues as support.',
+      objectives: ['Understand that grammatical gender is part of each noun', 'Use endings and word groups as clues without relying on them blindly', 'Memorize the article + noun in dictionary form', 'Recognize die in the plural and notice when a case changes the article form'],
+      sections: [
+        { title: 'First, take the pressure off', text: '<strong>There is no formula that gets every noun right.</strong> In German, every noun has its own grammatical gender. The Portuguese translation does not determine that gender. Learning <strong>der Tisch</strong>, <strong>die Sonne</strong>, or <strong>das Auto</strong> as one unit is part of learning the word — it does not mean you are missing some logic.' },
+        { title: 'Gender does not have to match Portuguese', lede: 'Compare the complete words. The article belongs to the German noun, even when the Portuguese article is different.', items: [
+          { en: 'the table', note: 'Tisch is masculine in German; “mesa” is feminine in Portuguese.' },
+          { en: 'the sun', note: 'Sonne is feminine in German; “sol” is masculine in Portuguese.' },
+          { en: 'the car', note: 'Auto is neuter in German; “carro” is masculine in Portuguese.' },
+          { en: 'the girl', note: 'Mädchen is neuter because of the ending -chen.' }
+        ]},
+        { title: 'Endings that give you clues', lede: 'These endings often point to a gender. Use them to make a good guess, then confirm the noun with its article.', headers: ['Ending clue', 'Common gender', 'Examples to learn'], rows: [
+          ['-ung, -heit, -keit', 'usually feminine: die', 'die Zeitung · die Freiheit · die Möglichkeit'],
+          ['-schaft, -ion', 'usually feminine: die', 'die Freundschaft · die Situation'],
+          ['-chen, -lein', 'neuter: das', 'das Mädchen · das Häuschen · das Büchlein']
+        ]},
+        { title: 'Three groups that are easy to recognize', lede: 'Days of the week, months, and seasons are normally masculine. In the plural, the definite article is die for nouns of all three genders.', headers: ['Group', 'Examples'], rows: [
+          ['Days of the week: der', 'der Montag · der Freitag'],
+          ['Months: der', 'der Januar · der Oktober'],
+          ['Seasons: der', 'der Sommer · der Winter'],
+          ['Plural: die', 'die Männer · die Frauen · die Kinder']
+        ]},
+        { title: 'Compound word? Look at the last part', lede: 'In a German compound, the gender comes from the final noun. Read from the end to find that part.', items: [
+          { en: 'the highway', note: 'The ending is Bahn: die Bahn, so die Autobahn.' },
+          { en: 'the children’s room', note: 'The ending is Zimmer: das Zimmer, so das Kinderzimmer.' },
+          { en: 'football / soccer ball', note: 'The ending is Ball: der Ball, so der Fußball.' }
+        ]},
+        { title: 'Your routine for a new word', lede: 'When you find a noun, follow these steps. The article will gradually become automatic.', headers: ['Step', 'Action', 'Example'], rows: [
+          ['1', 'Look up the word with its article in a reliable source.', 'Tisch → der Tisch'],
+          ['2', 'Write and repeat article + noun as one unit.', 'der Tisch, der Tisch'],
+          ['3', 'Use an ending or word-group clue, if there is one.', 'Zeitung ends in -ung: a clue for die'],
+          ['4', 'Review it in a simple sentence, using dictionary form.', 'Der Tisch ist groß.']
+        ]},
+        { title: 'One last distinction: gender and case', text: 'This lesson mainly uses dictionary form, called the nominative: <strong>der Hund</strong>. A noun’s role in a sentence can change the article form: <strong>Ich sehe den Hund</strong> (“I see the dog”). The gender stays masculine; <strong>den</strong> appears because of the accusative case. First memorize the dictionary form; learn case changes afterward.' }
+      ],
+      vocabulary: [
+        { meaning: 'the table' }, { meaning: 'the sun' }, { meaning: 'the car' }, { meaning: 'the newspaper' }, { meaning: 'freedom' },
+        { meaning: 'possibility' }, { meaning: 'the girl' }, { meaning: 'Monday' }, { meaning: 'summer' }, { meaning: 'the highway' }
+      ],
+      summary: ['Grammatical gender is a feature of the German noun and cannot always be guessed from its translation.', 'Learn each noun with its article in dictionary form: der Tisch, die Sonne, das Auto.', 'Endings and word groups are useful clues, but confirm the article instead of treating every tendency as a rule.', 'In compounds, the final noun determines gender; in the plural, the definite article is die.', 'Case can change the article form: der Hund becomes den Hund in the accusative, while its gender stays the same.'],
+      exercises: [
+        { prompt: 'Which ending is often a good clue for the feminine article die?', options: ['-ung', '-chen', '-lein', '-ment'], explanation: 'Nouns ending in -ung are usually feminine: die Zeitung. It is a very strong clue, but it is still useful to learn the complete word.' },
+        { prompt: 'Complete the correct unit for “girl”: ___ Mädchen.', options: ['der', 'die', 'das'], explanation: 'Mädchen ends in -chen, a diminutive ending that uses das. The word is das Mädchen, even though it means “the girl”.' },
+        { prompt: 'Which group usually takes the masculine article der?', options: ['Days of the week, months, and seasons', 'All plural nouns', 'Words ending in -keit'], answer: 'Days of the week, months, and seasons', explanation: 'Days, months, and seasons are normally masculine: der Montag, der Januar, der Sommer.' },
+        { prompt: 'Complete the definite plural article: ___ Kinder (the children).', explanation: 'The definite plural article is die for all genders: die Männer, die Frauen, die Kinder.' },
+        { prompt: 'Why do we say “die Autobahn”?', options: ['The final part is Bahn, which is die Bahn.', 'Every word that starts with Auto uses die.', 'Compound words are always feminine.'], answer: 'The final part is Bahn, which is die Bahn.', explanation: 'In a compound, look at the final noun: die Bahn → die Autobahn. The first part, Auto, does not determine the gender.' },
+        { prompt: 'Translate “the possibility” into German, including the article.', explanation: 'Possibility is die Möglichkeit. The ending -keit is a common clue for feminine nouns; learn the article and noun together.' },
+        { prompt: 'The dictionary form is “der Hund”. Complete: Ich sehe ___ Hund. (I see the dog.)', options: ['der', 'den', 'das'], explanation: 'Der Hund is the dictionary form. Because Hund is the direct object in this sentence, the masculine article changes to den in the accusative; the gender stays masculine.' },
+        { prompt: 'Translate “the highway” into German, including the article.', explanation: 'Autobahn ends with the noun Bahn. Since we say die Bahn, the compound is also die Autobahn.' }
       ]
     }
   };

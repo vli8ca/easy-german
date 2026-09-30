@@ -13,7 +13,8 @@
     activeLessonId: lessons[0] ? lessons[0].id : null,
     sessions: {},
     reviewSession: {},
-    reviewQuestions: [],
+    reviewQuestions: null,
+    reviewLessonIds: null,
     exerciseModes: { 'first-sentences': 'sentences', 'first-sentences-2': 'sentences', sein: 'conjugation', haben: 'conjugation', numbers: 'sequence', 'w-fragen': 'questions' },
     verbSessions: {},
     sidebarSections: { vocabulary: false, lessons: false, verbs: false, exercises: false }
@@ -482,8 +483,36 @@
         '<button type="button" class="continue-card" data-open-lesson="' + esc(next.id) + '"><span class="continue-number">' + String(next.number).padStart(2, '0') + '</span><span><h3>' + esc(localize(next, 'title')) + '</h3><p>' + (progress.completedLessons.length === lessons.length ? esc(tr('dashboard.reviewKeepGoing')) : esc(localize(next, 'focus'))) + '</p></span><span class="continue-arrow" aria-hidden="true">' + icon('arrow-right') + '</span></button>' +
       '</section>' +
       '<section class="path-section"><div class="section-heading"><div><h2>' + esc(tr('dashboard.path')) + '</h2><p>' + esc(tr('dashboard.pathCopy')) + '</p></div><button type="button" class="text-button" data-route="review">' + esc(tr('dashboard.reviewCompleted')) + ' ' + icon('arrow-right') + '</button></div><div class="lesson-path">' + lessons.map((lesson) => renderPathCard(lesson, progress, next.id)).join('') + '</div></section>' +
-      '<section class="bottom-grid"><div class="panel"><h3>' + esc(tr('dashboard.achievements')) + '</h3><p class="panel-intro">' + esc(tr('dashboard.achievementsCopy')) + '</p><div class="achievement-list">' + renderAchievements(progress) + '</div></div><div class="panel"><h3>' + esc(tr('dashboard.studyRhythm')) + '</h3><p class="panel-intro">' + esc(tr('dashboard.studyRhythmCopy')) + '</p><div class="study-rhythm" aria-label="' + esc(tr('dashboard.studyRhythmAria')) + '">' + [22, 38, 28, 46, 34, 57, progress.totalAnswered ? 68 : 0].map((height) => '<span class="rhythm-bar" style="height:' + height + '%"></span>').join('') + '</div><div class="rhythm-labels"><span>' + esc(tr('dashboard.week.mon')) + '</span><span>' + esc(tr('dashboard.week.tue')) + '</span><span>' + esc(tr('dashboard.week.wed')) + '</span><span>' + esc(tr('dashboard.week.thu')) + '</span><span>' + esc(tr('dashboard.week.fri')) + '</span><span>' + esc(tr('dashboard.week.sat')) + '</span><span>' + esc(tr('dashboard.today')) + '</span></div></div></section>' +
+      '<section class="bottom-grid"><div class="panel"><h3>' + esc(tr('dashboard.achievements')) + '</h3><p class="panel-intro">' + esc(tr('dashboard.achievementsCopy')) + '</p><div class="achievement-list">' + renderAchievements(progress) + '</div></div><div class="panel"><h3>' + esc(tr('dashboard.studyRhythm')) + '</h3><p class="panel-intro">' + esc(tr('dashboard.studyRhythmCopy')) + '</p>' + renderStudyRhythm(progress) + '</div></section>' +
       '</div>';
+  }
+
+  function localDayKey(date) {
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+  }
+
+  function renderStudyRhythm(progress) {
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+    const weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    const days = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(today);
+      date.setDate(today.getDate() - (6 - index));
+      return {
+        date,
+        count: progress.activityByDay[localDayKey(date)] || 0,
+        label: index === 6 ? tr('dashboard.today') : tr('dashboard.week.' + weekdays[date.getDay()])
+      };
+    });
+    const max = Math.max(1, ...days.map((day) => day.count));
+    const total = days.reduce((sum, day) => sum + day.count, 0);
+    const bars = days.map((day) => {
+      const height = day.count ? Math.max(12, Math.round(day.count / max * 100)) : 0;
+      const description = tr('dashboard.activityCount', { count: day.count });
+      return '<span class="rhythm-bar" role="img" aria-label="' + esc(day.label + ': ' + description) + '" title="' + esc(day.label + ': ' + description) + '" style="height:' + height + '%"></span>';
+    }).join('');
+    const labels = days.map((day) => '<span>' + esc(day.label) + '</span>').join('');
+    return '<div class="study-rhythm" aria-label="' + esc(tr('dashboard.studyRhythmAria')) + '">' + bars + '</div><div class="rhythm-labels">' + labels + '</div>' + (total ? '' : '<p class="panel-intro rhythm-empty">' + esc(tr('dashboard.studyRhythmEmpty')) + '</p>');
   }
 
   function statCard(value, label) {
@@ -578,7 +607,7 @@
       return '<section class="content-section"><p class="view-kicker">02 · ' + esc(tr('lesson.explanation')) + '</p><h2>' + esc(section.title) + '</h2><p class="section-lede">' + esc(section.lede || '') + '</p><div class="sound-grid">' + (section.items || []).map((item) => '<article class="sound-card"><div class="sound-symbol">' + esc(item.symbol) + '</div><div><h3>' + esc(item.title) + '</h3><p>' + esc(item.pronunciation) + '</p><p class="sound-example">' + esc(item.example) + ' · ' + esc(item.translation) + ' <button type="button" class="audio-inline" data-speak="' + esc(item.example) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: item.example })) + '">' + icon('volume-2', 'audio-icon') + '</button></p></div></article>').join('') + '</div></section>';
     }
     if (section.type === 'table') {
-      return '<section class="content-section"><p class="view-kicker">02 · ' + esc(tr('lesson.explanation')) + '</p><h2>' + esc(section.title) + '</h2>' + (section.lede ? '<p class="section-lede">' + esc(section.lede) + '</p>' : '') + '<div class="data-table-wrap"><table class="data-table"><thead><tr>' + (section.headers || []).map((header) => '<th>' + esc(header) + '</th>').join('') + '</tr></thead><tbody>' + (section.rows || []).map((row, rowIndex) => '<tr>' + row.map((cell, index) => { const spoken = source.rows && source.rows[rowIndex] ? source.rows[rowIndex][index] : cell; return '<td>' + esc(cell) + (index === 0 && /^[a-zäöüßÄÖÜ]/i.test(spoken) ? ' <button type="button" class="audio-inline" data-speak="' + esc(spoken) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: spoken })) + '">' + icon('volume-2', 'audio-icon') + '</button>' : '') + '</td>'; }).join('') + '</tr>').join('') + '</tbody></table></div></section>';
+      return '<section class="content-section"><p class="view-kicker">02 · ' + esc(tr('lesson.explanation')) + '</p><h2>' + esc(section.title) + '</h2>' + (section.lede ? '<p class="section-lede">' + esc(section.lede) + '</p>' : '') + '<div class="data-table-wrap"><table class="data-table"><thead><tr>' + (section.headers || []).map((header) => '<th>' + esc(header) + '</th>').join('') + '</tr></thead><tbody>' + (section.rows || []).map((row, rowIndex) => '<tr>' + row.map((cell, index) => { const spoken = source.rows && source.rows[rowIndex] ? source.rows[rowIndex][index] : cell; const audioEnabled = !(source.suppressFirstColumnAudio && index === 0); return '<td>' + esc(cell) + (audioEnabled && index === 0 && /^[a-zäöüßÄÖÜ]/i.test(spoken) ? ' <button type="button" class="audio-inline" data-speak="' + esc(spoken) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: spoken })) + '">' + icon('volume-2', 'audio-icon') + '</button>' : '') + '</td>'; }).join('') + '</tr>').join('') + '</tbody></table></div></section>';
     }
     if (section.type === 'examples') {
       return '<section class="content-section"><p class="view-kicker">03 · ' + esc(tr('lesson.examples')) + '</p><h2>' + esc(section.title) + '</h2>' + (section.lede ? '<p class="section-lede">' + esc(section.lede) + '</p>' : '') + '<div class="example-list">' + (section.items || []).map((item) => '<div class="example-row"><div><div class="example-de">' + esc(item.de) + '</div><span class="example-pt">' + esc(item.pt) + '</span>' + (item.note ? '<span class="example-note">' + esc(item.note) + '</span>' : '') + '</div><button type="button" class="speak-button" data-speak="' + esc(item.de) + '" aria-label="' + esc(tr('vocabulary.listenWord', { word: item.de })) + '">' + icon('volume-2', 'audio-icon') + '</button></div>').join('') + '</div></section>';
@@ -714,7 +743,13 @@
 
   function renderReview() {
     const progress = getProgress();
-    ui.reviewQuestions = buildReviewQuestions(progress);
+    const completedLessonIds = lessons.filter((lesson) => progress.completedLessons.includes(lesson.id)).map((lesson) => lesson.id);
+    const selectionChanged = !ui.reviewQuestions || !ui.reviewLessonIds || completedLessonIds.join('|') !== ui.reviewLessonIds.join('|');
+    if (selectionChanged) {
+      ui.reviewQuestions = buildReviewQuestions(progress);
+      ui.reviewLessonIds = completedLessonIds;
+      ui.reviewSession = {};
+    }
     if (!ui.reviewQuestions.length) {
       view.innerHTML = '<div class="fade-in"><section class="review-hero"><div><p class="view-kicker">' + esc(tr('review.kicker')) + '</p><h1>' + esc(tr('review.title')) + '</h1><p>' + esc(tr('review.copy')) + '</p></div><div class="review-mark" aria-hidden="true">' + icon('refresh-cw', 'review-mark-icon') + '</div></section><div class="review-empty"><div class="empty-symbol" aria-hidden="true">' + icon('sparkles') + '</div><h3>' + esc(tr('review.emptyTitle')) + '</h3><p>' + esc(tr('review.emptyCopy')) + '</p><button type="button" class="button button-primary" data-open-lesson="' + esc(lessons[0].id) + '">' + esc(tr('review.start')) + icon('arrow-right', 'button-icon') + '</button></div></div>';
       icons.refresh(view);
@@ -1405,7 +1440,7 @@
     const retry = event.target.closest('[data-retry-lesson]');
     if (retry) { resetLessonSession(retry.dataset.retryLesson); return; }
     const retryReview = event.target.closest('[data-retry-review]');
-    if (retryReview) { ui.reviewSession = {}; renderReview(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (retryReview) { ui.reviewQuestions = null; ui.reviewLessonIds = null; ui.reviewSession = {}; renderReview(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     const navLesson = event.target.closest('[data-nav-lesson]');
     if (navLesson && !navLesson.disabled) { navigateLesson(navLesson.dataset.navLesson); return; }
     const complete = event.target.closest('[data-complete-lesson]');

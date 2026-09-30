@@ -21,7 +21,7 @@ const contentContext = { window: {}, console };
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'lessons.js'), 'utf8'), contentContext, { filename: 'js/lessons.js' });
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'verb-exercises.js'), 'utf8'), contentContext, { filename: 'js/verb-exercises.js' });
 const lessons = contentContext.window.KlarLessons;
-assert.equal(lessons.length, 11);
+assert.equal(lessons.length, 12);
 
 const conjugationLesson = lessons.find((lesson) => lesson.id === 'present-verbs');
 assert.ok(conjugationLesson, 'the verb conjugation lesson must exist');
