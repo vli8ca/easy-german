@@ -15,6 +15,11 @@
     }))
     : [];
 
+  function removeUmlautMarks(value) {
+    const baseLetters = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
+    return value.replace(/[äöüÄÖÜ]/g, (letter) => baseLetters[letter]);
+  }
+
   const secondSentenceItems = [
     ['Onde está o padeiro?', 'Where is the baker?', 'Wo ist der Bäcker?'],
     ['Onde está o professor?', 'Where is the teacher?', 'Wo ist der Lehrer?'],
@@ -86,16 +91,22 @@
     ['Esta é a filha.', 'This is the daughter.', 'Das ist die Tochter.'],
     ['Esta é a irmã.', 'This is the sister.', 'Das ist die Schwester.'],
     ['Este é meu irmão.', 'This is my brother.', 'Das ist mein Bruder.']
-  ].map((sentence, index) => ({
-    id: 'first-sentences-2-' + String(index + 1).padStart(2, '0'),
-    prompt: sentence[0],
-    prompt_en: sentence[1],
-    detail: 'Traduza a frase para o alemão.',
-    detail_en: 'Translate the sentence into German.',
-    placeholder: 'Escreva a frase em alemão…',
-    placeholder_en: 'Write the sentence in German…',
-    answers: [sentence[2]]
-  }));
+  ].map((sentence, index) => {
+    const canonicalAnswer = sentence[2];
+    const answerWithoutUmlauts = removeUmlautMarks(canonicalAnswer);
+    return {
+      id: 'first-sentences-2-' + String(index + 1).padStart(2, '0'),
+      prompt: sentence[0],
+      prompt_en: sentence[1],
+      detail: 'Traduza a frase para o alemão.',
+      detail_en: 'Translate the sentence into German.',
+      placeholder: 'Escreva a frase em alemão…',
+      placeholder_en: 'Write the sentence in German…',
+      answers: answerWithoutUmlauts === canonicalAnswer
+        ? [canonicalAnswer]
+        : [canonicalAnswer, answerWithoutUmlauts]
+    };
+  });
 
   const numberItems = [
     { id: 'number-1', prompt: '1', prompt_en: '1', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['eins'] },

@@ -302,6 +302,37 @@ const scenarios = [
       Array.from(mode.items, (item) => item.id)
     );
   }],
+  ['aceita formas sem trema apenas nas frases iniciais 2 e mantém a forma padrão primeiro', () => {
+    const { exercises, verbPractice } = getModules();
+    const page = verbPractice.pages['first-sentences-2'];
+    const sentenceMode = page.modes.sentences;
+    const randomMode = page.modes.random;
+    const umlautToBase = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
+    const withoutUmlauts = (answer) => answer.replace(/[äöüÄÖÜ]/g, (letter) => umlautToBase[letter]);
+
+    assert.equal(sentenceMode.items.length, 70);
+    assert.deepEqual(
+      Array.from(randomMode.items, (item) => item.id),
+      Array.from(sentenceMode.items, (item) => item.id),
+      'a ordem aleatória deve reutilizar as frases com as mesmas formas aceitas'
+    );
+
+    let umlautItems = 0;
+    sentenceMode.items.forEach((item) => {
+      const canonical = item.answers[0];
+      const asciiVariant = withoutUmlauts(canonical);
+      const expectedAnswers = asciiVariant === canonical ? [canonical] : [canonical, asciiVariant];
+
+      assert.deepEqual(Array.from(item.answers), expectedAnswers, item.id + ' deve manter o padrão e aceitar apenas omissão de trema');
+      if (asciiVariant !== canonical) {
+        umlautItems += 1;
+        assert.equal(exercises.isCorrect(asciiVariant, item), true, item.id + ' deve aceitar a resposta sem trema');
+        assert.equal(item.answers[0], canonical, 'a forma padrão deve continuar primeiro para aparecer no feedback');
+      }
+    });
+    assert.ok(umlautItems > 0, 'o exercício precisa conter frases com trema para validar a variante');
+    assert.equal(exercises.isCorrect('schon', { answers: ['schön'] }), false, 'a tolerância não deve alterar os demais exercícios');
+  }],
   ['preserva diacríticos que podem mudar o significado e permite variantes explícitas', () => {
     const { exercises } = getModules();
     const pairs = [
