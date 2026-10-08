@@ -397,6 +397,23 @@ const scenarios = [
     assert.equal(exercises.matchesGermanAnswer('fällen', ['fallen']), false, 'a tolerância não pode acrescentar trema à resposta');
     assert.equal(exercises.matchesGermanAnswer('schoen', ['schön', 'schoen']), true, 'variantes explicitamente cadastradas continuam aceitas');
   }],
+  ['ignora pontuação na comparação e usa vírgulas nas frases iniciais 3', () => {
+    const { exercises, verbPractice } = getModules();
+    const typedAnswer = 'Lisa und Anna sind sportlich sie joggen oft im park';
+    const canonicalAnswer = 'Lisa und Anna sind sportlich, sie joggen oft im Park.';
+
+    assert.equal(exercises.matchesGermanAnswer(typedAnswer, [canonicalAnswer]), true, 'a resposta do usuário não deve precisar repetir a vírgula');
+    assert.equal(exercises.matchesGermanAnswer('Lisa und Anna sind sportlich; sie joggen oft im Park', [canonicalAnswer]), true, 'ponto e vírgula e vírgula não devem mudar a validação');
+    assert.equal(exercises.matchesGermanAnswer('schon', ['schön,']), false, 'ignorar pontuação não pode fundir schon e schön');
+    assert.equal(exercises.matchesGermanAnswer('Strasse', ['Straße;']), false, 'ignorar pontuação não pode fundir ß e ss');
+
+    const page = Object.values(verbPractice.pages).find((candidate) => candidate.modes && candidate.modes.sentences && candidate.modes.sentences.label === 'Frases iniciais 3');
+    assert.ok(page, 'a seção Frases iniciais 3 deve continuar registrada');
+    page.modes.sentences.items.forEach((item) => {
+      const sentenceText = [item.prompt, item.prompt_en].concat(item.answers || []).join(' ');
+      assert.doesNotMatch(sentenceText, /;/, item.id + ' não deve usar ponto e vírgula nas frases');
+    });
+  }],
   ['expõe o contrato estático da UI one-at-a-time', () => {
     const appSource = readSource('js/app.js');
     for (const marker of ['data-verb-answer', 'data-check-verb', 'data-next-verb', 'data-retry-verb', 'data-verb-option', 'data-verb-option-id', 'data-verb-mixed-practice', 'role="radiogroup"', 'renderMixedPractice', 'checkChoicePractice', 'checkMixedPractice']) {

@@ -48,6 +48,8 @@
    */
   function normalizeGermanAnswer(value) {
     return normalize(value)
+      .replace(/\p{P}/gu, ' ')
+      .replace(/\s+/g, ' ')
       .trim()
       .normalize('NFC');
   }
