@@ -277,7 +277,7 @@ const scenarios = [
   }],
   ['oferece frases iniciais como primeiro exercício unitário', () => {
     const { verbPractice } = getModules();
-    assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'first-sentences-2', 'sein', 'haben', 'numbers', 'w-fragen']);
+    assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'first-sentences-2', 'first-sentences-3', 'sein', 'haben', 'numbers', 'w-fragen']);
     const page = verbPractice.pages['first-sentences'];
     assertNonEmpty(page.title, 'first-sentences.title');
     assertNonEmpty(page.title_en, 'first-sentences.title_en');

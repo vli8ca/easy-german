@@ -72,7 +72,7 @@ lessons.forEach((lesson) => {
 });
 
 const verbPractice = contentContext.window.KlarVerbPractice;
-assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'first-sentences-2', 'sein', 'haben', 'numbers', 'w-fragen']);
+assert.deepEqual(Object.keys(verbPractice.pages), ['first-sentences', 'first-sentences-2', 'first-sentences-3', 'sein', 'haben', 'numbers', 'w-fragen']);
 Object.values(verbPractice.pages).forEach((page) => {
   const pageLabel = `verb:${page.id}`;
   ['title', 'subtitle', 'meaning', 'heroTitle', 'heroAccent', 'heroCopy', 'perfectMessage'].forEach((field) => requireEnglish(page, field, pageLabel));
