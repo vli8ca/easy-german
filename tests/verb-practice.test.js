@@ -366,7 +366,7 @@ const scenarios = [
     assert.equal(exercises.hasOmittedUmlaut('schön', 'schon'), false, 'o feedback não deve tratar trema acrescentado como omissão');
     const appSource = readSource('js/app.js');
     assert.equal((appSource.match(/exercises\.matchesGermanAnswer\(response, item\.answers\)/g) || []).length, 3, 'frases, treino misto e lote de verbos devem usar a mesma validação');
-    assert.ok(appSource.includes('exercises.hasOmittedUmlaut(response, standardAnswer)'), 'o feedback das aulas deve mostrar a grafia padrão quando o trema foi omitido');
+    assert.ok(appSource.includes('exercises.hasOmittedDiacritic(response, standardAnswer)'), 'o feedback das aulas deve mostrar a grafia padrão quando um diacrítico foi omitido');
     assert.ok(appSource.includes('exercise.umlautChangesMeaning'), 'a interface deve explicar quando o trema distingue palavras');
     assert.ok(appSource.includes('exercise.correctKeyboardVariant'), 'a interface deve ter uma mensagem com a resposta padrão');
   }],
@@ -413,6 +413,33 @@ const scenarios = [
       const sentenceText = [item.prompt, item.prompt_en].concat(item.answers || []).join(' ');
       assert.doesNotMatch(sentenceText, /;/, item.id + ' não deve usar ponto e vírgula nas frases');
     });
+  }],
+  ['aceita omitir acentos sem esconder a grafia correta', () => {
+    const { exercises, verbPractice } = getModules();
+    const page = Object.values(verbPractice.pages).find((candidate) => candidate.modes && candidate.modes.sentences && candidate.modes.sentences.label === 'Frases iniciais 3');
+    const item = page.modes.sentences.items.find((candidate) => candidate.id === 'first-sentences-3-03');
+    const canonical = item.answers[0];
+    const response = canonical.replace('Café', 'cafe');
+
+    assert.equal(exercises.matchesGermanAnswer(response, [canonical]), true, 'cafe deve ser aceito para Café');
+    assert.equal(exercises.isCorrect(response, { type: 'translate', answer: canonical, answers: [canonical] }), true, 'a validação da frase deve aceitar a omissão do acento');
+    assert.equal(exercises.answerLabel(item), canonical, 'a forma correta exibida deve manter o acento');
+    const cafeAnswers = new Map();
+    Object.values(verbPractice.pages).forEach((candidate) => {
+      Object.values(candidate.modes || {}).forEach((mode) => (mode.items || []).forEach((exercise) => {
+        (exercise.answers || []).forEach((answer) => {
+          if (/Café/.test(answer)) cafeAnswers.set(exercise.id + ':' + answer, answer);
+        });
+      }));
+    });
+    assert.ok(cafeAnswers.size >= 11, 'a auditoria deve encontrar Café em Frases iniciais 2 e 3');
+    cafeAnswers.forEach((answer) => assert.equal(exercises.matchesGermanAnswer(answer.replace(/Café/g, 'Cafe'), [answer]), true, 'a omissão do acento deve funcionar em todas as frases com Café'));
+    assert.equal(exercises.matchesGermanAnswer('schon', ['schön']), false, 'a omissão do trema ainda deve ser recusada quando muda o significado');
+    assert.equal(exercises.matchesGermanAnswer('wurde', ['würde']), false, 'würde e wurde têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('fallen', ['fällen']), false, 'fallen e fällen têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('Strasse', ['Straße']), false, 'ß e ss continuam distintos');
+    assert.equal(exercises.matchesGermanAnswer('Cafe', ['Café']), true, 'a omissão do acento deve continuar aceita em qualquer posição da frase');
+    assert.equal(exercises.matchesGermanAnswer('Café', ['Cafe']), false, 'acrescentar um acento à resposta não deve ser tratado como omissão');
   }],
   ['expõe o contrato estático da UI one-at-a-time', () => {
     const appSource = readSource('js/app.js');

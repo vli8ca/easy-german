@@ -1222,10 +1222,10 @@
     symbol.innerHTML = correct ? icon('circle-check', 'feedback-icon') : icon('circle-x', 'feedback-icon');
     const standardAnswer = exercises.answerLabel(exercise);
     const isTextAnswer = exercise.type === 'fill' || exercise.type === 'translate';
-    const omittedUmlaut = correct && isTextAnswer && typeof response === 'string' && exercises.hasOmittedUmlaut(response, standardAnswer);
+    const omittedDiacritic = correct && isTextAnswer && typeof response === 'string' && exercises.hasOmittedDiacritic(response, standardAnswer);
     const ambiguousUmlautOmission = !correct && isTextAnswer && typeof response === 'string' && (exercise.answers || [standardAnswer]).some((answer) => exercises.hasAmbiguousUmlautOmission(response, answer));
     text.textContent = correct
-      ? omittedUmlaut
+      ? omittedDiacritic
         ? tr('exercise.correctKeyboardVariant', { answer: standardAnswer, explanation: localized(exercise).explanation })
         : tr('exercise.correct', { explanation: localized(exercise).explanation })
       : ambiguousUmlautOmission

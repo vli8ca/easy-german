@@ -41,7 +41,7 @@
 
   /**
    * Normalizes an answer without merging German letters that can change meaning.
-   * Typed answer comparison handles omitted umlauts separately and directionally.
+   * Typed answer comparison handles omitted diacritics directionally and guards ambiguous German words.
    *
    * @param {*} value The answer to normalize.
    * @returns {string} A comparable normalized answer.
@@ -54,13 +54,56 @@
       .normalize('NFC');
   }
 
+  function hasOmittedDiacritic(response, answer) {
+    const actual = Array.from(normalizeGermanAnswer(response).normalize('NFD'));
+    const expected = Array.from(normalizeGermanAnswer(answer).normalize('NFD'));
+    let actualIndex = 0;
+    let expectedIndex = 0;
+    let omitted = false;
+
+    while (expectedIndex < expected.length) {
+      if (actualIndex >= actual.length) return false;
+      const actualBase = actual[actualIndex++];
+      const expectedBase = expected[expectedIndex++];
+      if (actualBase !== expectedBase || /\p{M}/u.test(actualBase) || /\p{M}/u.test(expectedBase)) return false;
+
+      const actualMarks = [];
+      const expectedMarks = [];
+      while (actualIndex < actual.length && /\p{M}/u.test(actual[actualIndex])) actualMarks.push(actual[actualIndex++]);
+      while (expectedIndex < expected.length && /\p{M}/u.test(expected[expectedIndex])) expectedMarks.push(expected[expectedIndex++]);
+
+      if (actualMarks.length > expectedMarks.length) return false;
+      if (actualMarks.some((mark, index) => mark !== expectedMarks[index])) return false;
+      if (actualMarks.length < expectedMarks.length) omitted = true;
+    }
+
+    return omitted && actualIndex === actual.length;
+  }
+
   const umlautBaseLetters = { ä: 'a', ö: 'o', ü: 'u' };
   // These omissions create different standard German words, so keep their meaning distinct.
   const ambiguousUmlautSpellings = {
     schön: 'schon',
     möchte: 'mochte',
     möchtest: 'mochtest',
-    möchten: 'mochten'
+    möchten: 'mochten',
+    würde: 'wurde',
+    würdest: 'wurdest',
+    würden: 'wurden',
+    würdet: 'wurdet',
+    wäre: 'ware',
+    wären: 'waren',
+    fällen: 'fallen',
+    fällt: 'fallt',
+    hält: 'halt',
+    lässt: 'lasst',
+    fährt: 'fahrt',
+    trägt: 'tragt',
+    schläft: 'schlaft',
+    läuft: 'lauft',
+    gräbt: 'grabt',
+    sägt: 'sagt',
+    schwül: 'schwul'
   };
 
   function hasOmittedUmlaut(response, answer) {
@@ -94,7 +137,7 @@
     const actual = normalizeGermanAnswer(response);
     return accepted.some((answer) => (
       actual === normalizeGermanAnswer(answer) || (
-        hasOmittedUmlaut(response, answer) && !hasAmbiguousUmlautOmission(response, answer)
+        hasOmittedDiacritic(response, answer) && !hasAmbiguousUmlautOmission(response, answer)
       )
     ));
   }
@@ -176,6 +219,7 @@
     normalize,
     normalizeGermanAnswer,
     matchesGermanAnswer,
+    hasOmittedDiacritic,
     hasOmittedUmlaut,
     hasAmbiguousUmlautOmission,
     renderExercise,
