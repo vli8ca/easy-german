@@ -80,7 +80,7 @@ The verb area begins with three regular verbs, their present-tense forms, and ex
 - Number-writing drills from 1 to 10, with ordered and randomized modes
 - One-at-a-time interaction with streak feedback for both verb practice modes
 - 50 beginner-friendly sentences for each verb
-- German answers with keyboard-friendly support for umlauts and `ß`
+- Typed German answers accept omitted umlauts (`ä/ö/ü` as `a/o/u`) when that does not create a different German word, and show the standard spelling; `ß` and `ss` are not automatically equated
 
 ## Audio
 

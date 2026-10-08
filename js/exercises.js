@@ -41,7 +41,7 @@
 
   /**
    * Normalizes an answer without merging German letters that can change meaning.
-   * Alternative keyboard spellings must be listed explicitly in exercise.answers.
+   * Typed answer comparison handles omitted umlauts separately and directionally.
    *
    * @param {*} value The answer to normalize.
    * @returns {string} A comparable normalized answer.
@@ -50,6 +50,51 @@
     return normalize(value)
       .trim()
       .normalize('NFC');
+  }
+
+  const umlautBaseLetters = { ä: 'a', ö: 'o', ü: 'u' };
+  // These omissions create different standard German words, so keep their meaning distinct.
+  const ambiguousUmlautSpellings = {
+    schön: 'schon',
+    möchte: 'mochte',
+    möchtest: 'mochtest',
+    möchten: 'mochten'
+  };
+
+  function hasOmittedUmlaut(response, answer) {
+    const normalizedActual = normalizeGermanAnswer(response);
+    const normalizedExpected = normalizeGermanAnswer(answer);
+    const actual = Array.from(normalizedActual);
+    const expected = Array.from(normalizedExpected);
+    if (actual.length !== expected.length) return false;
+
+    let omitted = false;
+    const matches = expected.every((letter, index) => {
+      if (actual[index] === letter) return true;
+      if (umlautBaseLetters[letter] === actual[index]) {
+        omitted = true;
+        return true;
+      }
+      return false;
+    });
+    return matches && omitted;
+  }
+
+  function hasAmbiguousUmlautOmission(response, answer) {
+    if (!hasOmittedUmlaut(response, answer)) return false;
+    const actualWords = normalizeGermanAnswer(response).match(/[a-zäöüß]+/g) || [];
+    const expectedWords = normalizeGermanAnswer(answer).match(/[a-zäöüß]+/g) || [];
+    return actualWords.some((word, index) => ambiguousUmlautSpellings[expectedWords[index]] === word);
+  }
+
+  function matchesGermanAnswer(response, acceptedAnswers) {
+    const accepted = Array.isArray(acceptedAnswers) ? acceptedAnswers : [acceptedAnswers];
+    const actual = normalizeGermanAnswer(response);
+    return accepted.some((answer) => (
+      actual === normalizeGermanAnswer(answer) || (
+        hasOmittedUmlaut(response, answer) && !hasAmbiguousUmlautOmission(response, answer)
+      )
+    ));
   }
 
   function renderOptions(exercise) {
@@ -109,12 +154,18 @@
       return actual.length === expected.length && actual.every((word, index) => word === expected[index]);
     }
     const accepted = exercise.answers || [exercise.answer];
+    if (exercise.type === 'fill' || exercise.type === 'translate') return matchesGermanAnswer(response, accepted);
     return accepted.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
   }
 
   function answerLabel(exercise) {
     if (exercise.type === 'order') return exercise.answer.join(' ');
-    return exercise.answer;
+    return exercise.answer || (exercise.answers && exercise.answers[0]);
+  }
+
+  function resolveEnterAction(state) {
+    if (!state || !state.checked) return 'submit';
+    return state.correct ? 'next' : 'retry';
   }
 
   window.KlarExercises = {
@@ -122,9 +173,13 @@
     typeLabels,
     normalize,
     normalizeGermanAnswer,
+    matchesGermanAnswer,
+    hasOmittedUmlaut,
+    hasAmbiguousUmlautOmission,
     renderExercise,
     readResponse,
     isCorrect,
-    answerLabel
+    answerLabel,
+    resolveEnterAction
   };
 }());

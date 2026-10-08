@@ -15,11 +15,6 @@
     }))
     : [];
 
-  function removeUmlautMarks(value) {
-    const baseLetters = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
-    return value.replace(/[äöüÄÖÜ]/g, (letter) => baseLetters[letter]);
-  }
-
   const secondSentenceItems = [
     ['Onde está o padeiro?', 'Where is the baker?', 'Wo ist der Bäcker?'],
     ['Onde está o professor?', 'Where is the teacher?', 'Wo ist der Lehrer?'],
@@ -93,7 +88,6 @@
     ['Este é meu irmão.', 'This is my brother.', 'Das ist mein Bruder.']
   ].map((sentence, index) => {
     const canonicalAnswer = sentence[2];
-    const answerWithoutUmlauts = removeUmlautMarks(canonicalAnswer);
     return {
       id: 'first-sentences-2-' + String(index + 1).padStart(2, '0'),
       prompt: sentence[0],
@@ -102,9 +96,7 @@
       detail_en: 'Translate the sentence into German.',
       placeholder: 'Escreva a frase em alemão…',
       placeholder_en: 'Write the sentence in German…',
-      answers: answerWithoutUmlauts === canonicalAnswer
-        ? [canonicalAnswer]
-        : [canonicalAnswer, answerWithoutUmlauts]
+      answers: [canonicalAnswer]
     };
   });
 

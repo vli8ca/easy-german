@@ -32,12 +32,28 @@ const { i18n, document, storage } = loadI18n();
 
 assert.equal(i18n.getLanguage(), 'pt');
 assert.equal(i18n.t('nav.overview'), 'Visão geral');
+assert.equal(
+  i18n.t('exercise.correctKeyboardVariant', { answer: 'fünf', explanation: 'Cinco.' }),
+  'Correto! Grafia padrão: fünf. Cinco.'
+);
+assert.equal(
+  i18n.t('exercise.umlautChangesMeaning', { answer: 'schön' }),
+  'Aqui, o trema muda o significado. Forma correta: schön.'
+);
 
 let changes = 0;
 i18n.subscribe(() => { changes += 1; });
 i18n.setLanguage('en');
 assert.equal(i18n.getLanguage(), 'en');
 assert.equal(i18n.t('nav.overview'), 'Overview');
+assert.equal(
+  i18n.t('exercise.correctKeyboardVariant', { answer: 'fünf', explanation: 'Five.' }),
+  'Correct! Standard spelling: fünf. Five.'
+);
+assert.equal(
+  i18n.t('exercise.umlautChangesMeaning', { answer: 'schön' }),
+  'Here, the umlaut changes the meaning. Correct form: schön.'
+);
 assert.equal(document.documentElement.lang, 'en');
 assert.equal(storage.getItem(i18n.STORAGE_KEY), 'en');
 assert.equal(changes, 1);

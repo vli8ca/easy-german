@@ -553,11 +553,12 @@
     const response = String(state.response || '');
     const status = session.status || 'idle';
     const disabled = status === 'idle' ? '' : ' disabled';
+    const ambiguousUmlautOmission = status === 'wrong' && exercises.hasAmbiguousUmlautOmission(response, content.answers[0]);
     let feedback = '';
     if (status === 'correct') {
       feedback = '<div class="verb-sentence-feedback is-correct" role="status" aria-live="polite">' + icon('circle-check', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.correctNotice', { answer: content.answers[0] })) + '</strong><p>' + esc(content.explanation) + '</p></div></div>';
     } else if (status === 'wrong') {
-      feedback = '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite">' + icon('circle-x', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><p>' + esc(tr('exercise.tryAgain')) + '</p></div></div>';
+      feedback = '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite">' + icon('circle-x', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><p>' + esc(ambiguousUmlautOmission ? tr('exercise.umlautChangesMeaning', { answer: content.answers[0] }) : tr('exercise.tryAgain')) + '</p></div></div>';
     }
     let action = '<button type="button" class="button button-primary" data-sequential-check>' + icon('check', 'button-icon') + esc(tr('verb.checkSentence')) + '</button>';
     if (status === 'correct') {
@@ -772,13 +773,15 @@
     const response = session.answers[item.id] || '';
     const hasResult = session.checked && Object.prototype.hasOwnProperty.call(session.results, item.id);
     const correct = hasResult && session.results[item.id];
+    const ambiguousUmlautOmission = hasResult && !correct && exercises.hasAmbiguousUmlautOmission(response, item.answers[0]);
     const statusClass = hasResult ? (correct ? ' is-correct' : response.trim() ? ' is-wrong' : ' is-empty') : '';
     const statusText = !hasResult ? '' : correct ? tr('verb.status.correct') : response.trim() ? tr('verb.status.wrong') : tr('verb.status.empty');
     const correctAnswer = hasResult && !correct ? '<span class="verb-correct-answer">' + esc(tr('verb.correctAnswer', { answer: item.answers.join(' / ') })) + '</span>' : '';
+    const umlautHint = ambiguousUmlautOmission ? '<span class="verb-correct-answer">' + esc(tr('exercise.umlautChangesMeaning', { answer: item.answers[0] })) + '</span>' : '';
     return '<div class="verb-prompt-row' + statusClass + '" data-verb-row data-verb-id="' + esc(item.id) + '">' +
       '<div class="verb-prompt-copy"><span class="verb-prompt-number">' + String(index + 1).padStart(2, '0') + '</span><div><strong>' + esc(content.prompt) + '</strong><span>' + esc(content.detail) + '</span></div></div>' +
       '<div class="verb-input-wrap"><span class="verb-input-label">' + esc(tr('verb.inGerman')) + '</span><input class="verb-input" type="text" autocomplete="off" spellcheck="false" data-verb-input data-verb-id="' + esc(item.id) + '" value="' + esc(response) + '" placeholder="' + esc(content.placeholder) + '" aria-label="' + esc(tr('exercise.answerFor', { prompt: content.prompt })) + '" /></div>' +
-      '<span class="verb-row-feedback" data-verb-feedback>' + (statusText ? (correct ? icon('circle-check', 'verb-feedback-symbol') : icon('circle-x', 'verb-feedback-symbol')) + statusText + correctAnswer : '') + '</span>' +
+      '<span class="verb-row-feedback" data-verb-feedback>' + (statusText ? (correct ? icon('circle-check', 'verb-feedback-symbol') : icon('circle-x', 'verb-feedback-symbol')) + statusText + correctAnswer + umlautHint : '') + '</span>' +
       '</div>';
   }
 
@@ -789,7 +792,10 @@
       return '<div class="verb-sentence-feedback is-correct" role="status" aria-live="polite">' + icon('circle-check', 'verb-feedback-symbol') + '<div><strong>' + esc(tr('verb.correctNotice', { answer: canonical })) + '</strong></div></div>';
     }
     if (status === 'wrong') {
-      return '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite"><div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><div class="verb-answer-comparison"><div><span>' + esc(tr('verb.youWrote')) + '</span><strong>' + esc(response) + '</strong></div><div><span>' + esc(tr('verb.correctAnswerLabel')) + '</span><strong>' + esc(canonical) + '</strong></div></div></div></div>';
+      const umlautHint = exercises.hasAmbiguousUmlautOmission(response, canonical)
+        ? '<p>' + esc(tr('exercise.umlautChangesMeaning', { answer: canonical })) + '</p>'
+        : '';
+      return '<div class="verb-sentence-feedback is-wrong" role="status" aria-live="polite"><div><strong>' + esc(tr('verb.wrongNotice')) + '</strong><div class="verb-answer-comparison"><div><span>' + esc(tr('verb.youWrote')) + '</span><strong>' + esc(response) + '</strong></div><div><span>' + esc(tr('verb.correctAnswerLabel')) + '</span><strong>' + esc(canonical) + '</strong></div></div>' + umlautHint + '</div></div>';
     }
     return '';
   }
@@ -802,6 +808,19 @@
     }
     const option = document.querySelector('[data-verb-option]:not(:disabled)');
     if (option) option.focus();
+  }
+
+  function focusVerbFeedbackAction(status) {
+    const action = status === 'correct' ? document.querySelector('[data-next-verb]') : document.querySelector('[data-retry-verb="current"]');
+    if (action) action.focus();
+    else if (status === 'correct') focusVerbCompletion();
+  }
+
+  function focusVerbCompletion() {
+    const completion = document.querySelector('[data-verb-sentence-practice].is-complete, [data-verb-choice-practice].is-complete, [data-verb-mixed-practice].is-complete');
+    if (!completion) return;
+    completion.tabIndex = -1;
+    completion.focus();
   }
 
   function renderSentenceStreak(session) {
@@ -1092,6 +1111,18 @@
     if (input) input.focus();
   }
 
+  function focusSequentialFeedbackAction(status) {
+    const action = document.querySelector(status === 'correct' ? '[data-sequential-next]' : '[data-sequential-retry]');
+    if (action) action.focus();
+  }
+
+  function focusSequentialCompletion() {
+    const completion = document.querySelector('[data-sequential-complete]');
+    if (!completion) return;
+    completion.tabIndex = -1;
+    completion.focus();
+  }
+
   function refreshSequentialLesson(lesson) {
     renderSidebar(getProgress());
     renderLesson(lesson);
@@ -1121,6 +1152,7 @@
     session.status = correct ? 'correct' : 'wrong';
     storage.recordAnswer(lesson.id, item.id, correct);
     refreshSequentialLesson(lesson);
+    focusSequentialFeedbackAction(session.status);
   }
 
   function handleSequentialNext() {
@@ -1131,6 +1163,7 @@
     if (session.currentIndex >= lesson.exercises.length - 1) {
       session.completed = true;
       completeLesson(lesson.id);
+      focusSequentialCompletion();
       return;
     }
     session.currentIndex += 1;
@@ -1186,9 +1219,68 @@
     const text = card.querySelector('[data-feedback-text]');
     feedback.className = 'feedback is-visible ' + (correct ? 'is-correct' : 'is-wrong');
     symbol.innerHTML = correct ? icon('circle-check', 'feedback-icon') : icon('circle-x', 'feedback-icon');
-    text.textContent = correct ? tr('exercise.correct', { explanation: localized(exercise).explanation }) : tr('exercise.tryAgain');
+    const standardAnswer = exercises.answerLabel(exercise);
+    const isTextAnswer = exercise.type === 'fill' || exercise.type === 'translate';
+    const omittedUmlaut = correct && isTextAnswer && typeof response === 'string' && exercises.hasOmittedUmlaut(response, standardAnswer);
+    const ambiguousUmlautOmission = !correct && isTextAnswer && typeof response === 'string' && (exercise.answers || [standardAnswer]).some((answer) => exercises.hasAmbiguousUmlautOmission(response, answer));
+    text.textContent = correct
+      ? omittedUmlaut
+        ? tr('exercise.correctKeyboardVariant', { answer: standardAnswer, explanation: localized(exercise).explanation })
+        : tr('exercise.correct', { explanation: localized(exercise).explanation })
+      : ambiguousUmlautOmission
+        ? tr('exercise.umlautChangesMeaning', { answer: standardAnswer })
+        : tr('exercise.tryAgain');
     icons.refresh(feedback);
     updateResultAfterAnswer();
+  }
+
+  function resetExerciseFeedback(card) {
+    const state = sessionForCard(card).state;
+    state.checked = false;
+    state.correct = false;
+    card.classList.remove('is-correct', 'is-wrong');
+    const feedback = card.querySelector('[data-feedback]');
+    if (feedback) feedback.className = 'feedback';
+  }
+
+  function focusExerciseResponse(card) {
+    const input = card.querySelector('.exercise-input');
+    if (input) {
+      input.focus();
+      input.select();
+      return;
+    }
+    const option = card.querySelector('[data-option]:not(.is-selected)') || card.querySelector('[data-option]');
+    if (option) {
+      option.focus();
+      return;
+    }
+    const word = card.querySelector('.word-bank [data-order-word]') || card.querySelector('[data-order-answer] [data-order-word]');
+    const target = word || card.querySelector('[data-check-exercise]');
+    if (target) target.focus();
+  }
+
+  function focusNextExerciseCard(card) {
+    const cards = Array.from(card.parentElement.querySelectorAll('[data-exercise-card]'));
+    const currentIndex = cards.indexOf(card);
+    const nextCard = cards.slice(currentIndex + 1).find((candidate) => {
+      const state = sessionForCard(candidate).state;
+      return exercises.resolveEnterAction({ checked: state.checked, correct: state.correct }) !== 'next';
+    });
+    if (!nextCard) return;
+    const target = nextCard.querySelector('.exercise-input, [data-option], [data-order-word], [data-check-exercise]');
+    if (target) target.focus();
+  }
+
+  function handleExerciseEnter(card) {
+    const state = sessionForCard(card).state;
+    const action = exercises.resolveEnterAction({ checked: state.checked, correct: state.correct });
+    if (action === 'submit') handleCheck(card);
+    else if (action === 'retry') {
+      resetExerciseFeedback(card);
+      focusExerciseResponse(card);
+    }
+    else focusNextExerciseCard(card);
   }
 
   function updateResultAfterAnswer() {
@@ -1225,7 +1317,7 @@
     if (opening) reveal.textContent = tr('exercise.answerReveal', { answer: exercises.answerLabel(exercise) });
   }
 
-  function handleOrderWord(button) {
+  function handleOrderWord(button, focusNext) {
     const card = button.closest('[data-exercise-card]');
     const bank = card.querySelector('.word-bank');
     const answer = card.querySelector('[data-order-answer]');
@@ -1238,6 +1330,11 @@
     state.checked = false;
     card.classList.remove('is-correct', 'is-wrong');
     card.querySelector('[data-feedback]').className = 'feedback';
+    if (focusNext) {
+      const nextWord = bank.querySelector('[data-order-word]');
+      const target = nextWord || card.querySelector('[data-check-exercise]');
+      if (target) target.focus();
+    }
   }
 
   function resetOrder(card) {
@@ -1424,7 +1521,7 @@
       return;
     }
     const orderWord = event.target.closest('[data-order-word]');
-    if (orderWord) { handleOrderWord(orderWord); return; }
+    if (orderWord) { handleOrderWord(orderWord, event.detail === 0); return; }
     const orderReset = event.target.closest('[data-reset-order]');
     if (orderReset) { resetOrder(orderReset.closest('[data-exercise-card]')); return; }
     const sequentialCheck = event.target.closest('[data-sequential-check]');
@@ -1500,8 +1597,73 @@
     setSidebarState(!isMobile);
   });
 
+  function handleEnterKeydown(event) {
+    const isEnter = event.key === 'Enter';
+    if (!isEnter || event.isComposing || event.keyCode === 229) return;
+    const target = event.target;
+    if (!target || target.isContentEditable || target.closest('textarea')) return;
+
+    const sequentialInput = target.closest('[data-sequential-input]');
+    if (sequentialInput) {
+      event.preventDefault();
+      const lesson = getLesson(ui.activeLessonId);
+      const session = getSequentialSession(lesson);
+      const action = exercises.resolveEnterAction({ checked: session.status !== 'idle', correct: session.status === 'correct' });
+      if (action === 'submit') handleSequentialCheck();
+      else if (action === 'retry') handleSequentialRetry();
+      else handleSequentialNext();
+      return;
+    }
+
+    const verbInput = target.closest('[data-verb-input], .verb-input');
+    if (verbInput) {
+      event.preventDefault();
+      const mode = getVerbMode();
+      const session = getVerbSession(mode.id);
+      if (isStreakMode(mode)) {
+        const action = exercises.resolveEnterAction({ checked: session.status !== 'idle', correct: session.status === 'correct' });
+        if (action === 'submit') checkVerbPractice();
+        else if (action === 'retry') retryVerbSentence();
+        else nextVerbSentence();
+      } else {
+        const action = exercises.resolveEnterAction({
+          checked: session.checked,
+          correct: session.checked && mode.items.every((item) => session.results[item.id])
+        });
+        if (action === 'submit') checkVerbPractice();
+        else if (action === 'retry') retryBatchVerbPractice();
+      }
+      return;
+    }
+
+    const verbOption = target.closest('[data-verb-option]');
+    if (verbOption) {
+      const mode = getVerbMode();
+      const session = getVerbSession(mode.id);
+      if (session.status === 'idle' && !verbOption.classList.contains('is-selected')) return;
+      event.preventDefault();
+      const action = exercises.resolveEnterAction({ checked: session.status !== 'idle', correct: session.status === 'correct' });
+      if (action === 'submit') checkVerbPractice();
+      else if (action === 'retry') retryVerbSentence();
+      else nextVerbSentence();
+      return;
+    }
+
+    const card = target.closest('[data-exercise-card]');
+    if (!card) return;
+    const state = sessionForCard(card).state;
+    const orderWord = target.closest('[data-order-word]');
+    if (orderWord && !state.checked) return;
+    const option = target.closest('[data-option]');
+    if (option && !state.checked && !option.classList.contains('is-selected')) return;
+    if (!target.matches('.exercise-input') && !target.closest('[data-check-exercise]') && !option && !orderWord) return;
+    event.preventDefault();
+    handleExerciseEnter(card);
+  }
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && sidebarIsOpen) closeSidebar();
+    handleEnterKeydown(event);
   });
 
   function nextVerbSentence() {
@@ -1549,11 +1711,11 @@
       showToast(tr('toast.answerRequired'));
       return;
     }
-    const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
-    const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
+    const correct = exercises.matchesGermanAnswer(response, item.answers);
     session.answers[item.id] = response;
     recordStreakResult(session, item, correct);
     renderActiveVerbPractice();
+    focusVerbFeedbackAction(session.status);
   }
 
   function recordStreakResult(session, item, correct) {
@@ -1582,6 +1744,7 @@
     const correct = selectedOptionId === item.correctOptionId;
     recordStreakResult(session, item, correct);
     renderExercises();
+    focusVerbFeedbackAction(session.status);
   }
 
   function checkMixedPractice() {
@@ -1602,12 +1765,12 @@
         showToast(tr('toast.answerRequired'));
         return;
       }
-      const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
-      const correct = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
+      const correct = exercises.matchesGermanAnswer(response, item.answers);
       session.answers[item.id] = response;
       recordStreakResult(session, item, correct);
     }
     renderExercises();
+    focusVerbFeedbackAction(session.status);
   }
 
   function checkVerbPractice() {
@@ -1625,6 +1788,7 @@
       return;
     }
     const session = getVerbSession(mode.id);
+    if (session.checked) return;
     const inputs = Array.from(document.querySelectorAll('.verb-input'));
     const hasAnswer = inputs.some((input) => input.value.trim());
     if (!hasAnswer) {
@@ -1635,15 +1799,34 @@
       const input = document.querySelector('.verb-input[data-verb-id="' + item.id + '"]');
       const response = input ? input.value : '';
       session.answers[item.id] = response;
-      const normalizeGermanAnswer = exercises.normalizeGermanAnswer || exercises.normalize;
-      session.results[item.id] = item.answers.some((answer) => normalizeGermanAnswer(response) === normalizeGermanAnswer(answer));
+      session.results[item.id] = exercises.matchesGermanAnswer(response, item.answers);
     });
     session.checked = true;
+    const firstIncorrect = mode.items.find((item) => !session.results[item.id]);
     const scrollY = window.scrollY;
     renderExercises();
     window.scrollTo({ top: scrollY, behavior: 'auto' });
+    const focusTarget = firstIncorrect
+      ? document.querySelector('.verb-input[data-verb-id="' + firstIncorrect.id + '"]')
+      : document.querySelector('[data-check-verb]');
+    if (focusTarget) focusTarget.focus();
     const correct = mode.items.filter((item) => session.results[item.id]).length;
     showToast(correct === mode.items.length ? tr('verb.perfect') : tr('verb.checked'), correct === mode.items.length ? 'success' : '');
+  }
+
+  function retryBatchVerbPractice() {
+    const mode = getVerbMode();
+    const session = getVerbSession(mode.id);
+    const firstIncorrect = mode.items.find((item) => !session.results[item.id]);
+    session.checked = false;
+    session.results = {};
+    const scrollY = window.scrollY;
+    renderExercises();
+    window.scrollTo({ top: scrollY, behavior: 'auto' });
+    const focusTarget = firstIncorrect
+      ? document.querySelector('.verb-input[data-verb-id="' + firstIncorrect.id + '"]')
+      : document.querySelector('.verb-input');
+    if (focusTarget) focusTarget.focus();
   }
 
   function resetVerbPractice() {

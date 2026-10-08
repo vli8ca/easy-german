@@ -37,7 +37,9 @@ function loadVerbPracticeModules() {
 
   return {
     exercises: context.window.KlarExercises,
-    verbPractice: context.window.KlarVerbPractice
+    verbPractice: context.window.KlarVerbPractice,
+    lessons: context.window.KlarLessons,
+    exerciseOnly: context.window.KlarExerciseOnly
   };
 }
 
@@ -302,45 +304,77 @@ const scenarios = [
       Array.from(mode.items, (item) => item.id)
     );
   }],
-  ['aceita formas sem trema apenas nas frases iniciais 2 e mantém a forma padrão primeiro', () => {
-    const { exercises, verbPractice } = getModules();
-    const page = verbPractice.pages['first-sentences-2'];
-    const sentenceMode = page.modes.sentences;
-    const randomMode = page.modes.random;
+  ['aceita omissão de trema em todas as respostas digitadas e mantém a forma padrão', () => {
+    const { exercises, verbPractice, lessons, exerciseOnly } = getModules();
     const umlautToBase = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
     const withoutUmlauts = (answer) => answer.replace(/[äöüÄÖÜ]/g, (letter) => umlautToBase[letter]);
-
-    assert.equal(sentenceMode.items.length, 70);
-    assert.deepEqual(
-      Array.from(randomMode.items, (item) => item.id),
-      Array.from(sentenceMode.items, (item) => item.id),
-      'a ordem aleatória deve reutilizar as frases com as mesmas formas aceitas'
+    const omitFirstUmlaut = (answer) => answer.replace(/[äöüÄÖÜ]/, (letter) => umlautToBase[letter]);
+    const ambiguousOmission = (answer, omission) => (
+      (/schön/i.test(answer) && /schon/i.test(omission)) ||
+      (/möchte/i.test(answer) && /mochte/i.test(omission))
     );
+    const textExercises = [];
 
-    let umlautItems = 0;
-    sentenceMode.items.forEach((item) => {
-      const canonical = item.answers[0];
-      const asciiVariant = withoutUmlauts(canonical);
-      const expectedAnswers = asciiVariant === canonical ? [canonical] : [canonical, asciiVariant];
-
-      assert.deepEqual(Array.from(item.answers), expectedAnswers, item.id + ' deve manter o padrão e aceitar apenas omissão de trema');
-      if (asciiVariant !== canonical) {
-        umlautItems += 1;
-        assert.equal(exercises.isCorrect(asciiVariant, item), true, item.id + ' deve aceitar a resposta sem trema');
-        assert.equal(item.answers[0], canonical, 'a forma padrão deve continuar primeiro para aparecer no feedback');
-      }
+    [...lessons, ...exerciseOnly].forEach((lesson) => {
+      (lesson.exercises || []).forEach((exercise) => {
+        if (['fill', 'translate'].includes(exercise.type)) textExercises.push({ label: lesson.id + '/' + exercise.id, exercise });
+      });
     });
-    assert.ok(umlautItems > 0, 'o exercício precisa conter frases com trema para validar a variante');
-    assert.equal(exercises.isCorrect('schon', { answers: ['schön'] }), false, 'a tolerância não deve alterar os demais exercícios');
+    Object.values(verbPractice.pages).forEach((page) => {
+      Object.values(page.modes).forEach((mode) => {
+        mode.items.forEach((item) => {
+          const isTextInput = mode.interaction === 'streak' || mode.interaction === 'form' || (mode.interaction === 'mixed' && item.interaction === 'text');
+          if (isTextInput) textExercises.push({ label: page.id + '/' + mode.id + '/' + item.id, exercise: item });
+        });
+      });
+    });
+
+    let umlautAnswers = 0;
+    let ambiguousAnswers = 0;
+    textExercises.forEach(({ label, exercise }) => {
+      const acceptedAnswers = exercise.answers || [exercise.answer];
+      acceptedAnswers.forEach((canonical) => {
+        if (!/[äöüÄÖÜ]/.test(canonical)) return;
+        umlautAnswers += 1;
+        const completeOmission = withoutUmlauts(canonical);
+        const partialOmission = omitFirstUmlaut(canonical);
+        const shouldAcceptComplete = !ambiguousOmission(canonical, completeOmission);
+        const shouldAcceptPartial = !ambiguousOmission(canonical, partialOmission);
+        if (!shouldAcceptComplete) ambiguousAnswers += 1;
+        assert.equal(exercises.matchesGermanAnswer(completeOmission, [canonical]), shouldAcceptComplete, label + ' deve tratar a omissão conforme a ambiguidade da palavra');
+        assert.equal(exercises.matchesGermanAnswer(partialOmission, [canonical]), shouldAcceptPartial, label + ' deve tratar a omissão parcial conforme a ambiguidade da palavra');
+        if (exercise.type === 'fill' || exercise.type === 'translate') {
+          assert.equal(exercises.isCorrect(completeOmission, exercise), shouldAcceptComplete, label + ' deve aplicar a regra na validação da aula');
+        }
+      });
+      assert.equal(exercises.answerLabel(exercise), exercise.answer || acceptedAnswers[0], label + ' deve mostrar a resposta padrão');
+    });
+
+    assert.ok(textExercises.length > 100, 'a auditoria deve cobrir todas as seções com resposta digitada');
+    assert.ok(umlautAnswers > 0, 'as seções auditadas precisam conter respostas com trema');
+    assert.ok(ambiguousAnswers > 0, 'a auditoria deve encontrar e proteger as palavras em que omitir o trema muda o significado');
+    assert.equal(exercises.isCorrect('funf', { type: 'translate', answer: 'fünf', answers: ['fünf'] }), true);
+    assert.equal(exercises.isCorrect('fünf', { type: 'translate', answer: 'funf', answers: ['funf'] }), false, 'a tolerância deve aceitar omissões, não adicionar trema a outra resposta');
+    assert.equal(exercises.isCorrect('mochte', { type: 'multiple', answer: 'möchte' }), false, 'alternativas continuam exigindo a grafia exata');
+    assert.equal(exercises.matchesGermanAnswer('Mochtest du Tee oder Kaffee?', ['Möchtest du Tee oder Kaffee?']), false, 'möchtest e mochtest têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('mochte', ['möchte']), false, 'möchte e mochte também têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('mochten', ['möchten']), false, 'möchten e mochten também têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('Die Bäckerei ist schon', ['Die Bäckerei ist schön']), false, 'schön e schon têm significados diferentes');
+    assert.equal(exercises.hasOmittedUmlaut('funf', 'fünf'), true, 'o feedback deve identificar a grafia sem trema');
+    assert.equal(exercises.hasOmittedUmlaut('schon', 'schön'), true, 'o helper deve reconhecer que o trema foi omitido');
+    assert.equal(exercises.hasAmbiguousUmlautOmission('schon', 'schön'), true, 'o feedback deve explicar quando a omissão muda o significado');
+    assert.equal(exercises.hasOmittedUmlaut('schön', 'schon'), false, 'o feedback não deve tratar trema acrescentado como omissão');
+    const appSource = readSource('js/app.js');
+    assert.equal((appSource.match(/exercises\.matchesGermanAnswer\(response, item\.answers\)/g) || []).length, 3, 'frases, treino misto e lote de verbos devem usar a mesma validação');
+    assert.ok(appSource.includes('exercises.hasOmittedUmlaut(response, standardAnswer)'), 'o feedback das aulas deve mostrar a grafia padrão quando o trema foi omitido');
+    assert.ok(appSource.includes('exercise.umlautChangesMeaning'), 'a interface deve explicar quando o trema distingue palavras');
+    assert.ok(appSource.includes('exercise.correctKeyboardVariant'), 'a interface deve ter uma mensagem com a resposta padrão');
   }],
-  ['preserva diacríticos que podem mudar o significado e permite variantes explícitas', () => {
+  ['mantém normalização estrita, mas aceita omissão de trema sem alterar ß ou letras simples', () => {
     const { exercises } = getModules();
     const pairs = [
       ['glücklich', 'glucklich'],
-      ['schön', 'schon'],
-      ['für', 'fur'],
-      ['Maße', 'Masse'],
-      ['Straße', 'Strasse']
+      ['für', 'fur']
     ];
 
     for (const [canonical, ascii] of pairs) {
@@ -350,12 +384,18 @@ const scenarios = [
         'a normalização não deve fundir ' + canonical + '/' + ascii
       );
       assert.equal(
-        exercises.isCorrect(ascii, { answers: [canonical] }),
-        false,
-        'a variante precisa estar cadastrada explicitamente para ' + canonical
+        exercises.matchesGermanAnswer(ascii, [canonical]),
+        true,
+        'a resposta sem trema deve ser aceita para ' + canonical
       );
     }
-    assert.equal(exercises.isCorrect('schoen', { answers: ['schön', 'schoen'] }), true, 'a variante explícita deve ser aceita');
+    assert.notEqual(exercises.normalizeGermanAnswer('schön'), exercises.normalizeGermanAnswer('schon'));
+    assert.equal(exercises.matchesGermanAnswer('schoen', ['schön']), false, 'ae/oe/ue não são omissão de trema');
+    assert.equal(exercises.matchesGermanAnswer('schon', ['schön']), false, 'schön e schon têm significados diferentes');
+    assert.equal(exercises.matchesGermanAnswer('Masse', ['Maße']), false, 'ß/ss deve continuar distinto');
+    assert.equal(exercises.matchesGermanAnswer('Strasse', ['Straße']), false, 'ß/ss deve continuar distinto');
+    assert.equal(exercises.matchesGermanAnswer('fällen', ['fallen']), false, 'a tolerância não pode acrescentar trema à resposta');
+    assert.equal(exercises.matchesGermanAnswer('schoen', ['schön', 'schoen']), true, 'variantes explicitamente cadastradas continuam aceitas');
   }],
   ['expõe o contrato estático da UI one-at-a-time', () => {
     const appSource = readSource('js/app.js');
