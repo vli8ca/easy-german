@@ -19,18 +19,18 @@ assert.ok(page, 'a seção Frases iniciais 3 deve existir');
 assert.deepEqual(Object.keys(pages), ['first-sentences', 'first-sentences-2', 'first-sentences-3', 'sein', 'haben', 'numbers', 'w-fragen']);
 assert.equal(page.title, 'Frases iniciais 3');
 assert.equal(page.title_en, 'First sentences 3');
-assert.equal(page.metaThird, '80 frases');
-assert.match(page.perfectMessage, /80/);
-assert.match(page.completedCopy, /80/);
+assert.equal(page.metaThird, '100 frases');
+assert.match(page.perfectMessage, /100/);
+assert.match(page.completedCopy, /100/);
 assert.equal(page.modes.sentences.interaction, 'streak');
 assert.equal(page.modes.sentences.shuffle, false);
 assert.equal(page.modes.random.interaction, 'streak');
 assert.equal(page.modes.random.shuffle, true);
-assert.strictEqual(page.modes.sentences.items, page.modes.random.items, 'os dois modos devem reutilizar as mesmas 80 frases');
+assert.strictEqual(page.modes.sentences.items, page.modes.random.items, 'os dois modos devem reutilizar as mesmas 100 frases');
 
 const items = page.modes.sentences.items;
-assert.equal(items.length, 80, 'a seção deve conter exatamente 80 frases');
-assert.equal(new Set(items.map((item) => item.id)).size, 80, 'as 80 frases devem ter IDs únicos');
+assert.equal(items.length, 100, 'a seção deve conter exatamente 100 frases');
+assert.equal(new Set(items.map((item) => item.id)).size, 100, 'as 100 frases devem ter IDs únicos');
 items.forEach((item, index) => {
   const label = `first-sentences-3.items[${index}]`;
   assert.equal(item.id, `first-sentences-3-${String(index + 1).padStart(2, '0')}`);
