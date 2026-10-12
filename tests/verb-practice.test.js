@@ -414,6 +414,26 @@ const scenarios = [
       assert.doesNotMatch(sentenceText, /;/, item.id + ' não deve usar ponto e vírgula nas frases');
     });
   }],
+  ['aceita omitir trema em Frases iniciais 3 e preserva a grafia padrão', () => {
+    const { exercises, verbPractice } = getModules();
+    const page = Object.values(verbPractice.pages).find((candidate) => candidate.modes && candidate.modes.sentences && candidate.modes.sentences.label === 'Frases iniciais 3');
+    const items = page.modes.sentences.items;
+    const item = items.find((candidate) => candidate.answers.includes('Wir schwimmen oft, der Park ist sehr schön.'));
+    const canonical = item.answers[0];
+    const response = 'wir schwimmen oft, der park ist sehr schon';
+    const umlautToBase = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
+    const withoutUmlauts = (answer) => answer.replace(/[äöüÄÖÜ]/g, (letter) => umlautToBase[letter]);
+
+    assert.equal(canonical, 'Wir schwimmen oft, der Park ist sehr schön.');
+    assert.equal(exercises.matchesGermanAnswer(response, item.answers), true, 'a resposta sem trema deve ser aceita em Frases iniciais 3');
+    assert.equal(exercises.answerLabel(item), canonical, 'a forma correta exibida deve manter o trema');
+    items.forEach((sentence) => {
+      const standardAnswer = sentence.answers[0];
+      if (/[äöüÄÖÜ]/.test(standardAnswer)) {
+        assert.ok(sentence.answers.includes(withoutUmlauts(standardAnswer)), sentence.id + ' deve aceitar a resposta sem trema');
+      }
+    });
+  }],
   ['aceita omitir acentos sem esconder a grafia correta', () => {
     const { exercises, verbPractice } = getModules();
     const page = Object.values(verbPractice.pages).find((candidate) => candidate.modes && candidate.modes.sentences && candidate.modes.sentences.label === 'Frases iniciais 3');

@@ -100,6 +100,7 @@
     };
   });
 
+  const thirdSentenceUmlautBases = { ä: 'a', ö: 'o', ü: 'u', Ä: 'A', Ö: 'O', Ü: 'U' };
   const thirdSentenceItems = [
     ['Eu vou do parque para casa.', 'I go home from the park.', 'Ich gehe aus dem Park nach Hause.'],
     ['Você vai do hotel para casa?', 'Do you go home from the hotel?', 'Gehst du aus dem Hotel nach Hause?'],
@@ -140,7 +141,7 @@
     ['Você faz ioga no parque?', 'Do you do yoga in the park?', 'Machst du Yoga im Park?'],
     ['O táxi está à esquerda?', 'Is the taxi on the left?', 'Ist das Taxi links?'],
     ['O táxi está ali do outro lado, o hotel está aqui.', 'The taxi is over there, and the hotel is here.', 'Das Taxi ist da drüben, das Hotel ist hier.'],
-    ['Não, o táxi não está no hotel, está na estação de trem.', 'No, the taxi is not in the hotel, but it is at the train station.', 'Nein, das Taxi ist nicht im Hotel, es ist am Bahnhof.'],
+    ['Não, o táxi não está no hotel, e sim na estação de trem.', 'No, the taxi is not in the hotel, but it is at the train station.', 'Nein, das Taxi ist nicht im Hotel, sondern am Bahnhof.'],
     ['O banheiro fica no café.', 'The restroom is in the café.', 'Die Toilette ist im Café.'],
     ['Onde está o vendedor?', 'Where is the salesperson?', 'Wo ist der Verkäufer?'],
     ['Onde está a vendedora?', 'Where is the saleswoman?', 'Wo ist die Verkäuferin?'],
@@ -201,16 +202,20 @@
     ['A música está alta, mas Anna está aqui. Vou para casa.', 'The music is loud, but Anna is here. I am going home.', 'Die Musik ist laut, aber Anna ist hier. Ich gehe nach Hause.'],
     ['A música no café está alta, e estamos cansados(as).', 'The music in the café is loud, and we are tired.', 'Die Musik im Café ist laut, und wir sind müde.'],
     ['A mulher está aqui, e o celular está no táxi.', 'The woman is here, and the phone is in the taxi.', 'Die Frau ist hier, und das Handy ist im Taxi.']
-  ].map((sentence, index) => ({
-    id: 'first-sentences-3-' + String(index + 1).padStart(2, '0'),
-    prompt: sentence[0],
-    prompt_en: sentence[1],
-    detail: 'Traduza a frase para o alemão.',
-    detail_en: 'Translate the sentence into German.',
-    placeholder: 'Escreva a frase em alemão…',
-    placeholder_en: 'Write the sentence in German…',
-    answers: [sentence[2]]
-  }));
+  ].map((sentence, index) => {
+    const canonicalAnswer = sentence[2];
+    const answerWithoutUmlauts = canonicalAnswer.replace(/[äöüÄÖÜ]/g, (letter) => thirdSentenceUmlautBases[letter]);
+    return {
+      id: 'first-sentences-3-' + String(index + 1).padStart(2, '0'),
+      prompt: sentence[0],
+      prompt_en: sentence[1],
+      detail: 'Traduza a frase para o alemão.',
+      detail_en: 'Translate the sentence into German.',
+      placeholder: 'Escreva a frase em alemão…',
+      placeholder_en: 'Write the sentence in German…',
+      answers: answerWithoutUmlauts === canonicalAnswer ? [canonicalAnswer] : [canonicalAnswer, answerWithoutUmlauts]
+    };
+  });
 
   const numberItems = [
     { id: 'number-1', prompt: '1', prompt_en: '1', detail: 'Escreva este número em alemão.', detail_en: 'Write this number in German.', placeholder: 'Escreva o número em alemão…', placeholder_en: 'Write the number in German…', answers: ['eins'] },
